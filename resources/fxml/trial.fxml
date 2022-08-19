@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane fx:id="anchorPane" nodeOrientation="LEFT_TO_RIGHT" prefHeight="820.0" prefWidth="1020.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.trial.TrialController">
+   <children>
+      <Rectangle fx:id="block1" arcHeight="5.0" arcWidth="5.0" fill="#214fff" height="120.0" stroke="BLACK" strokeType="INSIDE" width="120.0" x="520.0" y="80.0" />
+      <Rectangle fx:id="block2" arcHeight="5.0" arcWidth="5.0" fill="#214fff" height="120.0" layoutX="183.0" layoutY="267.0" stroke="BLACK" strokeType="INSIDE" width="120.0" AnchorPane.bottomAnchor="580.0" AnchorPane.leftAnchor="120.0" />
+      <Rectangle fx:id="block3" arcHeight="5.0" arcWidth="5.0" fill="#214fff" height="120.0" layoutX="348.0" layoutY="375.0" stroke="BLACK" strokeType="INSIDE" width="120.0" AnchorPane.bottomAnchor="480.0" AnchorPane.leftAnchor="720.0" />
+      <Rectangle fx:id="block4" arcHeight="5.0" arcWidth="5.0" fill="#214fff" height="120.0" layoutX="363.0" layoutY="560.0" stroke="BLACK" strokeType="INSIDE" width="120.0" AnchorPane.bottomAnchor="440.0" AnchorPane.leftAnchor="280.0" />
+      <Rectangle fx:id="block5" arcHeight="5.0" arcWidth="5.0" fill="#214fff" height="120.0" layoutX="510.0" layoutY="473.0" stroke="BLACK" strokeType="INSIDE" width="120.0" AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="560.0" />
+      <Rectangle fx:id="block6" arcHeight="5.0" arcWidth="5.0" fill="#214fff" height="120.0" layoutX="552.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" width="120.0" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="780.0" />
+      <Rectangle fx:id="block7" arcHeight="5.0" arcWidth="5.0" fill="#214fff" height="120.0" layoutX="363.0" layoutY="134.0" stroke="BLACK" strokeType="INSIDE" width="120.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="60.0" />
+      <Rectangle fx:id="block8" arcHeight="5.0" arcWidth="5.0" fill="#214fff" height="120.0" layoutX="672.0" layoutY="574.0" stroke="BLACK" strokeType="INSIDE" width="120.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="300.0" />
+      <Rectangle fx:id="block9" arcHeight="5.0" arcWidth="5.0" fill="#214fff" height="120.0" layoutX="781.0" layoutY="353.0" stroke="BLACK" strokeType="INSIDE" width="120.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="540.0" />
+   </children>
+</AnchorPane>
