@@ -68,7 +68,10 @@ public class TrialController {
         anchorPane.setScaleX(scale);
     }
 
+    // TODO
+    private void playSequence(int[] sequence) {
 
+    }
 
     private void changeBlockColor(Rectangle block, Paint color) {
         block.setFill(color);
