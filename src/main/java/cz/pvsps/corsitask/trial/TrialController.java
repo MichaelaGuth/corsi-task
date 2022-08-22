@@ -1,5 +1,7 @@
 package cz.pvsps.corsitask.trial;
 
+import cz.pvsps.corsitask.Constants;
+import cz.pvsps.corsitask.Tools;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +30,8 @@ public class TrialController {
 
     private ArrayList<Rectangle> allBlocks;
 
+    private ArrayList<int[]> sequences;
+
     private final Color YELLOW = Color.web("#f5da0f");
     private final Color BLUE = Color.web("#1f3bff");
     private final Color WHITE = Color.WHITE;
@@ -37,6 +41,17 @@ public class TrialController {
     public void initialize() {
         resize();
         allBlocks = getListOfBlocks();
+        sequences = Tools.loadSequences();
+
+        Thread testThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                playSequence(sequences.get(15));
+            }
+        });
+
+        testThread.setDaemon(true);
+        testThread.start();
     }
 
     private ArrayList<Rectangle> getListOfBlocks() {
@@ -63,15 +78,28 @@ public class TrialController {
     public void resize() {
         Rectangle2D resolution = Screen.getPrimary().getBounds();
         double scale = resolution.getHeight() / borderPane.getPrefHeight();
-        System.out.println(scale);
         anchorPane.setScaleY(scale);
         anchorPane.setScaleX(scale);
     }
 
     // TODO
     private void playSequence(int[] sequence) {
+        for (int i:
+             sequence) {
+            Rectangle block = allBlocks.get(i-1);
+            try {
+                Thread.sleep(1000);
+                changeBlockColor(block, YELLOW);
+                Thread.sleep(1000);
+                changeBlockColor(block, BLUE);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
+        }
     }
+
+
 
     private void changeBlockColor(Rectangle block, Paint color) {
         block.setFill(color);
