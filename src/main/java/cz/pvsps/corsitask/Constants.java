@@ -4,7 +4,7 @@ public class Constants {
 
     public enum FxmlFile {
         MENU ("menu.fxml"),
-        TRIAL ("trial2.fxml"),
+        TRIAL ("trial.fxml"),
         RESULT ("result.fxml");
         private final String fxmlFileName;
         FxmlFile(String fxmlFileName) {
