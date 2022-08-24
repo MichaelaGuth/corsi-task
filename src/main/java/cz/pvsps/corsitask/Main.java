@@ -30,7 +30,7 @@ public class Main extends Application {
             //primaryStage.getIcons().add(ImageLoader.loadImage(ICON));
             stage.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT));
             stage.setResizable(false);
-            stage.setFullScreen(true);
+            stage.setFullScreen(false);
             stage.setFullScreenExitHint("");
             stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             stage.show();

@@ -15,9 +15,15 @@ public class Constants {
         }
     }
 
-    public static final int SCENE_WIDTH = 4*255;
+    public static final int SCENE_WIDTH = 4*255+200;
     public static final int SCENE_HEIGHT = 4*205;
 
+    public static final String BUTTON_STYLE = "-fx-background-color: %s; -fx-border-color: %s; -fx-border-width: 5;";
+    public static final String TEXT_RED = "red";
+    public static final String TEXT_GREEN = "green";
+    public static final String TEXT_WHITE = "white";
+
+    /*
     public static final int[] SEQUENCE_2_1 = new int[]{8,5};
     public static final int[] SEQUENCE_2_2 = new int[]{6,4};
     public static final int[] SEQUENCE_3_1 = new int[]{4,7,2};
@@ -34,4 +40,5 @@ public class Constants {
     public static final int[] SEQUENCE_8_2 = new int[]{5,9,3,6,7,2,4,3};
     public static final int[] SEQUENCE_9_1 = new int[]{5,3,8,7,1,2,4,6,9};
     public static final int[] SEQUENCE_9_2 = new int[]{4,2,6,8,1,7,9,3,5};
+     */
 }

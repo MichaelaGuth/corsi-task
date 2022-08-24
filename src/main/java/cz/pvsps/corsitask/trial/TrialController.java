@@ -1,18 +1,24 @@
 package cz.pvsps.corsitask.trial;
 
-import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.Tools;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 
 import java.util.ArrayList;
+
+import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
+import static cz.pvsps.corsitask.Main.stage;
 
 public class TrialController {
     public Rectangle block1;
@@ -26,32 +32,102 @@ public class TrialController {
     public Rectangle block9;
     public AnchorPane anchorPane;
     public BorderPane borderPane;
+    public Label labelBlock1;
+    public Label labelBlock2;
+    public Label labelBlock3;
+    public Label labelBlock4;
+    public Label labelBlock5;
+    public Label labelBlock6;
+    public Label labelBlock7;
+    public Label labelBlock8;
+    public Label labelBlock9;
+    public Button confirmSelectionButton;
+    public HBox hbox;
+    public Button resetSelectionButton;
 
 
     private ArrayList<Rectangle> allBlocks;
+    private ArrayList<Label> allBlockLabels;
 
     private ArrayList<int[]> sequences;
+
+    private boolean testInProgress = false;
+    private boolean waitingForUser = false;
+
+    private ArrayList<Integer> userSequence;
 
     private final Color YELLOW = Color.web("#f5da0f");
     private final Color BLUE = Color.web("#1f3bff");
     private final Color WHITE = Color.WHITE;
+    private final Color BLACK = Color.BLACK;
 
 
     @FXML
     public void initialize() {
-        resize();
-        allBlocks = getListOfBlocks();
-        sequences = Tools.loadSequences();
-
+        prepareTest();
         Thread testThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                playSequence(sequences.get(15));
+                int sequenceIndex = 0;
+                while (testInProgress) {
+                    if (!waitingForUser) {
+                        if (sequenceIndex == 0) {
+                            try {
+                                Thread.sleep(3000);
+                            } catch (Exception e) {
+
+                            }
+                        }
+                        playSequence(sequences.get(sequenceIndex));
+                        sequenceIndex++;
+                        waitingForUser = true;
+                        userSequence = new ArrayList<>();
+                        setAllBlocksDisable(false);
+                        setButtonsDisable(false);
+                        if (sequenceIndex == 5) {
+                            testInProgress = false;
+                        }
+                    } else {
+                        confirmSelectionButton.setVisible(true);
+                        resetSelectionButton.setVisible(true);
+                    }
+                }
             }
         });
+        startTest(testThread);
+    }
 
-        testThread.setDaemon(true);
-        testThread.start();
+    private void prepareTest() {
+        allBlocks = getListOfBlocks();
+        allBlockLabels = getListOfBlockLabels();
+        setAllBlocksDisable(true);
+        setAllLabelsMouseTransparency(true);
+        setAllLabelsVisibility(false);
+        userSequence = new ArrayList<>();
+        confirmSelectionButton.setDisable(true);
+        resetSelectionButton.setDisable(true);
+        resize();
+        sequences = Tools.loadSequences();
+        testInProgress = true;
+    }
+
+    private void setButtonsDisable(boolean value) {
+        confirmSelectionButton.setDisable(value);
+        resetSelectionButton.setDisable(value);
+    }
+
+    private ArrayList<Label> getListOfBlockLabels() {
+        ArrayList<Label> labels = new ArrayList<>();
+        labels.add(labelBlock1);
+        labels.add(labelBlock2);
+        labels.add(labelBlock3);
+        labels.add(labelBlock4);
+        labels.add(labelBlock5);
+        labels.add(labelBlock6);
+        labels.add(labelBlock7);
+        labels.add(labelBlock8);
+        labels.add(labelBlock9);
+        return labels;
     }
 
     private ArrayList<Rectangle> getListOfBlocks() {
@@ -68,18 +144,41 @@ public class TrialController {
         return blocks;
     }
 
-    private void resetColors() {
-        for (Rectangle block :
-                allBlocks) {
-            changeBlockColor(block, BLUE);
+    private void setAllLabelsVisibility(boolean value) {
+        for (Label label :
+                allBlockLabels) {
+            label.setVisible(value);
+        }
+    }
+
+    private void setAllLabelsMouseTransparency(boolean value) {
+        for (Label label :
+                allBlockLabels) {
+            label.setMouseTransparent(value);
+        }
+    }
+
+
+
+    private void startTest(Thread testThread) {
+        try {
+            Thread.sleep(3000);
+            testThread.setDaemon(true);
+            testThread.start();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public void resize() {
-        Rectangle2D resolution = Screen.getPrimary().getBounds();
-        double scale = resolution.getHeight() / borderPane.getPrefHeight();
-        anchorPane.setScaleY(scale);
-        anchorPane.setScaleX(scale);
+        if (stage.isFullScreen()) {
+            Rectangle2D resolution = Screen.getPrimary().getBounds();
+            double scale = resolution.getHeight() / borderPane.getPrefHeight();
+            hbox.setScaleX(scale);
+            hbox.setScaleY(scale);
+        }
+        //anchorPane.setScaleY(scale);
+        //anchorPane.setScaleX(scale);
     }
 
     // TODO
@@ -99,7 +198,20 @@ public class TrialController {
         }
     }
 
+    private void resetAllLabels() {
+        for (int i = 0; i < allBlockLabels.size(); i++) {
+            allBlockLabels.get(i).setText(String.valueOf(i+1));
+            allBlockLabels.get(i).setTextFill(WHITE);
+            allBlockLabels.get(i).setVisible(false);
+        }
+    }
 
+    private void resetAllBlocks() {
+        for (Rectangle block :
+                allBlocks) {
+            changeBlockColor(block, BLUE);
+        }
+    }
 
     private void changeBlockColor(Rectangle block, Paint color) {
         block.setFill(color);
@@ -110,115 +222,68 @@ public class TrialController {
         block.setStroke(color);
     }
 
-    public void block1_OnMouseClicked(MouseEvent mouseEvent) {
-        changeBlockColor(block1,YELLOW);
-    }
-
-    public void block2_OnMouseClicked(MouseEvent mouseEvent) {
-        if (block2.getFill().equals(YELLOW)) {
-            resetColors();
-        } else {
-            changeBlockColor(block2,YELLOW);
+    public void blockAny_OnMouseClicked(MouseEvent event) {
+        if (event.getSource() instanceof Rectangle rectangle) {
+            changeBlockColor(rectangle, YELLOW);
+            int blockIndex = allBlocks.indexOf(rectangle);
+            userSequence.add(blockIndex+1);
+            allBlockLabels.get(blockIndex).setText(String.valueOf(userSequence.size()));
+            allBlockLabels.get(blockIndex).setTextFill(BLUE);
+            allBlockLabels.get(blockIndex).setVisible(true);
         }
     }
 
-    public void block3_OnMouseClicked(MouseEvent mouseEvent) {
-        changeBlockColor(block3,YELLOW);
+    public void blockAny_OnMouseEntered(MouseEvent event) {
+        if (event.getSource() instanceof Rectangle rectangle) {
+            changeBlockStrokeColor(rectangle, WHITE);
+        }
     }
 
-    public void block4_OnMouseClicked(MouseEvent mouseEvent) {
-        changeBlockColor(block4,YELLOW);
+    public void blockAny_OnMouseExited(MouseEvent event) {
+        if (event.getSource() instanceof Rectangle rectangle) {
+            changeBlockStrokeColor(rectangle, rectangle.getFill());
+        }
     }
 
-    public void block5_OnMouseClicked(MouseEvent mouseEvent) {
-        changeBlockColor(block5,YELLOW);
+    public void confirmSelectionButtonOnMouseClicked(MouseEvent event) {
+        //TODO saveResult(userSequence);
+        waitingForUser = false;
+        prepareForNewUserSequence();
+        setAllBlocksDisable(true);
+        setButtonsDisable(true);
     }
 
-    public void block6_OnMouseClicked(MouseEvent mouseEvent) {
-        changeBlockColor(block6,YELLOW);
+    public void resetSelectionButtonOnMouseClicked(MouseEvent event) {
+        prepareForNewUserSequence();
     }
 
-    public void block7_OnMouseClicked(MouseEvent mouseEvent) {
-        changeBlockColor(block7,YELLOW);
+    private void prepareForNewUserSequence() {
+        userSequence = new ArrayList<>();
+        resetAllLabels();
+        resetAllBlocks();
     }
 
-    public void block8_OnMouseClicked(MouseEvent mouseEvent) {
-        changeBlockColor(block8,YELLOW);
+    private void setAllBlocksDisable(boolean value) {
+        for (Rectangle block :
+                allBlocks) {
+            block.setDisable(value);
+        }
     }
 
-    public void block9_OnMouseClicked(MouseEvent mouseEvent) {
-        changeBlockColor(block9,YELLOW);
+    public void resetSelectionButtonOnMouseEntered(MouseEvent event) {
+        resetSelectionButton.setStyle(String.format(BUTTON_STYLE, "red", "white"));
     }
 
-    public void block1_OnMouseEntered(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block1, WHITE);
+    public void resetSelectionButtonOnMouseExited(MouseEvent event) {
+        resetSelectionButton.setStyle(String.format(BUTTON_STYLE, "red", "red"));
     }
 
-    public void block1_OnMouseExited(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block1, block1.getFill());
+    public void confirmSelectionButtonOnMouseEntered(MouseEvent event) {
+        confirmSelectionButton.setStyle(String.format(BUTTON_STYLE, "green", "white"));
     }
 
-    public void block2_OnMouseEntered(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block2, WHITE);
+    public void confirmSelectionButtonOnMouseExited(MouseEvent event) {
+        confirmSelectionButton.setStyle(String.format(BUTTON_STYLE, "green", "green"));
     }
 
-    public void block2_OnMouseExited(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block2, block2.getFill());
-    }
-
-    public void block3_OnMouseEntered(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block3, WHITE);
-    }
-
-    public void block3_OnMouseExited(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block3, block3.getFill());
-    }
-
-    public void block4_OnMouseEntered(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block4, WHITE);
-    }
-
-    public void block4_OnMouseExited(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block4, block4.getFill());
-    }
-
-    public void block5_OnMouseEntered(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block5, WHITE);
-    }
-
-    public void block5_OnMouseExited(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block5, block5.getFill());
-    }
-
-    public void block6_OnMouseEntered(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block6, WHITE);
-    }
-
-    public void block6_OnMouseExited(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block6, block6.getFill());
-    }
-
-    public void block7_OnMouseEntered(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block7, WHITE);
-    }
-
-    public void block7_OnMouseExited(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block7, block7.getFill());
-    }
-
-    public void block8_OnMouseEntered(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block8, WHITE);
-    }
-
-    public void block8_OnMouseExited(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block8, block8.getFill());
-    }
-
-    public void block9_OnMouseEntered(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block9, WHITE);
-    }
-
-    public void block9_OnMouseExited(MouseEvent mouseEvent) {
-        changeBlockStrokeColor(block9, block9.getFill());
-    }
 }

@@ -21,6 +21,8 @@ public class Tools {
             throw new RuntimeException(e);
         }
 
+        // TODO check if the json file is in good condition
+        //if (jsonString.matches("[0-9]"))
         Object obj = JSONValue.parse(jsonString);
         JSONArray array = (JSONArray) obj;
         ArrayList<int[]> sequences = new ArrayList<>();
