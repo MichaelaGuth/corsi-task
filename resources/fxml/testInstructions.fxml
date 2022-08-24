@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="77.0" layoutY="69.0" prefHeight="312.0" prefWidth="647.0" text="Na obrazovce nyní uvidíte 9 kostek. Uvidíte, že několik kostek bude postupně měnit barvu.. Až se rozvítí tlačitka Potvrdit výběr a Zrušit výběr, prosím, klikněte na bloky v takovém pořadí, v jakém byli rozsvíceni. Až si budete jsiti svou odpovědí, potvrďtr ji stisknutím tlačítka &quot;Potvrdit výběr&quot;." textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

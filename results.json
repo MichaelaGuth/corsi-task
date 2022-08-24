@@ -1,0 +1,24 @@
+[
+  {
+    "userTime": 0,
+    "userSequence": [
+      8,
+      5
+    ],
+    "correctSequence": [
+      8,
+      5
+    ]
+  },
+  {
+    "userTime": 0,
+    "userSequence": [
+      6,
+      4
+    ],
+    "correctSequence": [
+      6,
+      4
+    ]
+  }
+]

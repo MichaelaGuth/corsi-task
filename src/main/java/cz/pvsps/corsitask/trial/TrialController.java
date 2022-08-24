@@ -1,6 +1,7 @@
 package cz.pvsps.corsitask.trial;
 
 import cz.pvsps.corsitask.Tools;
+import cz.pvsps.corsitask.result.Result;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
 import static cz.pvsps.corsitask.Main.stage;
+import static cz.pvsps.corsitask.Tools.saveResults;
 
 public class TrialController {
     public Rectangle block1;
@@ -49,12 +51,14 @@ public class TrialController {
     private ArrayList<Rectangle> allBlocks;
     private ArrayList<Label> allBlockLabels;
 
-    private ArrayList<int[]> sequences;
+    private ArrayList<ArrayList<Integer>> sequences;
 
     private boolean testInProgress = false;
     private boolean waitingForUser = false;
+    private int sequenceIndex;
 
     private ArrayList<Integer> userSequence;
+    private ArrayList<Result> results;
 
     private final Color YELLOW = Color.web("#f5da0f");
     private final Color BLUE = Color.web("#1f3bff");
@@ -68,7 +72,8 @@ public class TrialController {
         Thread testThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                int sequenceIndex = 0;
+                System.out.println(Boolean.TRUE);
+                sequenceIndex = 0;
                 while (testInProgress) {
                     if (!waitingForUser) {
                         if (sequenceIndex == 0) {
@@ -78,20 +83,22 @@ public class TrialController {
 
                             }
                         }
-                        playSequence(sequences.get(sequenceIndex));
-                        sequenceIndex++;
-                        waitingForUser = true;
-                        userSequence = new ArrayList<>();
-                        setAllBlocksDisable(false);
-                        setButtonsDisable(false);
-                        if (sequenceIndex == 5) {
+                        if (sequenceIndex == 2) {
                             testInProgress = false;
+                        } else {
+                            playSequence(sequences.get(sequenceIndex));
+                            sequenceIndex++;
+                            waitingForUser = true;
+                            userSequence = new ArrayList<>();
+                            setAllBlocksDisable(false);
+                            setButtonsDisable(false);
                         }
                     } else {
                         confirmSelectionButton.setVisible(true);
                         resetSelectionButton.setVisible(true);
                     }
                 }
+                endTest();
             }
         });
         startTest(testThread);
@@ -107,7 +114,8 @@ public class TrialController {
         confirmSelectionButton.setDisable(true);
         resetSelectionButton.setDisable(true);
         resize();
-        sequences = Tools.loadSequences();
+        sequences = Tools.loadSequences("sequences.json");
+        results = new ArrayList<>();
         testInProgress = true;
     }
 
@@ -161,13 +169,12 @@ public class TrialController {
 
 
     private void startTest(Thread testThread) {
-        try {
-            Thread.sleep(3000);
-            testThread.setDaemon(true);
-            testThread.start();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        testThread.setDaemon(true);
+        testThread.start();
+    }
+
+    private void endTest() {
+        saveResults(results, "results.json");
     }
 
     public void resize() {
@@ -182,14 +189,14 @@ public class TrialController {
     }
 
     // TODO
-    private void playSequence(int[] sequence) {
+    private void playSequence(ArrayList<Integer> sequence) {
         for (int i:
              sequence) {
             Rectangle block = allBlocks.get(i-1);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 changeBlockColor(block, YELLOW);
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 changeBlockColor(block, BLUE);
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -246,11 +253,14 @@ public class TrialController {
     }
 
     public void confirmSelectionButtonOnMouseClicked(MouseEvent event) {
-        //TODO saveResult(userSequence);
-        waitingForUser = false;
+        // TODO add timer
+        Result result = new Result(sequences.get(sequenceIndex-1), userSequence, 0);
+        results.add(result);
+
         prepareForNewUserSequence();
         setAllBlocksDisable(true);
         setButtonsDisable(true);
+        waitingForUser = false;
     }
 
     public void resetSelectionButtonOnMouseClicked(MouseEvent event) {
