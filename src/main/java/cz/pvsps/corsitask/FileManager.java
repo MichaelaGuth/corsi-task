@@ -1,15 +1,12 @@
 package cz.pvsps.corsitask;
 
-import org.json.simple.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
-public class JSON_FileManager {
+public class FileManager {
 
     public static String loadJSON_File(String fileName) {
         String jsonString = "";

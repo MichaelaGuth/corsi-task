@@ -58,5 +58,12 @@
                 <Font name="Arial" size="24.0"/>
             </font>
         </Button>
+        <Button fx:id="goToSettingsButton1" layoutX="62.0" layoutY="262.0" mnemonicParsing="false"
+                onAction="#goToSettingsButtonOnAction" prefHeight="96.0" prefWidth="277.0" text="ZOBRAZIT VÝSLEDKY"
+                textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Arial" size="24.0"/>
+            </font>
+        </Button>
     </children>
 </AnchorPane>

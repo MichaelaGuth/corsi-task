@@ -1,17 +1,25 @@
 package cz.pvsps.corsitask;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import cz.pvsps.corsitask.result.Result;
+import cz.pvsps.corsitask.result.SequenceScore;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.WindowEvent;
 import org.json.simple.*;
+import javax.swing.filechooser.FileSystemView;
 
-import static cz.pvsps.corsitask.JSON_FileManager.loadJSON_File;
-import static cz.pvsps.corsitask.JSON_FileManager.saveJSON_File;
+import static cz.pvsps.corsitask.FileManager.loadJSON_File;
+import static cz.pvsps.corsitask.FileManager.saveJSON_File;
 
 public class Tools {
+
+    private static Logger LOGGER = Logger.getLogger(Tools.class.getName());
 
     public static ArrayList<ArrayList<Integer>> loadSequences(String fileName) {
         String jsonString = loadJSON_File(fileName);
@@ -34,18 +42,37 @@ public class Tools {
         return sequences;
     }
 
-    public static void saveResults(ArrayList<Result> results, String fileName) {
+    public static void saveResults(ArrayList<SequenceScore> sequenceScores, String fileName) {
         JSONArray jsonResults = new JSONArray();
 
-        for (Result result :
-                results) {
+        for (SequenceScore sequenceScore :
+                sequenceScores) {
             JSONObject jsonResult = new JSONObject();
-            jsonResult.put("correctSequence",result.getCorrectSequence());
-            jsonResult.put("userSequence",result.getUserSequence());
-            jsonResult.put("userTime",result.getUserTime());
+            jsonResult.put("correctSequence", sequenceScore.getCorrectSequence());
+            jsonResult.put("userSequence", sequenceScore.getUserSequence());
+            jsonResult.put("userTime", sequenceScore.getUserTime());
             jsonResults.add(jsonResult);
         }
 
         saveJSON_File(fileName, jsonResults.toJSONString());
+    }
+
+    public static void changeScene(Constants.FxmlFile fxmlFile) throws IOException {
+
+            Parent root = FXMLLoader.load(Main.class.getResource(fxmlFile.getPath()));
+            Main.stage.setScene(new Scene(root, fxmlFile.getSceneWidth(), fxmlFile.getSceneHeight()));
+            Main.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    event.consume();
+                }
+            });
+            Main.stage.show();
+            LOGGER.log(Level.INFO, "File named: " + fxmlFile.getName() + " has been successfully loaded.");
+
+    }
+
+    public static String getDocumentsPath() {
+        return FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     }
 }

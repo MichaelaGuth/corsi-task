@@ -3,15 +3,32 @@ package cz.pvsps.corsitask;
 public class Constants {
 
     public enum FxmlFile {
-        MENU ("menu.fxml"),
-        TRIAL ("trial.fxml"),
-        RESULT ("result.fxml");
-        private final String fxmlFileName;
-        FxmlFile(String fxmlFileName) {
-            this.fxmlFileName = fxmlFileName;
+        MENU ("menu.fxml", 400, 600),
+        TRIAL ("corsiTest.fxml", 1220, 820),
+        RESULT ("result.fxml", 0, 0),
+        SETTINGS ("settings.fxml", 400, 600);
+        private final String name;
+        private final int sceneWidth;
+        private final int sceneHeight;
+        FxmlFile(String fxmlFileName, int sceneWidth, int sceneHeight) {
+            this.name = fxmlFileName;
+            this.sceneWidth = sceneWidth;
+            this.sceneHeight = sceneHeight;
         }
         public String getPath() {
-            return "/fxml/" + fxmlFileName;
+            return "/fxml/" + name;
+        }
+
+        public int getSceneHeight() {
+            return sceneHeight;
+        }
+
+        public int getSceneWidth() {
+            return sceneWidth;
+        }
+
+        public String getName() {
+            return name;
         }
     }
 
