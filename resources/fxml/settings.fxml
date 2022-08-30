@@ -16,15 +16,17 @@
                 <Font size="14.0"/>
             </font>
         </Label>
-        <ChoiceBox fx:id="sequencesLocationChoiceBox" layoutX="36.0" layoutY="81.0" prefHeight="25.0" prefWidth="328.0"
-                   AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="81.0" onAction="#sequencesLocationChoiceBoxOnAction"/>
+        <ChoiceBox fx:id="sequencesLocationChoiceBox" layoutX="36.0" layoutY="81.0"
+                   onAction="#sequencesLocationChoiceBoxOnAction" prefHeight="25.0" prefWidth="328.0"
+                   AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="81.0"/>
         <Label layoutX="36.0" layoutY="116.0" prefHeight="31.0" prefWidth="328.0" text="Umístění pro ukládání výsledků"
                wrapText="true">
             <font>
                 <Font size="14.0"/>
             </font>
         </Label>
-        <ChoiceBox fx:id="resultsLocationChoiceBox" layoutX="36.0" layoutY="147.0" prefHeight="25.0" prefWidth="328.0"/>
+        <ChoiceBox fx:id="resultsLocationChoiceBox" layoutX="36.0" layoutY="147.0" prefHeight="25.0" prefWidth="328.0"
+                   onAction="#resultsLocationChoiceBoxOnAction"/>
         <Button fx:id="backToMenuButton" layoutX="86.0" layoutY="511.0" mnemonicParsing="false"
                 onAction="#backToMenuButtonOnAction" text="Uložit a vrátit se do menu" AnchorPane.bottomAnchor="50.0">
             <font>

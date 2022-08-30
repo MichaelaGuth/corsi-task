@@ -12,17 +12,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static cz.pvsps.corsitask.Constants.FxmlFile;
-import static cz.pvsps.corsitask.Constants.SCENE_HEIGHT;
-import static cz.pvsps.corsitask.Constants.SCENE_WIDTH;
 
 public class Main extends Application {
 
     private static Logger LOGGER = Logger.getLogger(Main.class.getName());
 
+    public static Configuration configuration;
+
     public static Stage stage;
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
+        configuration = Tools.loadConfiguration();
         try {
             Parent root = FXMLLoader.load(getClass().getResource(FxmlFile.MENU.getPath()));      // menu.fxml
 

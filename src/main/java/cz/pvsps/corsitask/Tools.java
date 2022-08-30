@@ -1,18 +1,22 @@
 package cz.pvsps.corsitask;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.pvsps.corsitask.result.SequenceScore;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.WindowEvent;
-import org.json.simple.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import javax.swing.filechooser.FileSystemView;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static cz.pvsps.corsitask.FileManager.loadJSON_File;
 import static cz.pvsps.corsitask.FileManager.saveJSON_File;
@@ -75,4 +79,28 @@ public class Tools {
     public static String getDocumentsPath() {
         return FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     }
+
+    public static Configuration loadConfiguration()  {
+        String json_String = loadJSON_File(getDocumentsPath()+"\\Corsi Test\\settings.json");
+        ObjectMapper mapper = new ObjectMapper();
+        Configuration configuration;
+        try {
+            configuration = mapper.readValue(json_String, Configuration.class);
+        } catch (JsonProcessingException ex) {
+            throw new RuntimeException(ex);
+        }
+        return configuration;
+    }
+
+    public static void saveConfiguration(Configuration configuration) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString;
+        try {
+            jsonString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(configuration);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        saveJSON_File(getDocumentsPath()+Constants.CONFIGURATION_LOCATION, jsonString);
+    }
+
 }

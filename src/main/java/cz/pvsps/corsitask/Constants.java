@@ -6,7 +6,10 @@ public class Constants {
         MENU ("menu.fxml", 400, 600),
         TRIAL ("corsiTest.fxml", 1220, 820),
         RESULT ("result.fxml", 0, 0),
-        SETTINGS ("settings.fxml", 400, 600);
+        SETTINGS ("settings.fxml", 400, 600),
+        TEST_SETTINGS_DIALOG ("testSettingsDialog.fxml", 400, 600),
+        TEST_INSTRUCTIONS ("testInstructions.fxml", 800, 450);
+
         private final String name;
         private final int sceneWidth;
         private final int sceneHeight;
@@ -15,6 +18,7 @@ public class Constants {
             this.sceneWidth = sceneWidth;
             this.sceneHeight = sceneHeight;
         }
+
         public String getPath() {
             return "/fxml/" + name;
         }
@@ -39,6 +43,8 @@ public class Constants {
     public static final String TEXT_RED = "red";
     public static final String TEXT_GREEN = "green";
     public static final String TEXT_WHITE = "white";
+
+    public static final String CONFIGURATION_LOCATION = "\\Corsi Test\\settings.json";
 
     /*
     public static final int[] SEQUENCE_2_1 = new int[]{8,5};

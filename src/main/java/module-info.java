@@ -5,6 +5,9 @@ module cz.pvsps.corsitask {
     requires org.kordamp.ikonli.javafx;
     requires java.logging;
     requires json.simple;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.annotation;
     requires java.desktop;
 
     opens cz.pvsps.corsitask to javafx.fxml;
