@@ -1,38 +1,74 @@
 package cz.pvsps.corsitask.result;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Score {
-    private final List<SequenceScore> sequencesScores;
+    @JsonProperty("patientName")
+    private final String patientName;
+    @JsonProperty("patientSurname")
+    private final String patientSurname;
+    @JsonProperty("sequencesScores")
+    private List<SequenceScore> sequencesScores;
+    @JsonProperty("blockSpan")
     private int blockSpan;
-    private final float totalScore;
+    @JsonProperty("totalScore")
+    private int totalScore;
+    @JsonProperty("numberOfCorrectTrials")
     private int numberOfCorrectTrials;
 
-    public Score(List<SequenceScore> sequencesScores) {
-        this.sequencesScores = sequencesScores;
-        for (int i = sequencesScores.size()-1; i < 0 ; i--) {
-            if (sequencesScores.get(i).isUserCorrect()) {
-                this.blockSpan = sequencesScores.get(i).getCorrectSequence().size();
-                break;
-            }
-        }
+    public Score(String patientName, String patientSurname) {
+        this.patientName = patientName;
+        this.patientSurname = patientSurname;
+        this.sequencesScores = new ArrayList<>();
+        this.totalScore = 0;
+        this.blockSpan = 0;
         this.numberOfCorrectTrials = 0;
-        for (SequenceScore sequenceScore : sequencesScores) {
-            if (sequenceScore.isUserCorrect()) this.numberOfCorrectTrials++;
-        }
-        this.totalScore = this.blockSpan * numberOfCorrectTrials;
-
     }
 
-    public int getNumberOfCorrectTrials() {
+    public List<SequenceScore> getSequencesScores() {
+        return sequencesScores;
+    }
+
+    public void addSequenceScore(SequenceScore sequenceScore) {
+        this.sequencesScores.add(sequenceScore);
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public String getPatientSurname() {
+        return patientSurname;
+    }
+
+    private int getNumberOfCorrectTrials() {
+        numberOfCorrectTrials = 0;
+        for (SequenceScore sequenceScore : sequencesScores) {
+            if (sequenceScore.isUserCorrect()) numberOfCorrectTrials++;
+        }
         return numberOfCorrectTrials;
     }
 
-    public float getBlockSpan() {
+    public int getBlockSpan() {
+        // TODO test this
+        for (int i = sequencesScores.size()-1; i < 0 ; i--) {
+            if (sequencesScores.get(i).isUserCorrect()) {
+                blockSpan = sequencesScores.get(i).correctSequence().size();
+                break;
+            }
+        }
         return blockSpan;
     }
 
     public float getTotalScore() {
+        totalScore = getBlockSpan() * getNumberOfCorrectTrials();
         return totalScore;
+    }
+
+    public int getNumberOfSequences() {
+        return sequencesScores.size();
     }
 }

@@ -1,10 +1,11 @@
 package cz.pvsps.corsitask;
 
+import cz.pvsps.corsitask.tools.Configuration;
+import cz.pvsps.corsitask.tools.Tools;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,12 +29,9 @@ public class Main extends Application {
             Parent root = FXMLLoader.load(getClass().getResource(FxmlFile.MENU.getPath()));      // menu.fxml
 
             stage.setTitle("Corsi Test");
-            //primaryStage.getIcons().add(ImageLoader.loadImage(ICON));
+            // TODO stage.getIcons().add();
             stage.setScene(new Scene(root, FxmlFile.MENU.getSceneWidth(), FxmlFile.MENU.getSceneHeight()));
             stage.setResizable(false);
-            stage.setFullScreen(false);
-            stage.setFullScreenExitHint("");
-            stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             stage.show();
 
             LOGGER.log(Level.INFO, "File named: menu.fxml has been successfully loaded.");
@@ -41,9 +39,5 @@ public class Main extends Application {
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "File named: " + " could not be loaded." );
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

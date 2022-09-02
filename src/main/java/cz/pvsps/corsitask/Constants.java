@@ -1,5 +1,7 @@
 package cz.pvsps.corsitask;
 
+import cz.pvsps.corsitask.tools.Tools;
+
 public class Constants {
 
     public enum FxmlFile {
@@ -36,15 +38,17 @@ public class Constants {
         }
     }
 
-    public static final int SCENE_WIDTH = 4*255+200;
-    public static final int SCENE_HEIGHT = 4*205;
-
     public static final String BUTTON_STYLE = "-fx-background-color: %s; -fx-border-color: %s; -fx-border-width: 5;";
     public static final String TEXT_RED = "red";
     public static final String TEXT_GREEN = "green";
     public static final String TEXT_WHITE = "white";
 
-    public static final String CONFIGURATION_LOCATION = "\\Corsi Test\\settings.json";
+    public static final String CONFIGURATION_LOCATION = Tools.getDocumentsPath() + "\\Corsi Test\\settings.json";
+    public static final String BROWSE_OPTION = "Procházet místní soubory";
+
+    public static final String DEFAULT_SEQUENCES_FILE_NAME = "defaultSequences.json";
+
+    public static final String RESULT_FILE_NAME_TEMPLATE = "<name><surname>_<date>.json";
 
     /*
     public static final int[] SEQUENCE_2_1 = new int[]{8,5};

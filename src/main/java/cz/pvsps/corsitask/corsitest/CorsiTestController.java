@@ -1,7 +1,8 @@
 package cz.pvsps.corsitask.corsitest;
 
-import cz.pvsps.corsitask.Tools;
+import cz.pvsps.corsitask.result.Score;
 import cz.pvsps.corsitask.result.SequenceScore;
+import cz.pvsps.corsitask.tools.Tools;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
@@ -15,11 +16,15 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
+import static cz.pvsps.corsitask.Main.configuration;
 import static cz.pvsps.corsitask.Main.stage;
-import static cz.pvsps.corsitask.Tools.saveResults;
+import static cz.pvsps.corsitask.dialogs.TestSettingsDialogController.patientName;
+import static cz.pvsps.corsitask.dialogs.TestSettingsDialogController.patientSurname;
+import static cz.pvsps.corsitask.tools.Tools.saveObjectToJSON;
 
 public class CorsiTestController {
     public Rectangle block1;
@@ -57,7 +62,7 @@ public class CorsiTestController {
     private int sequenceIndex;
 
     private ArrayList<Integer> userSequence;
-    private ArrayList<SequenceScore> sequenceScores;
+    private Score score;
     private SequenceScore currentSequence;
     private SequenceScore lastSequence;
 
@@ -67,7 +72,6 @@ public class CorsiTestController {
     private final Color BLACK = Color.BLACK;
     private long startTime;
     private long time;
-
 
     @FXML
     public void initialize() {
@@ -81,7 +85,7 @@ public class CorsiTestController {
                         testInProgress = false;
                     }
                     if (lastSequence != null && currentSequence != null) {
-                        if (lastSequence.getCorrectSequence().size() == currentSequence.getCorrectSequence().size()) {
+                        if (lastSequence.correctSequence().size() == currentSequence.correctSequence().size()) {
                             if (!lastSequence.isUserCorrect() && !currentSequence.isUserCorrect()) {
                                 testInProgress = false;
                             }
@@ -108,14 +112,14 @@ public class CorsiTestController {
         allBlockLabels = getListOfBlockLabels();
         setAllBlocksDisable(true);
         setAllLabelsMouseTransparency(true);
-        setAllLabelsVisibility(false);
+        setAllLabelsVisibility(configuration.isShowBlockNumbers());
         userSequence = new ArrayList<>();
         confirmSelectionButton.setDisable(true);
         resetSelectionButton.setDisable(true);
         resetSelectionButton.setVisible(false);
         resize();
         sequences = Tools.loadSequences("sequences.json");
-        sequenceScores = new ArrayList<>();
+        score = new Score(patientName, patientSurname);
         testInProgress = true;
     }
 
@@ -161,15 +165,24 @@ public class CorsiTestController {
         }
     }
 
-
-
     private void startTest(Thread testThread) {
         testThread.setDaemon(true);
         testThread.start();
     }
 
     private void endTest() {
-        saveResults(sequenceScores, "results.json");
+        // TODO test
+        String filePath = configuration.getPathToResultsDir() + "\\";
+        if (score.getPatientName().equals("") && score.getPatientSurname().equals("")) {
+            filePath = filePath + "Anonym-%i_" + LocalDate.now();
+        } else if (!score.getPatientSurname().equals("")) {
+            filePath = filePath + score.getPatientSurname() + "_" + score.toString() + "_" + LocalDate.now();
+        } else if (!score.getPatientName().equals("")) {
+            filePath = filePath + score.getPatientName() + "_" + score.toString() + "_" + LocalDate.now();
+        } else {
+            filePath = filePath + score.getPatientName() + "-" + score.getPatientSurname() + "_" + score.toString() + "_" + LocalDate.now();
+        }
+        saveObjectToJSON(score, filePath);
     }
 
     public void resize() {
@@ -179,11 +192,8 @@ public class CorsiTestController {
             hbox.setScaleX(scale);
             hbox.setScaleY(scale);
         }
-        //anchorPane.setScaleY(scale);
-        //anchorPane.setScaleX(scale);
     }
 
-    // TODO
     private void playSequence(ArrayList<Integer> sequence) {
         for (int i:
              sequence) {
@@ -194,6 +204,7 @@ public class CorsiTestController {
                 Thread.sleep(500);
                 changeBlockColor(block, BLUE);
             } catch (Exception e) {
+                // TODO
                 throw new RuntimeException(e);
             }
 
@@ -230,9 +241,11 @@ public class CorsiTestController {
                 changeBlockColor(rectangle, YELLOW);
                 int blockIndex = allBlocks.indexOf(rectangle);
                 userSequence.add(blockIndex+1);
-                allBlockLabels.get(blockIndex).setText(String.valueOf(userSequence.size()));
-                allBlockLabels.get(blockIndex).setTextFill(BLUE);
-                allBlockLabels.get(blockIndex).setVisible(true);
+                if (configuration.isShowUserSelectedOrderOnBlocks()) {
+                    allBlockLabels.get(blockIndex).setText(String.valueOf(userSequence.size()));
+                    allBlockLabels.get(blockIndex).setTextFill(BLUE);
+                    allBlockLabels.get(blockIndex).setVisible(true);
+                }
             }
         }
     }
@@ -253,9 +266,9 @@ public class CorsiTestController {
         long finishTime = System.currentTimeMillis();
         time = finishTime -startTime;
         currentSequence = new SequenceScore(sequences.get(sequenceIndex-1), userSequence, time);
-        sequenceScores.add(currentSequence);
-        if (sequenceScores.size()-2 >= 0) {
-            lastSequence = sequenceScores.get(sequenceScores.size()-2);
+        score.addSequenceScore(currentSequence);
+        if (score.getNumberOfSequences()-2 >= 0) {
+            lastSequence = score.getSequencesScores().get(score.getNumberOfSequences()-2);
         }
         prepareForNewUserSequence();
         setAllBlocksDisable(true);

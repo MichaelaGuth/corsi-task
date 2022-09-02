@@ -16,5 +16,7 @@ module cz.pvsps.corsitask {
     opens cz.pvsps.corsitask.result to javafx.fxml;
     opens cz.pvsps.corsitask.settings to javafx.fxml;
     opens cz.pvsps.corsitask.tools to javafx.fxml;
+    opens cz.pvsps.corsitask.dialogs to javafx.fxml;
     exports cz.pvsps.corsitask;
+    exports cz.pvsps.corsitask.tools;
 }

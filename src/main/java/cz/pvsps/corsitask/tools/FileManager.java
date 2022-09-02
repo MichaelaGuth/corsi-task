@@ -1,4 +1,4 @@
-package cz.pvsps.corsitask;
+package cz.pvsps.corsitask.tools;
 
 import java.io.File;
 import java.io.FileInputStream;

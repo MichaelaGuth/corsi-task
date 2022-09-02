@@ -1,4 +1,4 @@
-package cz.pvsps.corsitask;
+package cz.pvsps.corsitask.tools;
 
 
 import com.fasterxml.jackson.annotation.*;
@@ -11,14 +11,17 @@ public class Configuration {
     @JsonProperty("pathToSequenceDir")
     private String pathToSequenceDir;
 
-    @JsonProperty("currentlyInUseSequenceFileName")
-    private String currentlyInUseSequenceFileName;
-
     @JsonProperty("showUserSelectedOrderOnBlocks")
     private boolean showUserSelectedOrderOnBlocks;
 
     @JsonProperty("showBlockNumbers")
     private boolean showBlockNumbers;
+
+    @JsonProperty("allowResetButton")
+    private boolean allowResetButton;
+
+    @JsonProperty("currentlyInUseSequenceFilePath")
+    private String currentlyInUseSequenceFilePath;
 
     public Configuration() {
 
@@ -40,14 +43,6 @@ public class Configuration {
         this.pathToSequenceDir = pathToSequenceDir;
     }
 
-    public String getCurrentlyInUseSequenceFileName() {
-        return currentlyInUseSequenceFileName;
-    }
-
-    public void setCurrentlyInUseSequenceFileName(String currentlyInUseSequenceFileName) {
-        this.currentlyInUseSequenceFileName = currentlyInUseSequenceFileName;
-    }
-
     public boolean isShowUserSelectedOrderOnBlocks() {
         return showUserSelectedOrderOnBlocks;
     }
@@ -62,5 +57,21 @@ public class Configuration {
 
     public void setShowBlockNumbers(boolean showBlockNumbers) {
         this.showBlockNumbers = showBlockNumbers;
+    }
+
+    public boolean isAllowResetButton() {
+        return allowResetButton;
+    }
+
+    public void setAllowResetButton(boolean allowResetButton) {
+        this.allowResetButton = allowResetButton;
+    }
+
+    public String getCurrentlyInUseSequenceFilePath() {
+        return currentlyInUseSequenceFilePath;
+    }
+
+    public void setCurrentlyInUseSequenceFilePath(String currentlyInUseSequenceFilePath) {
+        this.currentlyInUseSequenceFilePath = currentlyInUseSequenceFilePath;
     }
 }

@@ -1,10 +1,9 @@
 package cz.pvsps.corsitask.menu;
 
 import cz.pvsps.corsitask.Constants;
-import cz.pvsps.corsitask.Tools;
+import cz.pvsps.corsitask.tools.Tools;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class MenuController {
     }
 
     public void startTestButtonOnAction(ActionEvent actionEvent) throws IOException {
-        Tools.changeScene(Constants.FxmlFile.TRIAL);
+        Tools.changeScene(Constants.FxmlFile.TEST_SETTINGS_DIALOG);
     }
 
     public void goToSettingsButtonOnAction(ActionEvent actionEvent) throws IOException {
