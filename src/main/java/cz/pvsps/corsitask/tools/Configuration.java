@@ -2,26 +2,27 @@ package cz.pvsps.corsitask.tools;
 
 
 import com.fasterxml.jackson.annotation.*;
+import cz.pvsps.corsitask.Constants;
 
 public class Configuration {
 
     @JsonProperty("pathToResultsDir")
-    private String pathToResultsDir;
+    private String pathToResultsDir = Constants.RESULTS_DIR_PATH;
 
     @JsonProperty("pathToSequenceDir")
-    private String pathToSequenceDir;
+    private String pathToSequenceDir = Constants.SEQUENCES_DIR_PATH;
 
     @JsonProperty("showUserSelectedOrderOnBlocks")
-    private boolean showUserSelectedOrderOnBlocks;
+    private boolean showUserSelectedOrderOnBlocks = false;
 
     @JsonProperty("showBlockNumbers")
-    private boolean showBlockNumbers;
+    private boolean showBlockNumbers = false;
 
     @JsonProperty("allowResetButton")
-    private boolean allowResetButton;
+    private boolean allowResetButton = false;
 
     @JsonProperty("currentlyInUseSequenceFilePath")
-    private String currentlyInUseSequenceFilePath;
+    private String currentlyInUseSequenceFilePath = Constants.CURRENTLY_USED_SEQUENCES_PATH;
 
     public Configuration() {
 

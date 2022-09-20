@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import static cz.pvsps.corsitask.Constants.FxmlFile;
 
 public class Main extends Application {
-
     private static Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     public static Configuration configuration;
@@ -26,12 +25,13 @@ public class Main extends Application {
         stage = primaryStage;
         configuration = Tools.loadConfiguration();
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(FxmlFile.MENU.getPath()));      // menu.fxml
+            Parent root = FXMLLoader.load(getClass().getResource(FxmlFile.SEQUENCE_RESULT.getPath()));      // menu.fxml
 
             stage.setTitle("Corsi Test");
             // TODO stage.getIcons().add();
-            stage.setScene(new Scene(root, FxmlFile.MENU.getSceneWidth(), FxmlFile.MENU.getSceneHeight()));
-            stage.setResizable(false);
+            stage.setScene(new Scene(root, FxmlFile.SEQUENCE_RESULT.getSceneWidth(), FxmlFile.SEQUENCE_RESULT.getSceneHeight()));
+            stage.setResizable(true);
+            stage.setFullScreen(false);
             stage.show();
 
             LOGGER.log(Level.INFO, "File named: menu.fxml has been successfully loaded.");

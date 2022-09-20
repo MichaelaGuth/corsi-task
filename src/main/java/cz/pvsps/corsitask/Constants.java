@@ -10,7 +10,8 @@ public class Constants {
         RESULT ("result.fxml", 0, 0),
         SETTINGS ("settings.fxml", 400, 600),
         TEST_SETTINGS_DIALOG ("testSettingsDialog.fxml", 400, 600),
-        TEST_INSTRUCTIONS ("testInstructions.fxml", 800, 450);
+        TEST_INSTRUCTIONS ("testInstructions.fxml", 800, 450),
+        SEQUENCE_RESULT ("sequenceResultCopy2.fxml", 510, 410);
 
         private final String name;
         private final int sceneWidth;
@@ -44,11 +45,19 @@ public class Constants {
     public static final String TEXT_WHITE = "white";
 
     public static final String CONFIGURATION_LOCATION = Tools.getDocumentsPath() + "\\Corsi Test\\settings.json";
+
+    public static final String RESULTS_DIR_PATH = Tools.getDocumentsPath() + "\\Corsi Test\\results";
+
+    public static final String SEQUENCES_DIR_PATH = Tools.getDocumentsPath() + "\\Corsi Test\\sequences";
+
+    public static final String CURRENTLY_USED_SEQUENCES_PATH = SEQUENCES_DIR_PATH + "\\defaultSequences.json";
     public static final String BROWSE_OPTION = "Procházet místní soubory";
 
     public static final String DEFAULT_SEQUENCES_FILE_NAME = "defaultSequences.json";
 
     public static final String RESULT_FILE_NAME_TEMPLATE = "<name><surname>_<date>.json";
+
+    public static final double LABEL_FONT_SIZE = 120;
 
     /*
     public static final int[] SEQUENCE_2_1 = new int[]{8,5};

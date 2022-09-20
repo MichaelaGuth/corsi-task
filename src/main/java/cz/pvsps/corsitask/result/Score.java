@@ -52,6 +52,10 @@ public class Score {
         return numberOfCorrectTrials;
     }
 
+    /**
+     *
+     * @return The number of the longest correctly selected sequence.
+     */
     public int getBlockSpan() {
         // TODO test this
         for (int i = sequencesScores.size()-1; i < 0 ; i--) {
@@ -63,6 +67,10 @@ public class Score {
         return blockSpan;
     }
 
+    /**
+     *
+     * @return (BlockSpan) * (Number of correctly selected sequences)
+     */
     public float getTotalScore() {
         totalScore = getBlockSpan() * getNumberOfCorrectTrials();
         return totalScore;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.Main;
+import cz.pvsps.corsitask.exceptions.FileNotFoundException;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -15,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 
 import javax.swing.filechooser.FileSystemView;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -73,13 +75,17 @@ public class Tools {
     }
 
     public static Configuration loadConfiguration()  {
-        String json_String = loadJSON_File(Constants.CONFIGURATION_LOCATION);
-        ObjectMapper mapper = new ObjectMapper();
         Configuration configuration;
         try {
+            String json_String = loadJSON_File(Constants.CONFIGURATION_LOCATION);
+            ObjectMapper mapper = new ObjectMapper();
             configuration = mapper.readValue(json_String, Configuration.class);
-        } catch (JsonProcessingException ex) {
-            throw new RuntimeException(ex);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            configuration = new Configuration();
+            saveObjectToJSON(configuration,Constants.CONFIGURATION_LOCATION);
+            LOGGER.log(Level.INFO, "Configuration has been created to file: " + Constants.CONFIGURATION_LOCATION + ".");
         }
         LOGGER.log(Level.INFO, "Configuration has been successfully loaded from file: " + Constants.CONFIGURATION_LOCATION + ".");
         return configuration;
@@ -93,7 +99,7 @@ public class Tools {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        saveJSON_File(filePath, jsonString);
+        saveJSON_File(new File(filePath), jsonString);
     }
 
     public static void resize(Pane pane) {
