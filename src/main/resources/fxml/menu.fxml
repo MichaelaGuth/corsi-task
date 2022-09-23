@@ -32,37 +32,30 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="cz.pvsps.corsitask.menu.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.menu.MenuController">
     <children>
-        <Button fx:id="goToSettingsButton" layoutX="62.0" layoutY="171.0" mnemonicParsing="false"
-                onAction="#goToSettingsButtonOnAction" prefHeight="76.0" prefWidth="277.0" text="NASTAVENÍ">
+        <Button fx:id="goToSettingsButton" layoutX="62.0" layoutY="171.0" mnemonicParsing="false" onAction="#goToSettingsButtonOnAction" prefHeight="76.0" prefWidth="277.0" text="NASTAVENÍ">
             <font>
-                <Font name="Arial" size="24.0"/>
+                <Font name="Arial" size="24.0" />
             </font>
         </Button>
-        <Button fx:id="startTestButton" layoutX="62.0" layoutY="80.0" mnemonicParsing="false"
-                onAction="#startTestButtonOnAction" prefHeight="76.0" prefWidth="277.0" text="SPUSTIT TEST">
+        <Button fx:id="startTestButton" layoutX="62.0" layoutY="80.0" mnemonicParsing="false" onAction="#startTestButtonOnAction" prefHeight="76.0" prefWidth="277.0" text="SPUSTIT TEST">
             <font>
-                <Font name="Arial" size="24.0"/>
+                <Font name="Arial" size="24.0" />
             </font>
         </Button>
-        <Button fx:id="exitButton" layoutX="62.0" layoutY="459.0" mnemonicParsing="false" onAction="#exitButtonOnAction"
-                prefHeight="76.0" prefWidth="277.0" text="UKONČIT">
+        <Button fx:id="exitButton" layoutX="62.0" layoutY="459.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="76.0" prefWidth="277.0" text="UKONČIT">
             <font>
-                <Font name="Arial" size="24.0"/>
+                <Font name="Arial" size="24.0" />
             </font>
         </Button>
-        <Button fx:id="goToSettingsButton1" layoutX="62.0" layoutY="262.0" mnemonicParsing="false"
-                onAction="#goToSettingsButtonOnAction" prefHeight="96.0" prefWidth="277.0" text="ZOBRAZIT VÝSLEDKY"
-                textAlignment="CENTER" wrapText="true">
+        <Button fx:id="showResultsButton" layoutX="62.0" layoutY="262.0" mnemonicParsing="false" onAction="#showResultsButtonOnAction" prefHeight="96.0" prefWidth="277.0" text="ZOBRAZIT VÝSLEDKY" textAlignment="CENTER" wrapText="true">
             <font>
-                <Font name="Arial" size="24.0"/>
+                <Font name="Arial" size="24.0" />
             </font>
         </Button>
     </children>

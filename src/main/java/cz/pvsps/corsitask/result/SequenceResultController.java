@@ -1,25 +1,27 @@
 package cz.pvsps.corsitask.result;
 
-import cz.pvsps.corsitask.tools.Point;
+import cz.pvsps.corsitask.tools.Block;
 import cz.pvsps.corsitask.tools.Tools;
-import cz.pvsps.corsitask.tools.Vector;
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static cz.pvsps.corsitask.Main.stage;
 
 public class SequenceResultController {
     public AnchorPane anchorPane;
+
+    // TODO create class extending Rectangle with number
     public Rectangle block1;
     public Rectangle block2;
     public Rectangle block3;
@@ -42,34 +44,99 @@ public class SequenceResultController {
     private ArrayList<Rectangle> allBlocks;
     private ArrayList<Label> allBlockLabels;
 
+
     @FXML
     public void initialize() {
         Tools.resize(anchorPane);
         allBlocks = getListOfBlocks();
         allBlockLabels = getListOfBlockLabels();
+        setAllBlocksOpacity(0.1);
 
         stage.addEventHandler(WindowEvent.WINDOW_SHOWING, new  EventHandler<WindowEvent>()
         {
             @Override
             public void handle(WindowEvent window)
             {
-                ArrayList<Integer> correctSequence = new ArrayList<>();
-                correctSequence.add(1);
-                correctSequence.add(2);
-                correctSequence.add(3);
+                ArrayList<Block> correctSequence = new ArrayList<>();
+                correctSequence.add(new Block(1));
+                correctSequence.add(new Block(2));
+                correctSequence.add(new Block(3));
 
-                ArrayList<Integer> userSequence = new ArrayList<>();
-                userSequence.add(1);
-                userSequence.add(2);
-                userSequence.add(4);
+                ArrayList<Block> userSequence = new ArrayList<>();
+                userSequence.add(new Block(1));
+                userSequence.add(new Block(2));
+                userSequence.add(new Block(4));
 
-                SequenceScore sequenceScore = new SequenceScore(correctSequence, userSequence, 0);
-                drawArrowsForSequenceScore(sequenceScore);
+                playSequenceScore(new SequenceScore(correctSequence, userSequence, 0));
+
+//                SequenceScore sequenceScore = new SequenceScore(correctSequence, userSequence, 0);
+//                drawArrowsForSequenceScore(sequenceScore);
             }
         });
 
         //drawLinesBetweenTwoPoints(new Coordinates(290,70), new Coordinates(90, 90), Color.GREEN);
 
+    }
+
+    private void playSequenceScore(SequenceScore sequenceScore) {
+        //var userSequenceAnimation = prepareSequenceAnimation(sequenceScore.userSequence(), Color.RED);
+        //var correctSequenceAnimation = prepareSequenceAnimation(sequenceScore.correctSequence(), Color.GREEN);
+
+        var userSequenceAnimation = new SequentialTransition();
+        var correctSequenceAnimation = new SequentialTransition();
+/*
+        for (Block block : sequenceScore.userSequence()) {
+            var rectangle = allBlocks.get(block.number()-1);
+            rectangle.setFill(color);
+            FadeTransition fadeTransition = fadeTransitionBlock(rectangle);
+            sequentialTransition.getChildren().add(fadeTransition);
+        }
+*/
+        userSequenceAnimation.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println(System.currentTimeMillis());
+            }
+        });
+        correctSequenceAnimation.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("correct sequence");
+                System.out.println(System.currentTimeMillis());
+            }
+        });
+
+        userSequenceAnimation.play();
+        correctSequenceAnimation.play();
+    }
+
+
+    private SequentialTransition prepareSequenceAnimation(ArrayList<Block> sequence, Color color) {
+        SequentialTransition sequentialTransition = new SequentialTransition();
+        for (Block block : sequence) {
+            var rectangle = allBlocks.get(block.number()-1);
+            rectangle.setFill(color);
+            FadeTransition fadeTransition = fadeTransitionBlock(rectangle);
+            sequentialTransition.getChildren().add(fadeTransition);
+        }
+        sequentialTransition.setCycleCount(0);
+        return sequentialTransition;
+    }
+
+    private void setAllBlocksOpacity(double value) {
+        for (Rectangle block :
+                allBlocks) {
+            block.setOpacity(value);
+        }
+    }
+
+    private FadeTransition fadeTransitionBlock(Rectangle block) {
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), block);
+        ft.setFromValue(0.1);
+        ft.setToValue(1.0);
+        ft.setCycleCount(0);
+        ft.setAutoReverse(true);
+        return ft;
     }
 
     private ArrayList<Label> getListOfBlockLabels() {
@@ -100,82 +167,5 @@ public class SequenceResultController {
         return blocks;
     }
 
-    private void drawArrowsForSequenceScore(SequenceScore sequenceScore) {
-        if (!sequenceScore.isUserCorrect()) {
-            drawArrowsForSequence(sequenceScore.userSequence(), Color.RED);
-        }
-        drawArrowsForSequence(sequenceScore.correctSequence(), Color.GREEN);
-    }
 
-    private void drawArrowsForSequence(List<Integer> sequence, Color color) {
-        for (int i = 0; i < sequence.size()-1; i++) {
-            drawArrowBetweenTwoBlocks(allBlocks.get(sequence.get(i)-1), allBlocks.get(sequence.get(i+1)-1), color);
-        }
-    }
-
-    private void drawArrowBetweenTwoBlocks(Rectangle block1, Rectangle block2, Color color) {
-        double tmp = block1.getHeight() / 2;
-        Point startPoint = new Point(block1.getX() + tmp, block1.getY() + tmp);
-        Point endPoint = new Point(block2.getX() + tmp, block2.getY() + tmp);
-        Line line = drawLineBetweenTwoPoints(startPoint, endPoint, color);
-        drawArrowHead(line);
-    }
-
-    private Line drawLineBetweenTwoPoints(Point startPoint, Point endPoint, Paint color) {
-        Line line = new Line();
-        line.setStroke(color);
-        line.setStrokeWidth(3);
-        line.setVisible(true);
-        line.setStartX(startPoint.x());
-        line.setStartY(startPoint.y());
-        line.setEndX(endPoint.x());
-        line.setEndY(endPoint.y());
-        anchorPane.getChildren().add(line);
-        return line;
-    }
-
-
-    private Point findRotatedUnitVector(Point startPoint, Point endPoint, double angleInRad) {
-        Point vector = new Point(endPoint.x()-startPoint.x(), endPoint.y()-startPoint.y());
-        double vectorLength = Math.sqrt((vector.x()*vector.x()) + (vector.y()* vector.y()));
-        Point unitVector = new Point(vector.x()/vectorLength, vector.y()/vectorLength);
-        double sin = Math.sin(angleInRad);
-        double cos = Math.cos(angleInRad);
-        return new Point(cos*unitVector.x() - sin*unitVector.y(), sin*unitVector.x() + cos*unitVector.y());
-    }
-
-    private Vector getVector(Point startPoint, Point endPoint) {
-        return new Vector(endPoint.x()-startPoint.x(), endPoint.y()-startPoint.y());
-    }
-
-    private Vector getUnitVector(Vector vector) {
-        return new Vector(vector.x()/ vector.getLength(), vector.y()/vector.getLength());
-    }
-
-    private Vector rotateVector(Vector vector, double angleInRad) {
-        double sin = Math.sin(angleInRad);
-        double cos = Math.cos(angleInRad);
-        return new Vector(cos*vector.x() - sin*vector.y(), sin*vector.x() + cos*vector.y());
-    }
-
-    private final double ARROWHEAD_ANGLE = Math.PI/4;
-    private final int ARROWHEAD_LENGTH = 20;
-
-    private void drawArrowHead(Line line) {
-        Point lineStartPoint = new Point(line.getStartX(), line.getStartY());
-        Point lineEndPoint = new Point(line.getEndX(), line.getEndY());
-        Vector vector = getVector(lineEndPoint, lineStartPoint);
-        Vector unitVector = getUnitVector(vector);
-
-        // right
-        Vector rotatedVector = rotateVector(unitVector, ARROWHEAD_ANGLE);
-        Point arrowHeadPoint = new Point(lineEndPoint.x() + rotatedVector.x()*ARROWHEAD_LENGTH, lineEndPoint.y() + rotatedVector.y()*ARROWHEAD_LENGTH);
-        drawLineBetweenTwoPoints(lineEndPoint, arrowHeadPoint, line.getStroke());
-
-        // left
-        rotatedVector = rotateVector(unitVector, -ARROWHEAD_ANGLE);
-        arrowHeadPoint = new Point(lineEndPoint.x() + rotatedVector.x()*ARROWHEAD_LENGTH, lineEndPoint.y() + rotatedVector.y()*ARROWHEAD_LENGTH);
-        drawLineBetweenTwoPoints(lineEndPoint, arrowHeadPoint, line.getStroke());
-
-    }
 }

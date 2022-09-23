@@ -7,11 +7,12 @@ public class Constants {
     public enum FxmlFile {
         MENU ("menu.fxml", 400, 600),
         TRIAL ("corsiTest.fxml", 1220, 820),
-        RESULT ("result.fxml", 0, 0),
+        RESULT ("result.fxml", 800, 600),
         SETTINGS ("settings.fxml", 400, 600),
         TEST_SETTINGS_DIALOG ("testSettingsDialog.fxml", 400, 600),
         TEST_INSTRUCTIONS ("testInstructions.fxml", 800, 450),
-        SEQUENCE_RESULT ("sequenceResultCopy2.fxml", 510, 410);
+        SEQUENCE_RESULT ("sequenceResultCopy2.fxml", 510, 410),
+        TEST_RESULTS_DIALOG ("testResultsDialog.fxml", 400, 250);
 
         private final String name;
         private final int sceneWidth;

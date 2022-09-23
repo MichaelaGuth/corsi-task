@@ -30,17 +30,17 @@ public class Tools {
 
     private static Logger LOGGER = Logger.getLogger(Tools.class.getName());
 
-    public static ArrayList<ArrayList<Integer>> loadSequences(String fileName) {
+    public static ArrayList<ArrayList<Block>> loadSequences(String fileName) {
         String jsonString = loadJSON_File(fileName);
         Object obj = JSONValue.parse(jsonString);
         JSONArray array = (JSONArray) obj;
-        ArrayList<ArrayList<Integer>> sequences = new ArrayList<>();
+        ArrayList<ArrayList<Block>> sequences = new ArrayList<>();
         for (Object item : array) {
             JSONArray tmp = (JSONArray) item;
-            ArrayList<Integer> sequence = new ArrayList<>();
+            ArrayList<Block> sequence = new ArrayList<>();
             for (Object o : tmp) {
                 Long value = (Long) o;
-                sequence.add(value.intValue());
+                sequence.add(new Block(value.intValue()));
             }
             sequences.add(sequence);
         }
@@ -51,16 +51,17 @@ public class Tools {
         try {
             Parent root = FXMLLoader.load(Main.class.getResource(fxmlFile.getPath()));
             Main.stage.setScene(new Scene(root, fxmlFile.getSceneWidth(), fxmlFile.getSceneHeight()));
+            stage.centerOnScreen();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "File named: " + fxmlFile.getName() + " could no be Loaded.");
-            // TODO
+            e.printStackTrace();
             Main.stage.close();
             System.exit(100);
         }
         switch (fxmlFile) {
             case TRIAL, TEST_INSTRUCTIONS ->
             {
-                Main.stage.setFullScreen(true);
+                Main.stage.setFullScreen(false);
                 Main.stage.setFullScreenExitHint("");
                 Main.stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             }

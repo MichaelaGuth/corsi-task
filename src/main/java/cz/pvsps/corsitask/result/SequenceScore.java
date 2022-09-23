@@ -1,8 +1,10 @@
 package cz.pvsps.corsitask.result;
 
-import java.util.List;
+import cz.pvsps.corsitask.tools.Block;
 
-public record SequenceScore(List<Integer> correctSequence, List<Integer> userSequence, long userTime) {
+import java.util.ArrayList;
+
+public record SequenceScore(ArrayList<Block> correctSequence, ArrayList<Block> userSequence, long userTime) {
 
     public boolean isUserCorrect() {
         return correctSequence.equals(userSequence);

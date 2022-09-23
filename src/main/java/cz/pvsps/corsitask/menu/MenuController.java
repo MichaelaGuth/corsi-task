@@ -15,6 +15,7 @@ public class MenuController {
     public Button goToSettingsButton;
     public Button startTestButton;
     public Button exitButton;
+    public Button showResultsButton;
 
     public void exitButtonOnAction(ActionEvent actionEvent) {
         Platform.exit();
@@ -27,5 +28,10 @@ public class MenuController {
 
     public void goToSettingsButtonOnAction(ActionEvent actionEvent) throws IOException {
         Tools.changeScene(Constants.FxmlFile.SETTINGS);
+    }
+
+
+    public void showResultsButtonOnAction(ActionEvent actionEvent) {
+        Tools.changeScene(Constants.FxmlFile.TEST_RESULTS_DIALOG);
     }
 }

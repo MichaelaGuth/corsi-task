@@ -9,6 +9,7 @@ module cz.pvsps.corsitask {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.annotation;
     requires java.desktop;
+    requires AnimateFX;
 
     opens cz.pvsps.corsitask to javafx.fxml;
     opens cz.pvsps.corsitask.corsitest to javafx.fxml;

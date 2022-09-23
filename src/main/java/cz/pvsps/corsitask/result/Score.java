@@ -2,14 +2,20 @@ package cz.pvsps.corsitask.result;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Score {
     @JsonProperty("patientName")
     private final String patientName;
     @JsonProperty("patientSurname")
     private final String patientSurname;
+    @JsonProperty
+    private final LocalDate patientBirthdate;
+    @JsonProperty
+    private final UUID patientID;
     @JsonProperty("sequencesScores")
     private List<SequenceScore> sequencesScores;
     @JsonProperty("blockSpan")
@@ -19,13 +25,15 @@ public class Score {
     @JsonProperty("numberOfCorrectTrials")
     private int numberOfCorrectTrials;
 
-    public Score(String patientName, String patientSurname) {
+    public Score(String patientName, String patientSurname, LocalDate patientBirthdate, UUID patientID) {
         this.patientName = patientName;
         this.patientSurname = patientSurname;
         this.sequencesScores = new ArrayList<>();
         this.totalScore = 0;
         this.blockSpan = 0;
         this.numberOfCorrectTrials = 0;
+        this.patientBirthdate = patientBirthdate;
+        this.patientID = patientID;
     }
 
     public List<SequenceScore> getSequencesScores() {

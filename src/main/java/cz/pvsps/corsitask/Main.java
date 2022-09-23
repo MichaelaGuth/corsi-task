@@ -25,10 +25,11 @@ public class Main extends Application {
         stage = primaryStage;
         configuration = Tools.loadConfiguration();
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(FxmlFile.SEQUENCE_RESULT.getPath()));      // menu.fxml
+            Parent root = FXMLLoader.load(getClass().getResource(FxmlFile.MENU.getPath()));      // menu.fxml
 
             stage.setTitle("Corsi Test");
             // TODO stage.getIcons().add();
+            stage.setIconified(false);
             stage.setScene(new Scene(root, FxmlFile.SEQUENCE_RESULT.getSceneWidth(), FxmlFile.SEQUENCE_RESULT.getSceneHeight()));
             stage.setResizable(true);
             stage.setFullScreen(false);

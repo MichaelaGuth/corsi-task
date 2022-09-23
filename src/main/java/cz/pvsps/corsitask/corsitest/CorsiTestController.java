@@ -2,6 +2,7 @@ package cz.pvsps.corsitask.corsitest;
 
 import cz.pvsps.corsitask.result.Score;
 import cz.pvsps.corsitask.result.SequenceScore;
+import cz.pvsps.corsitask.tools.Block;
 import cz.pvsps.corsitask.tools.Tools;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -22,8 +23,7 @@ import java.util.ArrayList;
 import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
 import static cz.pvsps.corsitask.Main.configuration;
 import static cz.pvsps.corsitask.Main.stage;
-import static cz.pvsps.corsitask.dialogs.TestSettingsDialogController.patientName;
-import static cz.pvsps.corsitask.dialogs.TestSettingsDialogController.patientSurname;
+import static cz.pvsps.corsitask.dialogs.TestSettingsDialogController.*;
 import static cz.pvsps.corsitask.tools.Tools.saveObjectToJSON;
 
 public class CorsiTestController {
@@ -55,13 +55,13 @@ public class CorsiTestController {
     private ArrayList<Rectangle> allBlocks;
     private ArrayList<Label> allBlockLabels;
 
-    private ArrayList<ArrayList<Integer>> sequences;
+    private ArrayList<ArrayList<Block>> sequences;
 
     private boolean testInProgress = false;
     private boolean waitingForUser = false;
     private int sequenceIndex;
 
-    private ArrayList<Integer> userSequence;
+    private ArrayList<Block> userSequence;
     private Score score;
     private SequenceScore currentSequence;
     private SequenceScore lastSequence;
@@ -83,11 +83,13 @@ public class CorsiTestController {
                 while (testInProgress) {
                     if (sequenceIndex >= sequences.size()) {
                         testInProgress = false;
+                        waitingForUser = true;
                     }
                     if (lastSequence != null && currentSequence != null) {
                         if (lastSequence.correctSequence().size() == currentSequence.correctSequence().size()) {
                             if (!lastSequence.isUserCorrect() && !currentSequence.isUserCorrect()) {
                                 testInProgress = false;
+                                waitingForUser = true;
                             }
                         }
                     }
@@ -119,7 +121,7 @@ public class CorsiTestController {
         resetSelectionButton.setVisible(false);
         resize();
         sequences = Tools.loadSequences("sequences.json");
-        score = new Score(patientName, patientSurname);
+        score = new Score(patientName, patientSurname, patientBirthdate, patientID);
         testInProgress = true;
     }
 
@@ -194,15 +196,15 @@ public class CorsiTestController {
         }
     }
 
-    private void playSequence(ArrayList<Integer> sequence) {
-        for (int i:
+    private void playSequence(ArrayList<Block> sequence) {
+        for (Block block:
              sequence) {
-            Rectangle block = allBlocks.get(i-1);
+            Rectangle rectangle = allBlocks.get(block.number()-1);
             try {
                 Thread.sleep(500);
-                changeBlockColor(block, YELLOW);
+                changeBlockColor(rectangle, YELLOW);
                 Thread.sleep(500);
-                changeBlockColor(block, BLUE);
+                changeBlockColor(rectangle, BLUE);
             } catch (Exception e) {
                 // TODO
                 throw new RuntimeException(e);
@@ -240,7 +242,7 @@ public class CorsiTestController {
             if (!rectangle.getFill().equals(YELLOW)) {
                 changeBlockColor(rectangle, YELLOW);
                 int blockIndex = allBlocks.indexOf(rectangle);
-                userSequence.add(blockIndex+1);
+                userSequence.add(new Block(blockIndex+1));
                 if (configuration.isShowUserSelectedOrderOnBlocks()) {
                     allBlockLabels.get(blockIndex).setText(String.valueOf(userSequence.size()));
                     allBlockLabels.get(blockIndex).setTextFill(BLUE);
@@ -265,11 +267,11 @@ public class CorsiTestController {
     public void confirmSelectionButtonOnMouseClicked(MouseEvent event) {
         long finishTime = System.currentTimeMillis();
         time = finishTime -startTime;
+        if (score.getNumberOfSequences() > 0) {
+            lastSequence = score.getSequencesScores().get(score.getNumberOfSequences()-1);
+        }
         currentSequence = new SequenceScore(sequences.get(sequenceIndex-1), userSequence, time);
         score.addSequenceScore(currentSequence);
-        if (score.getNumberOfSequences()-2 >= 0) {
-            lastSequence = score.getSequencesScores().get(score.getNumberOfSequences()-2);
-        }
         prepareForNewUserSequence();
         setAllBlocksDisable(true);
         confirmSelectionButton.setDisable(true);
