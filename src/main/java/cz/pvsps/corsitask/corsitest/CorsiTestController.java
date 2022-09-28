@@ -5,6 +5,7 @@ import cz.pvsps.corsitask.result.Score;
 import cz.pvsps.corsitask.result.SequenceScore;
 import cz.pvsps.corsitask.tools.Block;
 import cz.pvsps.corsitask.tools.Tools;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -18,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
+import javafx.util.Duration;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -71,7 +73,6 @@ public class CorsiTestController {
     private final Color YELLOW = Color.web("#f5da0f");
     private final Color BLUE = Color.web("#1f3bff");
     private final Color WHITE = Color.WHITE;
-    private final Color BLACK = Color.BLACK;
     private long startTime;
     private long time;
 
@@ -122,6 +123,7 @@ public class CorsiTestController {
         resetSelectionButton.setDisable(true);
         resetSelectionButton.setVisible(false);
         resize();
+        // TODO change sequence loading to from sequence dir
         sequences = Tools.loadSequences("sequences.json");
         score = new Score(patientName, patientSurname, patientBirthdate, patientID);
         testInProgress = true;
@@ -237,6 +239,11 @@ public class CorsiTestController {
         if (event.getSource() instanceof Rectangle rectangle) {
             if (!rectangle.getFill().equals(YELLOW)) {
                 changeBlockColor(rectangle, YELLOW);
+                PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+                pause.setOnFinished(actionEvent -> {
+                    changeBlockColor(rectangle,BLUE);
+                });
+                pause.play();
                 int blockIndex = allBlocks.indexOf(rectangle);
                 userSequence.add(new Block(blockIndex+1));
                 if (configuration.isShowUserSelectedOrderOnBlocks()) {
@@ -257,10 +264,11 @@ public class CorsiTestController {
     public void blockAny_OnMouseExited(MouseEvent event) {
         if (event.getSource() instanceof Rectangle rectangle) {
             changeBlockStrokeColor(rectangle, rectangle.getFill());
+            //changeBlockColor(rectangle, rectangle.getFill());
         }
     }
 
-    public void confirmSelectionButtonOnMouseClicked(MouseEvent event) {
+    public void confirmSelectionButtonOnMouseClicked() {
         long finishTime = System.currentTimeMillis();
         time = finishTime -startTime;
         if (score.getNumberOfSequences() > 0) {
@@ -274,7 +282,7 @@ public class CorsiTestController {
         waitingForUser = false;
     }
 
-    public void resetSelectionButtonOnMouseClicked(MouseEvent event) {
+    public void resetSelectionButtonOnMouseClicked() {
         prepareForNewUserSequence();
     }
 
@@ -293,19 +301,19 @@ public class CorsiTestController {
         }
     }
 
-    public void resetSelectionButtonOnMouseEntered(MouseEvent event) {
+    public void resetSelectionButtonOnMouseEntered() {
         resetSelectionButton.setStyle(String.format(BUTTON_STYLE, "red", "white"));
     }
 
-    public void resetSelectionButtonOnMouseExited(MouseEvent event) {
+    public void resetSelectionButtonOnMouseExited() {
         resetSelectionButton.setStyle(String.format(BUTTON_STYLE, "red", "red"));
     }
 
-    public void confirmSelectionButtonOnMouseEntered(MouseEvent event) {
+    public void confirmSelectionButtonOnMouseEntered() {
         confirmSelectionButton.setStyle(String.format(BUTTON_STYLE, "green", "white"));
     }
 
-    public void confirmSelectionButtonOnMouseExited(MouseEvent event) {
+    public void confirmSelectionButtonOnMouseExited() {
         confirmSelectionButton.setStyle(String.format(BUTTON_STYLE, "green", "green"));
     }
 

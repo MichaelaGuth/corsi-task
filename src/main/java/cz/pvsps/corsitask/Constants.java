@@ -12,7 +12,9 @@ public class Constants {
         TEST_SETTINGS_DIALOG ("testSettingsDialog.fxml", 400, 600),
         TEST_INSTRUCTIONS ("testInstructions.fxml", 800, 450),
         SEQUENCE_RESULT ("sequenceResultCopy2.fxml", 510, 410),
-        TEST_RESULTS_DIALOG ("testResultsDialog.fxml", 400, 250);
+        TEST_RESULTS_DIALOG ("testResultsDialog.fxml", 400, 250),
+        TUTORIAL ("tutorial.fxml", 800, 450),
+        START_TEST ("startCorsiTest", 600, 400);
 
         private final String name;
         private final int sceneWidth;

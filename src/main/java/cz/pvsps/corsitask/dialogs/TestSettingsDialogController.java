@@ -165,7 +165,8 @@ public class TestSettingsDialogController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 Tools.saveObjectToJSON(configuration, Constants.CONFIGURATION_LOCATION);
-                Tools.changeScene(Constants.FxmlFile.TRIAL);
+                Tools.changeScene(Constants.FxmlFile.TUTORIAL);
+                // TODO set fullscreen
             }
         }
 
