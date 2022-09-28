@@ -52,7 +52,7 @@ public class TestResultsDialogController {
             }
         }
         pathToResultsComboBox.setItems(resultsFileOptions);
-        pathToResultsComboBox.setValue(configuration.getPathToResultsDir()+"results.json");
+        //pathToResultsComboBox.setValue(configuration.getPathToResultsDir()+"\\results.json");
     }
 
     public void confirmSelectionButtonOnAction(ActionEvent actionEvent) {

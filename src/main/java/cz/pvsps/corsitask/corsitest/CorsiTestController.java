@@ -1,9 +1,11 @@
 package cz.pvsps.corsitask.corsitest;
 
+import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.result.Score;
 import cz.pvsps.corsitask.result.SequenceScore;
 import cz.pvsps.corsitask.tools.Block;
 import cz.pvsps.corsitask.tools.Tools;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
@@ -17,7 +19,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 
-import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
@@ -173,18 +175,12 @@ public class CorsiTestController {
     }
 
     private void endTest() {
-        // TODO test
         String filePath = configuration.getPathToResultsDir() + "\\";
-        if (score.getPatientName().equals("") && score.getPatientSurname().equals("")) {
-            filePath = filePath + "Anonym-%i_" + LocalDate.now();
-        } else if (!score.getPatientSurname().equals("")) {
-            filePath = filePath + score.getPatientSurname() + "_" + score.toString() + "_" + LocalDate.now();
-        } else if (!score.getPatientName().equals("")) {
-            filePath = filePath + score.getPatientName() + "_" + score.toString() + "_" + LocalDate.now();
-        } else {
-            filePath = filePath + score.getPatientName() + "-" + score.getPatientSurname() + "_" + score.toString() + "_" + LocalDate.now();
-        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH_mm_ss");
+        filePath += score.getPatientSurname()+" "+score.getPatientName()+" "+score.getTestDate().format(dtf)+".json";
         saveObjectToJSON(score, filePath);
+        // TODO add black screen
+        Platform.runLater(() -> Tools.changeScene(Constants.FxmlFile.MENU));
     }
 
     public void resize() {

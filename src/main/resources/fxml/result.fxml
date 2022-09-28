@@ -7,88 +7,83 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="cz.pvsps.corsitask.result.ResultController">
+<AnchorPane prefHeight="600.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.result.ResultController">
     <children>
-        <Label alignment="CENTER" layoutX="135.0" layoutY="40.0" prefWidth="150.0" text="Pacientův profil"
-               textAlignment="CENTER">
+        <Label alignment="CENTER" layoutX="135.0" layoutY="40.0" prefWidth="150.0" text="Pacientův profil" textAlignment="CENTER">
             <font>
-                <Font name="System Bold" size="18.0"/>
+                <Font name="System Bold" size="18.0" />
             </font>
         </Label>
         <Label layoutX="40.0" layoutY="90.0" text="Jméno:">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
         <Label layoutX="40.0" layoutY="120.0" text="Příjmení:">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
-        <Separator layoutY="200.0" prefHeight="5.0" prefWidth="420.0"/>
-        <Separator layoutX="420.0" orientation="VERTICAL" prefHeight="600.0"/>
+        <Separator layoutY="200.0" prefHeight="5.0" prefWidth="420.0" />
+        <Separator layoutX="420.0" orientation="VERTICAL" prefHeight="600.0" AnchorPane.leftAnchor="420.0" />
         <Label fx:id="PacientNameLabel" layoutX="180.0" layoutY="90.0" text="Antonín">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
         <Label fx:id="pacientSurnameLabel" layoutX="180.0" layoutY="120.0" text="Novák">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
-        <TableView fx:id="table" layoutX="340.0" layoutY="26.0" prefHeight="500.0" prefWidth="300.0"
-                   AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
+        <TableView fx:id="table" layoutX="340.0" layoutY="26.0" prefHeight="500.0" prefWidth="460.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
             <columns>
-                <TableColumn fx:id="sequenceLengthColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0"
-                             resizable="false" sortable="false" text="Délka sekvence"/>
-                <TableColumn fx:id="trialNumberColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0"
-                             resizable="false" text="Pokus"/>
-                <TableColumn fx:id="scoreColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false"
-                             text="Skóre"/>
+                <TableColumn fx:id="sequenceLengthColumn" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" resizable="false" sortable="false" text="Délka sekvence" />
+                <TableColumn fx:id="trialNumberColumn" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" resizable="false" text="Pokus" />
+            <TableColumn maxWidth="115.0" minWidth="115.0" prefWidth="115.0" resizable="false" text="Čas" />
+                <TableColumn fx:id="scoreColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="Skóre" />
+            <TableColumn maxWidth="65.0" minWidth="65.0" prefWidth="65.0" resizable="false" />
             </columns>
         </TableView>
         <Label layoutX="40.0" layoutY="150.0" prefWidth="117.0" text="Datum narození:" wrapText="true">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
         <Label fx:id="pacientBirthdateLabel" layoutX="180.0" layoutY="150.0" text="13/01/2000">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="596.0" layoutY="553.0" text="TIP"/>
+        <Label alignment="CENTER" layoutX="473.0" layoutY="554.0" prefHeight="17.0" prefWidth="460.0" text="TIP" />
         <Label layoutX="40.0" layoutY="230.0" text="Total Score:">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
         <Label layoutX="40.0" layoutY="260.0" text="Block Span:">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
         <Label layoutX="40.0" layoutY="290.0" text="Number of Correct Trials:">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
         <Label fx:id="totalScoreLabel" layoutX="140.0" layoutY="230.0" text="0">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
         <Label fx:id="blockSpanLabel" layoutX="140.0" layoutY="260.0" text="0">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
         <Label fx:id="correctTrialsLabel" layoutX="230.0" layoutY="290.0" text="0">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
     </children>

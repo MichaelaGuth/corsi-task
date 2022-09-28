@@ -30,7 +30,7 @@ public class Main extends Application {
             stage.setTitle("Corsi Test");
             // TODO stage.getIcons().add();
             stage.setIconified(false);
-            stage.setScene(new Scene(root, FxmlFile.SEQUENCE_RESULT.getSceneWidth(), FxmlFile.SEQUENCE_RESULT.getSceneHeight()));
+            stage.setScene(new Scene(root, FxmlFile.MENU.getSceneWidth(), FxmlFile.MENU.getSceneHeight()));
             stage.setResizable(true);
             stage.setFullScreen(false);
             stage.show();

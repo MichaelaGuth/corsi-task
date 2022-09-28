@@ -3,19 +3,23 @@ package cz.pvsps.corsitask.result;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class Score {
     @JsonProperty("patientName")
-    private final String patientName;
+    private String patientName;
     @JsonProperty("patientSurname")
-    private final String patientSurname;
-    @JsonProperty
-    private final LocalDate patientBirthdate;
-    @JsonProperty
-    private final UUID patientID;
+    private String patientSurname;
+    @JsonProperty("patientBirthdate")
+    private LocalDate patientBirthdate;
+    @JsonProperty("testDate")
+    private LocalDateTime testDate;
+    @JsonProperty("patientID")
+    private UUID patientID;
     @JsonProperty("sequencesScores")
     private List<SequenceScore> sequencesScores;
     @JsonProperty("blockSpan")
@@ -34,6 +38,7 @@ public class Score {
         this.numberOfCorrectTrials = 0;
         this.patientBirthdate = patientBirthdate;
         this.patientID = patientID;
+        this.testDate = LocalDateTime.now();
     }
 
     public List<SequenceScore> getSequencesScores() {
@@ -52,7 +57,7 @@ public class Score {
         return patientSurname;
     }
 
-    private int getNumberOfCorrectTrials() {
+    public int getNumberOfCorrectTrials() {
         numberOfCorrectTrials = 0;
         for (SequenceScore sequenceScore : sequencesScores) {
             if (sequenceScore.isUserCorrect()) numberOfCorrectTrials++;
@@ -62,16 +67,18 @@ public class Score {
 
     /**
      *
-     * @return The number of the longest correctly selected sequence.
+     * @return The length of the longest correctly selected sequence.
      */
     public int getBlockSpan() {
-        // TODO test this
-        for (int i = sequencesScores.size()-1; i < 0 ; i--) {
-            if (sequencesScores.get(i).isUserCorrect()) {
-                blockSpan = sequencesScores.get(i).correctSequence().size();
+        Collections.reverse(sequencesScores);
+        for (SequenceScore sequenceScore :
+                sequencesScores) {
+            if (sequenceScore.isUserCorrect()) {
+                blockSpan = sequenceScore.correctSequence().size();
                 break;
             }
         }
+        Collections.reverse(sequencesScores);
         return blockSpan;
     }
 
@@ -86,5 +93,9 @@ public class Score {
 
     public int getNumberOfSequences() {
         return sequencesScores.size();
+    }
+
+    public LocalDateTime getTestDate() {
+        return testDate;
     }
 }

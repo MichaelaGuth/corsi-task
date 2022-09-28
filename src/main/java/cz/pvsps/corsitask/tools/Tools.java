@@ -2,6 +2,8 @@ package cz.pvsps.corsitask.tools;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.Main;
 import cz.pvsps.corsitask.exceptions.FileNotFoundException;
@@ -25,6 +27,8 @@ import java.util.logging.Logger;
 import static cz.pvsps.corsitask.Main.stage;
 import static cz.pvsps.corsitask.tools.FileManager.loadJSON_File;
 import static cz.pvsps.corsitask.tools.FileManager.saveJSON_File;
+
+;
 
 public class Tools {
 
@@ -93,7 +97,9 @@ public class Tools {
     }
 
     public static void saveObjectToJSON(Object o, String filePath) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper =  JsonMapper.builder()
+                .addModule(new JavaTimeModule())
+                .build();
         String jsonString;
         try {
             jsonString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
