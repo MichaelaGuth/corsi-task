@@ -76,6 +76,10 @@ public class CorsiTestController {
     private long startTime;
     private long time;
 
+
+
+    /// TODO opravit vyhodnocení ukončení - test se má ukončit po dvou nesprávně odpovězených sekvencích o stejné délce!!!!
+
     @FXML
     public void initialize() {
         //stage.setFullScreen(Constants.FxmlFile.TRIAL.isFullscreen());

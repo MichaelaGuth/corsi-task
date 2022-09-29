@@ -33,6 +33,8 @@ public class ResultController {
     public static File file;
     private Score score;
 
+    // TODO přidat řádek/zahlavi na konec tabulky s score celkem
+
     @FXML
     public void initialize() {
         stage.setFullScreen(Constants.FxmlFile.RESULT.isFullscreen());
