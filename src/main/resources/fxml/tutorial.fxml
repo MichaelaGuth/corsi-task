@@ -9,13 +9,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.corsitest.TutorialController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.corsitest.TutorialController">
     <center>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <VBox fx:id="vBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <children>
-                <HBox alignment="CENTER" prefHeight="325.0" prefWidth="800.0">
+                <HBox fx:id="hBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="325.0" prefWidth="800.0">
                     <children>
-                        <AnchorPane prefWidth="600.0">
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="325.0" prefWidth="600.0">
                             <children>
                                 <Rectangle fx:id="block1" arcHeight="5.0" arcWidth="5.0" fill="#1f3bff" height="90.0" layoutX="57.0" layoutY="42.0" onMouseClicked="#blockAny_OnMouseClicked" onMouseEntered="#blockAny_OnMouseEntered" onMouseExited="#blockAny_OnMouseExited" stroke="#1f3bff" strokeType="INSIDE" strokeWidth="5.0" width="90.0" />
                                 <Rectangle fx:id="block2" arcHeight="5.0" arcWidth="5.0" fill="#1f3bff" height="90.0" layoutX="147.0" layoutY="177.0" onMouseClicked="#blockAny_OnMouseClicked" onMouseEntered="#blockAny_OnMouseEntered" onMouseExited="#blockAny_OnMouseExited" stroke="#1f3bff" strokeType="INSIDE" strokeWidth="5.0" width="90.0" />

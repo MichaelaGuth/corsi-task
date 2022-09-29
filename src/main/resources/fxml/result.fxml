@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.result.ResultController">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.result.ResultController">
     <children>
         <Label alignment="CENTER" layoutX="135.0" layoutY="40.0" prefWidth="150.0" text="Pacientův profil" textAlignment="CENTER">
             <font>
@@ -26,23 +26,24 @@
         </Label>
         <Separator layoutY="200.0" prefHeight="5.0" prefWidth="420.0" />
         <Separator layoutX="420.0" orientation="VERTICAL" prefHeight="600.0" AnchorPane.leftAnchor="420.0" />
-        <Label fx:id="PacientNameLabel" layoutX="180.0" layoutY="90.0" text="Antonín">
+        <Label fx:id="patientNameLabel" layoutX="180.0" layoutY="90.0" text="Antonín">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="pacientSurnameLabel" layoutX="180.0" layoutY="120.0" text="Novák">
+        <Label fx:id="patientSurnameLabel" layoutX="180.0" layoutY="120.0" text="Novák">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <TableView fx:id="table" layoutX="340.0" layoutY="26.0" prefHeight="500.0" prefWidth="460.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
+        <TableView fx:id="table" layoutX="340.0" layoutY="26.0" prefHeight="500.0" prefWidth="700.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
             <columns>
-                <TableColumn fx:id="sequenceLengthColumn" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" resizable="false" sortable="false" text="Délka sekvence" />
-                <TableColumn fx:id="trialNumberColumn" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" resizable="false" text="Pokus" />
-            <TableColumn maxWidth="115.0" minWidth="115.0" prefWidth="115.0" resizable="false" text="Čas" />
-                <TableColumn fx:id="scoreColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="Skóre" />
-            <TableColumn maxWidth="65.0" minWidth="65.0" prefWidth="65.0" resizable="false" />
+                <TableColumn fx:id="sequenceColumn" maxWidth="280.0" minWidth="280.0" prefWidth="280.0" resizable="false" text="Sekvence" />
+                <TableColumn fx:id="sequenceLengthColumn" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" text="Délka &#10;sekvence" />
+                <TableColumn fx:id="trialNumberColumn" maxWidth="80.0" minWidth="80.0" resizable="false" text="Pokus" />
+                <TableColumn fx:id="userTimeColumn" maxWidth="80.0" minWidth="80.0" resizable="false" text="Čas" />
+                <TableColumn fx:id="scoreColumn" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" text="Skóre" />
+                <TableColumn fx:id="buttonColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" />
             </columns>
         </TableView>
         <Label layoutX="40.0" layoutY="150.0" prefWidth="117.0" text="Datum narození:" wrapText="true">
@@ -50,7 +51,7 @@
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="pacientBirthdateLabel" layoutX="180.0" layoutY="150.0" text="13/01/2000">
+        <Label fx:id="patientBirthdateLabel" layoutX="180.0" layoutY="150.0" text="13/01/2000">
             <font>
                 <Font size="16.0" />
             </font>

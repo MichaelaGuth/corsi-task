@@ -21,6 +21,9 @@ public class Configuration {
     @JsonProperty("allowResetButton")
     private boolean allowResetButton = false;
 
+    @JsonProperty("allowTutorial")
+    private boolean allowTutorial = true;
+
     @JsonProperty("currentlyInUseSequenceFilePath")
     private String currentlyInUseSequenceFilePath = Constants.CURRENTLY_USED_SEQUENCES_PATH;
 
@@ -74,5 +77,13 @@ public class Configuration {
 
     public void setCurrentlyInUseSequenceFilePath(String currentlyInUseSequenceFilePath) {
         this.currentlyInUseSequenceFilePath = currentlyInUseSequenceFilePath;
+    }
+
+    public boolean isAllowTutorial() {
+        return allowTutorial;
+    }
+
+    public void setAllowTutorial(boolean allowTutorial) {
+        this.allowTutorial = allowTutorial;
     }
 }

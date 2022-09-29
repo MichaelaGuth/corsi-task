@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Score {
+
     @JsonProperty("patientName")
     private String patientName;
     @JsonProperty("patientSurname")
@@ -28,11 +29,17 @@ public class Score {
     private int totalScore;
     @JsonProperty("numberOfCorrectTrials")
     private int numberOfCorrectTrials;
+    @JsonProperty("numberOfSequences")
+    private int numberOfSequences;
+
+
+    public Score(){}
 
     public Score(String patientName, String patientSurname, LocalDate patientBirthdate, UUID patientID) {
         this.patientName = patientName;
         this.patientSurname = patientSurname;
         this.sequencesScores = new ArrayList<>();
+        this.numberOfSequences = 0;
         this.totalScore = 0;
         this.blockSpan = 0;
         this.numberOfCorrectTrials = 0;
@@ -47,6 +54,7 @@ public class Score {
 
     public void addSequenceScore(SequenceScore sequenceScore) {
         this.sequencesScores.add(sequenceScore);
+        this.numberOfSequences++;
     }
 
     public String getPatientName() {
@@ -74,7 +82,7 @@ public class Score {
         for (SequenceScore sequenceScore :
                 sequencesScores) {
             if (sequenceScore.isUserCorrect()) {
-                blockSpan = sequenceScore.correctSequence().size();
+                blockSpan = sequenceScore.getCorrectSequence().size();
                 break;
             }
         }
@@ -92,10 +100,22 @@ public class Score {
     }
 
     public int getNumberOfSequences() {
+        System.out.println(numberOfSequences);
+        System.out.println(sequencesScores.size());
+        System.out.println(sequencesScores.size() == numberOfSequences);
         return sequencesScores.size();
     }
 
     public LocalDateTime getTestDate() {
         return testDate;
+    }
+
+
+    public LocalDate getPatientBirthdate() {
+        return patientBirthdate;
+    }
+
+    public UUID getPatientID() {
+        return patientID;
     }
 }

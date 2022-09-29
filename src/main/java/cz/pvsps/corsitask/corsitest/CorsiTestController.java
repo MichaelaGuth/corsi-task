@@ -78,6 +78,8 @@ public class CorsiTestController {
 
     @FXML
     public void initialize() {
+        //stage.setFullScreen(Constants.FxmlFile.TRIAL.isFullscreen());
+        stage.setFullScreen(false);
         prepareTest();
         Thread testThread = new Thread(new Runnable() {
             @Override
@@ -89,7 +91,7 @@ public class CorsiTestController {
                         waitingForUser = true;
                     }
                     if (lastSequence != null && currentSequence != null) {
-                        if (lastSequence.correctSequence().size() == currentSequence.correctSequence().size()) {
+                        if (lastSequence.getCorrectSequence().size() == currentSequence.getCorrectSequence().size()) {
                             if (!lastSequence.isUserCorrect() && !currentSequence.isUserCorrect()) {
                                 testInProgress = false;
                                 waitingForUser = true;
@@ -112,6 +114,79 @@ public class CorsiTestController {
         startTest(testThread);
     }
 
+    private void startTest(Thread testThread) {
+        testThread.setDaemon(true);
+        testThread.start();
+    }
+
+    private void endTest() {
+        String filePath = configuration.getPathToResultsDir() + "\\";
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH_mm_ss");
+        filePath += score.getPatientSurname()+" "+score.getPatientName()+" "+score.getTestDate().format(dtf)+".json";
+        saveObjectToJSON(score, filePath);
+        Platform.runLater(() -> Tools.changeScene(Constants.FxmlFile.END_TEST));
+    }
+
+    private void playSequence(ArrayList<Block> sequence) {
+        for (Block block:
+             sequence) {
+            Rectangle rectangle = allBlocks.get(block.number()-1);
+            try {
+                Thread.sleep(500);
+                changeBlockColor(rectangle, YELLOW);
+                Thread.sleep(500);
+                changeBlockColor(rectangle, BLUE);
+            } catch (Exception e) {
+                // TODO
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+
+    public void blockAny_OnMouseClicked(MouseEvent event) {
+        if (event.getSource() instanceof Rectangle rectangle) {
+            if (!rectangle.getFill().equals(YELLOW)) {
+                changeBlockColor(rectangle, YELLOW);
+                PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+                pause.setOnFinished(actionEvent -> {
+                    changeBlockColor(rectangle,BLUE);
+                });
+                pause.play();
+                int blockIndex = allBlocks.indexOf(rectangle);
+                userSequence.add(new Block(blockIndex+1));
+                if (configuration.isShowUserSelectedOrderOnBlocks()) {
+                    allBlockLabels.get(blockIndex).setText(String.valueOf(userSequence.size()));
+                    allBlockLabels.get(blockIndex).setTextFill(BLUE);
+                    allBlockLabels.get(blockIndex).setVisible(true);
+                }
+            }
+        }
+    }
+
+    public void confirmSelectionButtonOnMouseClicked() {
+        long finishTime = System.currentTimeMillis();
+        time = finishTime -startTime;
+        if (score.getNumberOfSequences() > 0) {
+            lastSequence = score.getSequencesScores().get(score.getNumberOfSequences()-1);
+        }
+        currentSequence = new SequenceScore(sequences.get(sequenceIndex-1), userSequence, time);
+        if (lastSequence != null)  {
+            if (lastSequence.getCorrectSequence().size() == currentSequence.getCorrectSequence().size()) {
+                currentSequence.setTrialNumber(2);
+            }
+        }
+        score.addSequenceScore(currentSequence);
+        prepareForNewUserSequence();
+        setAllBlocksDisable(true);
+        confirmSelectionButton.setDisable(true);
+        waitingForUser = false;
+    }
+
+    public void resetSelectionButtonOnMouseClicked() {
+        prepareForNewUserSequence();
+    }
+
     private void prepareTest() {
         allBlocks = getListOfBlocks();
         allBlockLabels = getListOfBlockLabels();
@@ -127,6 +202,15 @@ public class CorsiTestController {
         sequences = Tools.loadSequences("sequences.json");
         score = new Score(patientName, patientSurname, patientBirthdate, patientID);
         testInProgress = true;
+    }
+
+    public void resize() {
+        if (stage.isFullScreen()) {
+            Rectangle2D resolution = Screen.getPrimary().getBounds();
+            double scale = resolution.getHeight() / borderPane.getPrefHeight();
+            hbox.setScaleX(scale);
+            hbox.setScaleY(scale);
+        }
     }
 
     private ArrayList<Label> getListOfBlockLabels() {
@@ -157,6 +241,21 @@ public class CorsiTestController {
         return blocks;
     }
 
+    private void prepareForNewUserSequence() {
+        userSequence = new ArrayList<>();
+        time = 0;
+
+        resetAllLabels();
+        resetAllBlocks();
+    }
+
+    private void setAllBlocksDisable(boolean value) {
+        for (Rectangle block :
+                allBlocks) {
+            block.setDisable(value);
+        }
+    }
+
     private void setAllLabelsVisibility(boolean value) {
         for (Label label :
                 allBlockLabels) {
@@ -168,46 +267,6 @@ public class CorsiTestController {
         for (Label label :
                 allBlockLabels) {
             label.setMouseTransparent(value);
-        }
-    }
-
-    private void startTest(Thread testThread) {
-        testThread.setDaemon(true);
-        testThread.start();
-    }
-
-    private void endTest() {
-        String filePath = configuration.getPathToResultsDir() + "\\";
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH_mm_ss");
-        filePath += score.getPatientSurname()+" "+score.getPatientName()+" "+score.getTestDate().format(dtf)+".json";
-        saveObjectToJSON(score, filePath);
-        // TODO add black screen
-        Platform.runLater(() -> Tools.changeScene(Constants.FxmlFile.MENU));
-    }
-
-    public void resize() {
-        if (stage.isFullScreen()) {
-            Rectangle2D resolution = Screen.getPrimary().getBounds();
-            double scale = resolution.getHeight() / borderPane.getPrefHeight();
-            hbox.setScaleX(scale);
-            hbox.setScaleY(scale);
-        }
-    }
-
-    private void playSequence(ArrayList<Block> sequence) {
-        for (Block block:
-             sequence) {
-            Rectangle rectangle = allBlocks.get(block.number()-1);
-            try {
-                Thread.sleep(500);
-                changeBlockColor(rectangle, YELLOW);
-                Thread.sleep(500);
-                changeBlockColor(rectangle, BLUE);
-            } catch (Exception e) {
-                // TODO
-                throw new RuntimeException(e);
-            }
-
         }
     }
 
@@ -226,79 +285,13 @@ public class CorsiTestController {
         }
     }
 
-    private void changeBlockColor(Rectangle block, Paint color) {
-        block.setFill(color);
-        block.setStroke(color);
-    }
-
     private void changeBlockStrokeColor(Rectangle block, Paint color) {
         block.setStroke(color);
     }
 
-    public void blockAny_OnMouseClicked(MouseEvent event) {
-        if (event.getSource() instanceof Rectangle rectangle) {
-            if (!rectangle.getFill().equals(YELLOW)) {
-                changeBlockColor(rectangle, YELLOW);
-                PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
-                pause.setOnFinished(actionEvent -> {
-                    changeBlockColor(rectangle,BLUE);
-                });
-                pause.play();
-                int blockIndex = allBlocks.indexOf(rectangle);
-                userSequence.add(new Block(blockIndex+1));
-                if (configuration.isShowUserSelectedOrderOnBlocks()) {
-                    allBlockLabels.get(blockIndex).setText(String.valueOf(userSequence.size()));
-                    allBlockLabels.get(blockIndex).setTextFill(BLUE);
-                    allBlockLabels.get(blockIndex).setVisible(true);
-                }
-            }
-        }
-    }
-
-    public void blockAny_OnMouseEntered(MouseEvent event) {
-        if (event.getSource() instanceof Rectangle rectangle) {
-            changeBlockStrokeColor(rectangle, WHITE);
-        }
-    }
-
-    public void blockAny_OnMouseExited(MouseEvent event) {
-        if (event.getSource() instanceof Rectangle rectangle) {
-            changeBlockStrokeColor(rectangle, rectangle.getFill());
-            //changeBlockColor(rectangle, rectangle.getFill());
-        }
-    }
-
-    public void confirmSelectionButtonOnMouseClicked() {
-        long finishTime = System.currentTimeMillis();
-        time = finishTime -startTime;
-        if (score.getNumberOfSequences() > 0) {
-            lastSequence = score.getSequencesScores().get(score.getNumberOfSequences()-1);
-        }
-        currentSequence = new SequenceScore(sequences.get(sequenceIndex-1), userSequence, time);
-        score.addSequenceScore(currentSequence);
-        prepareForNewUserSequence();
-        setAllBlocksDisable(true);
-        confirmSelectionButton.setDisable(true);
-        waitingForUser = false;
-    }
-
-    public void resetSelectionButtonOnMouseClicked() {
-        prepareForNewUserSequence();
-    }
-
-    private void prepareForNewUserSequence() {
-        userSequence = new ArrayList<>();
-        time = 0;
-
-        resetAllLabels();
-        resetAllBlocks();
-    }
-
-    private void setAllBlocksDisable(boolean value) {
-        for (Rectangle block :
-                allBlocks) {
-            block.setDisable(value);
-        }
+    private void changeBlockColor(Rectangle block, Paint color) {
+        block.setFill(color);
+        block.setStroke(color);
     }
 
     public void resetSelectionButtonOnMouseEntered() {
@@ -315,6 +308,19 @@ public class CorsiTestController {
 
     public void confirmSelectionButtonOnMouseExited() {
         confirmSelectionButton.setStyle(String.format(BUTTON_STYLE, "green", "green"));
+    }
+
+    public void blockAny_OnMouseEntered(MouseEvent event) {
+        if (event.getSource() instanceof Rectangle rectangle) {
+            changeBlockStrokeColor(rectangle, WHITE);
+        }
+    }
+
+    public void blockAny_OnMouseExited(MouseEvent event) {
+        if (event.getSource() instanceof Rectangle rectangle) {
+            changeBlockStrokeColor(rectangle, rectangle.getFill());
+            //changeBlockColor(rectangle, rectangle.getFill());
+        }
     }
 
 }

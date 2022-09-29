@@ -12,8 +12,14 @@ public class FileManager {
 
     public static String loadJSON_File(String fileName) {
         String jsonString = "";
+        File file = new File(fileName);
+        jsonString = loadJSON_File(file);
+        return jsonString;
+    }
+
+    public static String loadJSON_File(File file) {
+        String jsonString = "";
         try {
-            File file = new File(fileName);
             FileInputStream fileInputStream = new FileInputStream(file);
             byte[] data = new byte[(int) file.length()];
             fileInputStream.read(data);
@@ -24,6 +30,7 @@ public class FileManager {
         }
         return jsonString;
     }
+
 
     public static void saveJSON_File(File file, String jsonString) {
         file.getParentFile().mkdirs();

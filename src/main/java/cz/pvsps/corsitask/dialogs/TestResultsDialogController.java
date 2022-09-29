@@ -4,7 +4,6 @@ import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.tools.Tools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -28,6 +27,7 @@ public class TestResultsDialogController {
 
     @FXML
     public void initialize() {
+        stage.setFullScreen(Constants.FxmlFile.TEST_RESULTS_DIALOG.isFullscreen());
         configuration = Tools.loadConfiguration();
         prepareResultsFileChoiceBox();
         prepareFileChooser();
@@ -55,7 +55,7 @@ public class TestResultsDialogController {
         //pathToResultsComboBox.setValue(configuration.getPathToResultsDir()+"\\results.json");
     }
 
-    public void confirmSelectionButtonOnAction(ActionEvent actionEvent) {
+    public void confirmSelectionButtonOnAction() {
         // TODO check if file exists and is correct
         // else throw new exception
         file = new File(pathToResultsComboBox.getValue());
@@ -65,7 +65,7 @@ public class TestResultsDialogController {
 
     }
 
-    public void browseLocalFilesButtonOnAction(ActionEvent actionEvent) {
+    public void browseLocalFilesButtonOnAction() {
         var location = fileChooser.showOpenDialog(stage);
         if (location != null) {
             if (!resultsFileOptions.contains(location.getPath())) {

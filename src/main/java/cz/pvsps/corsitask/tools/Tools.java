@@ -7,11 +7,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.Main;
 import cz.pvsps.corsitask.exceptions.FileNotFoundException;
+import cz.pvsps.corsitask.result.Score;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import org.json.simple.JSONArray;
@@ -21,6 +21,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +33,7 @@ import static cz.pvsps.corsitask.tools.FileManager.saveJSON_File;
 
 public class Tools {
 
-    private static Logger LOGGER = Logger.getLogger(Tools.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Tools.class.getName());
 
     public static ArrayList<ArrayList<Block>> loadSequences(String fileName) {
         String jsonString = loadJSON_File(fileName);
@@ -53,25 +54,16 @@ public class Tools {
 
     public static void changeScene(Constants.FxmlFile fxmlFile) {
         try {
-            Parent root = FXMLLoader.load(Main.class.getResource(fxmlFile.getPath()));
-            Main.stage.setScene(new Scene(root, fxmlFile.getSceneWidth(), fxmlFile.getSceneHeight()));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxmlFile.getPath())));
+            stage.setScene(new Scene(root, fxmlFile.getSceneWidth(), fxmlFile.getSceneHeight()));
             stage.centerOnScreen();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "File named: " + fxmlFile.getName() + " could no be Loaded.");
             e.printStackTrace();
-            Main.stage.close();
+            stage.close();
             System.exit(100);
         }
-        switch (fxmlFile) {
-            case TRIAL, TEST_INSTRUCTIONS ->
-            {
-                Main.stage.setFullScreen(false);
-                Main.stage.setFullScreenExitHint("");
-                Main.stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-            }
-            default -> Main.stage.setFullScreen(false);
-        }
-        Main.stage.show();
+        stage.show();
         LOGGER.log(Level.INFO, "File named: " + fxmlFile.getName() + " has been successfully loaded.");
     }
 
@@ -107,6 +99,21 @@ public class Tools {
             throw new RuntimeException(e);
         }
         saveJSON_File(new File(filePath), jsonString);
+    }
+
+    public static Score loadScore(File file) {
+        Score score;
+        try {
+            String json_String = loadJSON_File(file);
+            ObjectMapper mapper = JsonMapper.builder()
+                    .addModule(new JavaTimeModule())
+                    .build();
+            score = mapper.readValue(json_String, Score.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        LOGGER.log(Level.INFO, "Results have been successfully loaded from file:" + file.getPath() + ".");
+        return score;
     }
 
     public static void resize(Pane pane) {

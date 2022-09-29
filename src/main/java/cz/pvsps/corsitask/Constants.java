@@ -6,23 +6,34 @@ public class Constants {
 
     public enum FxmlFile {
         MENU ("menu.fxml", 400, 600),
-        TRIAL ("corsiTest.fxml", 1220, 820),
-        RESULT ("result.fxml", 800, 600),
+        TRIAL ("corsiTest.fxml", 1220, 820, true),
+        RESULT ("result.fxml", 1200, 600),
         SETTINGS ("settings.fxml", 400, 600),
         TEST_SETTINGS_DIALOG ("testSettingsDialog.fxml", 400, 600),
-        TEST_INSTRUCTIONS ("testInstructions.fxml", 800, 450),
         SEQUENCE_RESULT ("sequenceResultCopy2.fxml", 510, 410),
         TEST_RESULTS_DIALOG ("testResultsDialog.fxml", 400, 250),
-        TUTORIAL ("tutorial.fxml", 800, 450),
-        START_TEST ("startCorsiTest", 600, 400);
+        TUTORIAL ("tutorial.fxml", 800, 450, true),
+        START_TEST("startTest.fxml", 600, 400, true),
+        END_TEST("startTest.fxml", 600, 400, true);
 
         private final String name;
         private final int sceneWidth;
         private final int sceneHeight;
+
+        private final boolean isFullscreen;
+
         FxmlFile(String fxmlFileName, int sceneWidth, int sceneHeight) {
             this.name = fxmlFileName;
             this.sceneWidth = sceneWidth;
             this.sceneHeight = sceneHeight;
+            this.isFullscreen = false;
+        }
+
+        FxmlFile(String fxmlFileName, int sceneWidth, int sceneHeight, boolean isFullscreen) {
+            this.name = fxmlFileName;
+            this.sceneWidth = sceneWidth;
+            this.sceneHeight = sceneHeight;
+            this.isFullscreen = isFullscreen;
         }
 
         public String getPath() {
@@ -40,12 +51,13 @@ public class Constants {
         public String getName() {
             return name;
         }
+
+        public boolean isFullscreen() {
+            return isFullscreen;
+        }
     }
 
     public static final String BUTTON_STYLE = "-fx-background-color: %s; -fx-border-color: %s; -fx-border-width: 5;";
-    public static final String TEXT_RED = "red";
-    public static final String TEXT_GREEN = "green";
-    public static final String TEXT_WHITE = "white";
 
     public static final String CONFIGURATION_LOCATION = Tools.getDocumentsPath() + "\\Corsi Test\\settings.json";
 
@@ -57,9 +69,6 @@ public class Constants {
     public static final String BROWSE_OPTION = "Procházet místní soubory";
 
     public static final String DEFAULT_SEQUENCES_FILE_NAME = "defaultSequences.json";
-
-    public static final String RESULT_FILE_NAME_TEMPLATE = "<name><surname>_<date>.json";
-
     public static final double LABEL_FONT_SIZE = 120;
 
     /*

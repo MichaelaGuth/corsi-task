@@ -6,18 +6,24 @@ import cz.pvsps.corsitask.tools.Block;
 import cz.pvsps.corsitask.tools.Tools;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 
 import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
 import static cz.pvsps.corsitask.Main.configuration;
+import static cz.pvsps.corsitask.Main.stage;
 
 public class TutorialController {
     public Rectangle block1;
@@ -28,6 +34,9 @@ public class TutorialController {
     public Label resultLabel;
     public Button continueToTestButton;
     public Button playTutorialButton;
+    public BorderPane borderPane;
+    public VBox vBox;
+    public HBox hBox;
 
     private ArrayList<Rectangle> allBlocks;
 
@@ -40,18 +49,11 @@ public class TutorialController {
 
     private boolean isContinueButtonDisabled;
 
-    private boolean waitingForUser;
-
     private int sequenceIndex;
-
-
-    private final String RESULT_LABEL_START = "VÝSLEDEK: ";
-
-    private final String WRONG_ANSWER_STYLE = "-fx-background-color: red; -fx-text-fill: white;";
-    private final String RIGHT_ANSWER_STYLE = "-fx-background-color: greenyellow; -fx-text-fill: black;";
 
     @FXML
     public void initialize() {
+        stage.setFullScreen(Constants.FxmlFile.TUTORIAL.isFullscreen());
         prepareTutorial();
         Thread checkForContinueButtonThread = new Thread(new Runnable() {
             @Override
@@ -70,7 +72,7 @@ public class TutorialController {
     }
 
     private void prepareTutorial() {
-        // TODO resize
+        resize();
         allBlocks = getListOfBlocks();
         setAllBlocksDisable(true);
         userSequence = new ArrayList<>();
@@ -79,7 +81,6 @@ public class TutorialController {
         continueToTestButton.setVisible(false);
         numberOfCorrectlyAnsweredTrials = 0;
         isContinueButtonDisabled = true;
-        waitingForUser = false;
         sequenceIndex = 0;
     }
 
@@ -101,23 +102,28 @@ public class TutorialController {
         }
     }
 
-    public void confirmSelectionButtonOnMouseClicked(MouseEvent event) {
+    public void confirmSelectionButtonOnMouseClicked() {
         SequenceScore sequenceScore = new SequenceScore(correctSequence, userSequence, 0);
+        final String RESULT_LABEL_START = "VÝSLEDEK: ";
         if (sequenceScore.isUserCorrect()) {
             resultLabel.setText(RESULT_LABEL_START + "SPRÁVNĚ");
+            String RIGHT_ANSWER_STYLE = "-fx-background-color: greenyellow; -fx-text-fill: black;";
             resultLabel.setStyle(RIGHT_ANSWER_STYLE);
             new animatefx.animation.Pulse(resultLabel).play();
             numberOfCorrectlyAnsweredTrials++;
         } else {
             resultLabel.setText(RESULT_LABEL_START + "ŠPATNĚ");
+            String WRONG_ANSWER_STYLE = "-fx-background-color: red; -fx-text-fill: white;";
             resultLabel.setStyle(WRONG_ANSWER_STYLE);
             new animatefx.animation.Shake(resultLabel).play();
         }
-        waitingForUser = false;
+        playTutorialButton.setDisable(false);
+        confirmSelectionButton.setDisable(true);
+        setAllBlocksDisable(true);
         userSequence = new ArrayList<>();
     }
 
-    public void playTutorialButtonOnMouseClicked(MouseEvent event) {
+    public void playTutorialButtonOnMouseClicked() {
         Thread tutorialThread = new Thread(() -> {
             confirmSelectionButton.setDisable(true);
             playSequence(sequences.get(sequenceIndex));
@@ -129,20 +135,13 @@ public class TutorialController {
             }
             confirmSelectionButton.setDisable(false);
             setAllBlocksDisable(false);
-            waitingForUser = true;
+            playTutorialButton.setDisable(true);
         });
-        if (!waitingForUser) {
-            tutorialThread.setDaemon(true);
-            tutorialThread.start();
-        } else {
-            resultLabel.setText("Nepotvrdil jste odpověď!");
-            resultLabel.setStyle(WRONG_ANSWER_STYLE);
-            new animatefx.animation.Shake(resultLabel).play();
-        }
+        tutorialThread.setDaemon(true);
+        tutorialThread.start();
     }
 
-    public void continueToTestButtonOnMouseClicked(MouseEvent event) {
-        // TODO edit PROBLEM
+    public void continueToTestButtonOnMouseClicked() {
         Tools.changeScene(Constants.FxmlFile.START_TEST);
     }
 
@@ -171,27 +170,27 @@ public class TutorialController {
         }
     }
 
-    public void confirmSelectionButtonOnMouseEntered(MouseEvent event) {
+    public void confirmSelectionButtonOnMouseEntered() {
         confirmSelectionButton.setStyle(String.format(BUTTON_STYLE, "green", "white" ));
     }
 
-    public void confirmSelectionButtonOnMouseExited(MouseEvent event) {
+    public void confirmSelectionButtonOnMouseExited() {
         confirmSelectionButton.setStyle(String.format(BUTTON_STYLE, "green", "green"));
     }
 
-    public void playTutorialButtonOnMouseEntered(MouseEvent event) {
+    public void playTutorialButtonOnMouseEntered() {
         playTutorialButton.setStyle(String.format(BUTTON_STYLE, "orange", "white" ));
     }
 
-    public void playTutorialButtonOnMouseExited(MouseEvent event) {
+    public void playTutorialButtonOnMouseExited() {
         playTutorialButton.setStyle(String.format(BUTTON_STYLE, "orange", "orange" ));
     }
 
-    public void continueToTestButtonOnMouseExited(MouseEvent event) {
+    public void continueToTestButtonOnMouseExited() {
         continueToTestButton.setStyle(String.format(BUTTON_STYLE, "yellow", "yellow" ));
     }
 
-    public void continueToTestButtonOnMouseEntered(MouseEvent event) {
+    public void continueToTestButtonOnMouseEntered() {
         continueToTestButton.setStyle(String.format(BUTTON_STYLE, "yellow", "white" ));
     }
 
@@ -218,6 +217,15 @@ public class TutorialController {
         blocks.add(block3);
         blocks.add(block4);
         return blocks;
+    }
+
+    public void resize() {
+        if (stage.isFullScreen()) {
+            Rectangle2D resolution = Screen.getPrimary().getBounds();
+            double scale = resolution.getHeight() / borderPane.getPrefHeight();
+            vBox.setScaleX(scale);
+            vBox.setScaleY(scale);
+        }
     }
 
 }

@@ -4,7 +4,6 @@ import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.tools.Tools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -12,14 +11,15 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
+import java.util.Objects;
 
 import static cz.pvsps.corsitask.Constants.BROWSE_OPTION;
 import static cz.pvsps.corsitask.Main.configuration;
 import static cz.pvsps.corsitask.Main.stage;
 
 public class SettingsController {
-    public ChoiceBox sequencesLocationChoiceBox;
-    public ChoiceBox resultsLocationChoiceBox;
+    public ChoiceBox<String> sequencesLocationChoiceBox;
+    public ChoiceBox<String> resultsLocationChoiceBox;
     public Button backToMenuButton;
     public CheckBox showBlockNumbersCheckBox;
     public CheckBox showUserOrderCheckBox;
@@ -36,6 +36,7 @@ public class SettingsController {
 
     @FXML
     public void initialize() {
+        stage.setFullScreen(Constants.FxmlFile.SETTINGS.isFullscreen());
 
         directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File(Tools.getDocumentsPath()));
@@ -54,17 +55,16 @@ public class SettingsController {
         resultsLocationChoiceBox.setValue(resultsLocationOptions.get(0));
     }
 
-
-    public void backToMenuButtonOnAction(ActionEvent actionEvent) {
+    public void backToMenuButtonOnAction() {
         configuration.setPathToResultsDir(resultsLocationChoiceBox.getValue().toString());
         configuration.setPathToSequenceDir(sequencesLocationChoiceBox.getValue().toString());
         Tools.saveObjectToJSON(configuration, Constants.CONFIGURATION_LOCATION);
         Tools.changeScene(Constants.FxmlFile.MENU);
     }
 
-    public void sequencesLocationChoiceBoxOnAction(ActionEvent actionEvent) {
+    public void sequencesLocationChoiceBoxOnAction() {
         if (sequencesLocationChoiceBox.getValue() != null) {
-            if (sequencesLocationChoiceBox.getValue() == BROWSE_OPTION) {
+            if (Objects.equals(sequencesLocationChoiceBox.getValue(), BROWSE_OPTION)) {
                 var location = directoryChooser.showDialog(stage);
                 sequenceLocationOptions.remove(BROWSE_OPTION);
                 sequenceLocationOptions.add(location.getPath());
@@ -74,9 +74,9 @@ public class SettingsController {
         }
     }
 
-    public void resultsLocationChoiceBoxOnAction(ActionEvent actionEvent) {
+    public void resultsLocationChoiceBoxOnAction() {
         if (resultsLocationChoiceBox.getValue() != null) {
-            if (resultsLocationChoiceBox.getValue() == BROWSE_OPTION) {
+            if (Objects.equals(resultsLocationChoiceBox.getValue(), BROWSE_OPTION)) {
                 var location = directoryChooser.showDialog(stage);
                 resultsLocationOptions.remove(BROWSE_OPTION);
                 resultsLocationOptions.add(location.getPath());
@@ -86,9 +86,9 @@ public class SettingsController {
         }
     }
 
-    public void showUserOrderCheckBoxOnAction(ActionEvent actionEvent) {
+    public void showUserOrderCheckBoxOnAction() {
     }
 
-    public void showBlockNumbersCheckBoxOnAction(ActionEvent actionEvent) {
+    public void showBlockNumbersCheckBoxOnAction() {
     }
 }
