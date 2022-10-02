@@ -7,33 +7,55 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.settings.SettingsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="cz.pvsps.corsitask.settings.SettingsController">
     <children>
-        <Label layoutX="36.0" layoutY="54.0" prefHeight="31.0" prefWidth="328.0" text="Umístění pro soubory se sekvencema" wrapText="true" AnchorPane.topAnchor="50.0">
+        <Label layoutX="40.0" layoutY="45.0" prefHeight="31.0" prefWidth="328.0"
+               text="Umístění pro soubory se sekvencema" wrapText="true">
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Label>
-        <ChoiceBox fx:id="sequencesLocationChoiceBox" layoutX="36.0" layoutY="81.0" onAction="#sequencesLocationChoiceBoxOnAction" prefHeight="25.0" prefWidth="328.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="81.0" />
-        <Label layoutX="36.0" layoutY="116.0" prefHeight="31.0" prefWidth="328.0" text="Umístění pro ukládání výsledků" wrapText="true">
+        <ChoiceBox fx:id="sequencesLocationChoiceBox" layoutX="40.0" layoutY="80.0"
+                   onAction="#sequencesLocationChoiceBoxOnAction" prefHeight="25.0" prefWidth="328.0"
+                   AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="81.0"/>
+        <Label layoutX="40.0" layoutY="115.0" prefHeight="31.0" prefWidth="328.0" text="Umístění pro ukládání výsledků"
+               wrapText="true">
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Label>
-        <ChoiceBox fx:id="resultsLocationChoiceBox" layoutX="36.0" layoutY="147.0" onAction="#resultsLocationChoiceBoxOnAction" prefHeight="25.0" prefWidth="328.0" />
-        <Button fx:id="backToMenuButton" layoutX="86.0" layoutY="511.0" mnemonicParsing="false" onAction="#backToMenuButtonOnAction" text="Uložit a vrátit se do menu" AnchorPane.bottomAnchor="50.0">
+        <ChoiceBox fx:id="resultsLocationChoiceBox" layoutX="40.0" layoutY="150.0"
+                   onAction="#resultsLocationChoiceBoxOnAction" prefHeight="25.0" prefWidth="328.0"/>
+        <Button fx:id="backToMenuButton" layoutX="86.0" layoutY="511.0" mnemonicParsing="false"
+                onAction="#backToMenuButtonOnAction" text="Uložit a vrátit se do menu" AnchorPane.bottomAnchor="50.0">
             <font>
-                <Font size="18.0" />
+                <Font size="18.0"/>
             </font>
         </Button>
-        <CheckBox fx:id="showUserOrderCheckBox" layoutX="36.0" layoutY="200.0" mnemonicParsing="false" onAction="#showUserOrderCheckBoxOnAction" text="Zobrazit pořadí výběru kostek">
+        <CheckBox fx:id="showUserOrderCheckBox" layoutX="40.0" layoutY="200.0" mnemonicParsing="false"
+                  text="Zobrazit pořadí výběru kostek">
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </CheckBox>
-        <CheckBox fx:id="showBlockNumbersCheckBox" layoutX="36.0" layoutY="237.0" mnemonicParsing="false" onAction="#showBlockNumbersCheckBoxOnAction" text="Zobrazit čísla bloků">
+        <CheckBox fx:id="showBlockNumbersCheckBox" layoutX="40.0" layoutY="230.0" mnemonicParsing="false"
+                  text="Zobrazit čísla bloků">
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
+            </font>
+        </CheckBox>
+        <CheckBox fx:id="allowResetButtonCheckBox" layoutX="40.0" layoutY="260.0" mnemonicParsing="false"
+                  text="Povolit opravu chyb">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </CheckBox>
+        <CheckBox fx:id="allowTutorialCheckBox" layoutX="40.0" layoutY="290.0" mnemonicParsing="false"
+                  text="Povolit tutoriál">
+            <font>
+                <Font size="14.0"/>
             </font>
         </CheckBox>
     </children>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -14,78 +15,106 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <Label layoutX="40.0" layoutY="90.0" text="Jméno:">
+        <Label layoutX="40.0" layoutY="110.0" text="Jméno:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label layoutX="40.0" layoutY="120.0" text="Příjmení:">
+        <Label layoutX="40.0" layoutY="140.0" text="Příjmení:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Separator layoutY="200.0" prefHeight="5.0" prefWidth="420.0" />
+        <Separator layoutY="260.0" prefHeight="5.0" prefWidth="420.0" />
         <Separator layoutX="420.0" orientation="VERTICAL" prefHeight="600.0" AnchorPane.leftAnchor="420.0" />
-        <Label fx:id="patientNameLabel" layoutX="180.0" layoutY="90.0" text="Antonín">
+        <Label fx:id="patientNameLabel" layoutX="180.0" layoutY="110.0" text="Antonín">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="patientSurnameLabel" layoutX="180.0" layoutY="120.0" text="Novák">
+        <Label fx:id="patientSurnameLabel" layoutX="180.0" layoutY="140.0" text="Novák">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <TableView fx:id="table" layoutX="340.0" layoutY="26.0" prefHeight="500.0" prefWidth="700.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
+        <TableView fx:id="table" layoutX="460.0" layoutY="40.0" prefHeight="520.0" prefWidth="603.0">
             <columns>
-                <TableColumn fx:id="sequenceColumn" maxWidth="280.0" minWidth="280.0" prefWidth="280.0" resizable="false" text="Sekvence" />
-                <TableColumn fx:id="sequenceLengthColumn" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" text="Délka &#10;sekvence" />
-                <TableColumn fx:id="trialNumberColumn" maxWidth="80.0" minWidth="80.0" resizable="false" text="Pokus" />
-                <TableColumn fx:id="userTimeColumn" maxWidth="80.0" minWidth="80.0" resizable="false" text="Čas" />
-                <TableColumn fx:id="scoreColumn" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" text="Skóre" />
-                <TableColumn fx:id="buttonColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" />
+                <TableColumn fx:id="sequenceColumn" editable="false" maxWidth="280.0" minWidth="280.0" prefWidth="280.0" resizable="false" sortable="false" style="-fx-alignment: CENTER-LEFT;" text="Sekvence" />
+                <TableColumn fx:id="sequenceLengthColumn" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Délka &#10;sekvence" />
+                <TableColumn fx:id="trialNumberColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Pokus" />
+                <TableColumn fx:id="userTimeColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Čas" />
+                <TableColumn fx:id="scoreColumn" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Skóre" />
             </columns>
         </TableView>
-        <Label layoutX="40.0" layoutY="150.0" prefWidth="117.0" text="Datum narození:" wrapText="true">
+        <Label layoutX="40.0" layoutY="170.0" prefWidth="117.0" text="Datum narození:" wrapText="true">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="patientBirthdateLabel" layoutX="180.0" layoutY="150.0" text="13/01/2000">
+        <Label fx:id="patientBirthdateLabel" layoutX="180.0" layoutY="170.0" text="13/01/2000">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="473.0" layoutY="554.0" prefHeight="17.0" prefWidth="460.0" text="TIP" />
-        <Label layoutX="40.0" layoutY="230.0" text="Total Score:">
+        <Label layoutX="40.0" layoutY="290.0" text="Total Score:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label layoutX="40.0" layoutY="260.0" text="Block Span:">
+        <Label layoutX="40.0" layoutY="320.0" text="Block Span:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label layoutX="40.0" layoutY="290.0" text="Number of Correct Trials:">
+        <Label layoutX="40.0" layoutY="350.0" text="Počet správně odpovězených pokusů:">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="totalScoreLabel" layoutX="140.0" layoutY="230.0" text="0">
+        <Label fx:id="totalScoreLabel" layoutX="140.0" layoutY="290.0" text="0">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="blockSpanLabel" layoutX="140.0" layoutY="260.0" text="0">
+        <Label fx:id="blockSpanLabel" layoutX="140.0" layoutY="320.0" text="0">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="correctTrialsLabel" layoutX="230.0" layoutY="290.0" text="0">
+        <Label fx:id="correctTrialsLabel" layoutX="321.0" layoutY="350.0" text="0">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
+        <Label layoutX="40.0" layoutY="200.0" prefWidth="117.0" text="Datum testu:" wrapText="true">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="testDateLabel" layoutX="180.0" layoutY="200.0" text="13/01/2000">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="patientIDLabel" alignment="CENTER" layoutX="40.0" layoutY="70.0" prefHeight="25.0" prefWidth="340.0" text="ID:" textFill="#797979" wrapText="true">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Label>
+        <Button fx:id="showSequenceButton" layoutX="1079.0" layoutY="253.0" mnemonicParsing="false" onAction="#showSequenceButtonOnAction" prefHeight="74.0" prefWidth="94.0" text="Ukázat&#10;sekvenci&#10;" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
+      <Label layoutX="40.0" layoutY="380.0" text="Součet skóre:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="scoreSumLabel" layoutX="155.0" layoutY="380.0" text="0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

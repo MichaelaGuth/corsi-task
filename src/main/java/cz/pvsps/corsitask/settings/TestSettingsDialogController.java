@@ -1,10 +1,9 @@
-package cz.pvsps.corsitask.dialogs;
+package cz.pvsps.corsitask.settings;
 
 import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.tools.Tools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -20,7 +19,6 @@ import static cz.pvsps.corsitask.Main.stage;
 public class TestSettingsDialogController {
 
     public Button saveSettingsButton;
-    public TextField resultFileNameTextField;
     public CheckBox showBlockNumbersCheckBox;
     public CheckBox showUserOrderCheckBox;
     public ChoiceBox<String> sequenceFileChoiceBox;
@@ -94,7 +92,7 @@ public class TestSettingsDialogController {
 
 
 
-    public void saveSettingsButtonOnAction(ActionEvent actionEvent) {
+    public void saveSettingsButtonOnAction() {
         configuration.setShowBlockNumbers(showBlockNumbersCheckBox.isSelected());
         configuration.setCurrentlyInUseSequenceFilePath(sequenceFileChoiceBox.getValue().toString());
         configuration.setShowUserSelectedOrderOnBlocks(showUserOrderCheckBox.isSelected());
@@ -167,19 +165,21 @@ public class TestSettingsDialogController {
             alert.setHeaderText(null);
             alert.setContentText("Jsou zadané informace správné?");
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK){
-                Tools.saveObjectToJSON(configuration, Constants.CONFIGURATION_LOCATION);
-                if (configuration.isAllowTutorial()) {
-                    Tools.changeScene(Constants.FxmlFile.TUTORIAL);
-                } else {
-                    Tools.changeScene(Constants.FxmlFile.START_TEST);
-                }
+            if (result.isPresent()) {
+                if (result.get() == ButtonType.OK){
+                    Tools.saveObjectToJSONFile(configuration, Constants.CONFIGURATION_LOCATION);
+                    if (configuration.isAllowTutorial()) {
+                        Tools.changeScene(Constants.FxmlFile.TUTORIAL);
+                    } else {
+                        Tools.changeScene(Constants.FxmlFile.START_TEST);
+                    }
 
+                }
             }
         }
     }
 
-    public void showBlockNumbersCheckBoxOnAction(ActionEvent actionEvent) {
+    public void showBlockNumbersCheckBoxOnAction() {
         if (showBlockNumbersCheckBox.isSelected()) {
             showUserOrderCheckBox.setSelected(false);
             showUserOrderCheckBox.setDisable(true);
@@ -188,7 +188,7 @@ public class TestSettingsDialogController {
         }
     }
 
-    public void showUserOrderCheckBoxOnAction(ActionEvent actionEvent) {
+    public void showUserOrderCheckBoxOnAction() {
         if (showUserOrderCheckBox.isSelected()) {
             showBlockNumbersCheckBox.setSelected(false);
             showBlockNumbersCheckBox.setDisable(true);
@@ -197,7 +197,7 @@ public class TestSettingsDialogController {
         }
     }
 
-    public void browseLocalFilesButtonOnAction(ActionEvent actionEvent) {
+    public void browseLocalFilesButtonOnAction() {
         var location = fileChooser.showOpenDialog(stage);
         if (location != null) {
             if (!sequenceFileOptions.contains(location.getPath())) {
@@ -208,7 +208,7 @@ public class TestSettingsDialogController {
     }
 
     private boolean isNameInvalid(String name) {
-        return !name.matches("^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčřšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŘŠŽ∂ð ,.'-]+$");
+        return !name.matches("^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçřšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆŘŠŽ∂ð ,.'-]+$");
     }
 
 }

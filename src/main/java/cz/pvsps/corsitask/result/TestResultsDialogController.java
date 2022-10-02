@@ -1,4 +1,4 @@
-package cz.pvsps.corsitask.dialogs;
+package cz.pvsps.corsitask.result;
 
 import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.tools.Tools;

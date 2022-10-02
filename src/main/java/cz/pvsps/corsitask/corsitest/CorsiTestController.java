@@ -27,8 +27,8 @@ import java.util.ArrayList;
 import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
 import static cz.pvsps.corsitask.Main.configuration;
 import static cz.pvsps.corsitask.Main.stage;
-import static cz.pvsps.corsitask.dialogs.TestSettingsDialogController.*;
-import static cz.pvsps.corsitask.tools.Tools.saveObjectToJSON;
+import static cz.pvsps.corsitask.settings.TestSettingsDialogController.*;
+import static cz.pvsps.corsitask.tools.Tools.saveObjectToJSONFile;
 
 public class CorsiTestController {
     public Rectangle block1;
@@ -127,7 +127,7 @@ public class CorsiTestController {
         String filePath = configuration.getPathToResultsDir() + "\\";
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH_mm_ss");
         filePath += score.getPatientSurname()+" "+score.getPatientName()+" "+score.getTestDate().format(dtf)+".json";
-        saveObjectToJSON(score, filePath);
+        saveObjectToJSONFile(score, filePath);
         Platform.runLater(() -> Tools.changeScene(Constants.FxmlFile.END_TEST));
     }
 

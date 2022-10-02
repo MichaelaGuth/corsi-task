@@ -1,10 +1,15 @@
 package cz.pvsps.corsitask.result;
 
 import cz.pvsps.corsitask.Constants;
+import cz.pvsps.corsitask.tools.Block;
 import cz.pvsps.corsitask.tools.Tools;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -19,21 +24,22 @@ public class ResultController {
     public Label patientNameLabel;
     public Label patientSurnameLabel;
     public Label patientBirthdateLabel;
-    public TableView table;
-    public TableColumn sequenceLengthColumn;
-    public TableColumn trialNumberColumn;
-    public TableColumn scoreColumn;
-    public TableColumn userTimeColumn;
-    public TableColumn sequenceColumn;
-    public TableColumn buttonColumn;
+    public TableView<SequenceTableItem> table;
+    public TableColumn<SequenceTableItem, SimpleIntegerProperty> sequenceLengthColumn;
+    public TableColumn<SequenceTableItem, SimpleIntegerProperty> trialNumberColumn;
+    public TableColumn<SequenceTableItem, SimpleIntegerProperty> scoreColumn;
+    public TableColumn<SequenceTableItem, SimpleDoubleProperty> userTimeColumn;
+    public TableColumn<SequenceTableItem, SimpleListProperty<Block>> sequenceColumn;
     public Label totalScoreLabel;
     public Label blockSpanLabel;
     public Label correctTrialsLabel;
 
     public static File file;
+    public Button showSequenceButton;
+    public Label patientIDLabel;
+    public Label testDateLabel;
+    public Label scoreSumLabel;
     private Score score;
-
-    // TODO přidat řádek/zahlavi na konec tabulky s score celkem
 
     @FXML
     public void initialize() {
@@ -50,16 +56,28 @@ public class ResultController {
             totalScoreLabel.setText(String.valueOf(score.getTotalScore()));
             blockSpanLabel.setText(String.valueOf(score.getBlockSpan()));
             correctTrialsLabel.setText(String.valueOf(score.getNumberOfCorrectTrials()));
-            // TODO finallize -  add remaining info
+            table.getSelectionModel().select(0);
+            patientIDLabel.setText("ID: "+ score.getPatientID());
+            formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            testDateLabel.setText(score.getTestDate().format(formatter));
+            int scoreSum = 0;
+            for (SequenceScore sequenceScore :
+                    score.getSequencesScores()) {
+                scoreSum += sequenceScore.getScore();
+            }
+            scoreSumLabel.setText(String.valueOf(scoreSum));
+            // before feature is complete
+            showSequenceButton.setDisable(true);
+            showSequenceButton.setVisible(false);
         }
     }
 
     public void setTable() {
-        sequenceLengthColumn.setCellValueFactory(new PropertyValueFactory("sequenceLength"));
-        trialNumberColumn.setCellValueFactory(new PropertyValueFactory("trialNumber"));
-        scoreColumn.setCellValueFactory(new PropertyValueFactory("score"));
-        userTimeColumn.setCellValueFactory(new PropertyValueFactory("time"));
-        sequenceColumn.setCellValueFactory(new PropertyValueFactory("sequence"));
+        sequenceLengthColumn.setCellValueFactory(new PropertyValueFactory<>("sequenceLength"));
+        trialNumberColumn.setCellValueFactory(new PropertyValueFactory<>("trialNumber"));
+        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+        userTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        sequenceColumn.setCellValueFactory(new PropertyValueFactory<>("sequence"));
     }
 
     private ObservableList<SequenceTableItem> getTableItemsList() {
@@ -72,4 +90,9 @@ public class ResultController {
     }
 
 
+    public void showSequenceButtonOnAction() {
+        // TODO add this feature
+        //SequenceTableItem sequenceTableItem = table.getSelectionModel().getSelectedItem();
+        System.out.println(table.getSelectionModel().getSelectedItem());
+    }
 }

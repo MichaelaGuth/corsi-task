@@ -8,10 +8,12 @@ import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.Main;
 import cz.pvsps.corsitask.exceptions.FileNotFoundException;
 import cz.pvsps.corsitask.result.Score;
+import cz.pvsps.corsitask.settings.Configuration;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import org.json.simple.JSONArray;
@@ -19,15 +21,16 @@ import org.json.simple.JSONValue;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static cz.pvsps.corsitask.Main.stage;
-import static cz.pvsps.corsitask.tools.FileManager.loadJSON_File;
-import static cz.pvsps.corsitask.tools.FileManager.saveJSON_File;
 
 ;
 
@@ -49,6 +52,7 @@ public class Tools {
             }
             sequences.add(sequence);
         }
+        LOGGER.log(Level.INFO, "Sequences have been successfully loaded.");
         return sequences;
     }
 
@@ -56,12 +60,26 @@ public class Tools {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxmlFile.getPath())));
             stage.setScene(new Scene(root, fxmlFile.getSceneWidth(), fxmlFile.getSceneHeight()));
+            if (fxmlFile.isExitButtonOverridden()) {
+                stage.setOnCloseRequest(windowEvent -> {
+                    Tools.changeScene(Constants.FxmlFile.MENU);
+                    windowEvent.consume();
+                });
+            } else {
+                stage.setOnCloseRequest(windowEvent -> {});
+            }
             stage.centerOnScreen();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "File named: " + fxmlFile.getName() + " could no be Loaded.");
             e.printStackTrace();
             stage.close();
             System.exit(100);
+            // TODO
+        }
+        stage.setFullScreen(fxmlFile.isFullscreen());
+        if (stage.isFullScreen()) {
+            stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            stage.setFullScreenExitHint("");
         }
         stage.show();
         LOGGER.log(Level.INFO, "File named: " + fxmlFile.getName() + " has been successfully loaded.");
@@ -81,14 +99,14 @@ public class Tools {
             throw new RuntimeException(e);
         } catch (FileNotFoundException e) {
             configuration = new Configuration();
-            saveObjectToJSON(configuration,Constants.CONFIGURATION_LOCATION);
+            saveObjectToJSONFile(configuration,Constants.CONFIGURATION_LOCATION);
             LOGGER.log(Level.INFO, "Configuration has been created to file: " + Constants.CONFIGURATION_LOCATION + ".");
         }
         LOGGER.log(Level.INFO, "Configuration has been successfully loaded from file: " + Constants.CONFIGURATION_LOCATION + ".");
         return configuration;
     }
 
-    public static void saveObjectToJSON(Object o, String filePath) {
+    public static void saveObjectToJSONFile(Object o, String filePath) {
         ObjectMapper objectMapper =  JsonMapper.builder()
                 .addModule(new JavaTimeModule())
                 .build();
@@ -99,6 +117,7 @@ public class Tools {
             throw new RuntimeException(e);
         }
         saveJSON_File(new File(filePath), jsonString);
+        LOGGER.log(Level.INFO, "Object "+ o.getClass().getName() + "has been successfully saved to file: " + filePath + ".");
     }
 
     public static Score loadScore(File file) {
@@ -122,6 +141,39 @@ public class Tools {
             double scale = resolution.getHeight() / pane.getPrefHeight();
             pane.setScaleX(scale);
             pane.setScaleY(scale);
+        }
+    }
+
+    public static String loadJSON_File(String fileName) {
+        String jsonString = "";
+        File file = new File(fileName);
+        jsonString = loadJSON_File(file);
+        return jsonString;
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static String loadJSON_File(File file) {
+        String jsonString = "";
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fileInputStream.read(data);
+            fileInputStream.close();
+            jsonString = new String(data, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new FileNotFoundException(e);
+        }
+        return jsonString;
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void saveJSON_File(File file, String jsonString) {
+        file.getParentFile().mkdirs();
+        try (FileWriter fileWriter = new FileWriter(file)){
+            fileWriter.write(jsonString);
+            fileWriter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

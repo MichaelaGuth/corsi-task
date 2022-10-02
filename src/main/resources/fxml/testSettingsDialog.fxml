@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.dialogs.TestSettingsDialogController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.settings.TestSettingsDialogController">
     <children>
         <Label fx:id="nameLabel" layoutX="40.0" layoutY="90.0" prefHeight="25.0" text="Jméno:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="110.0">
             <font>

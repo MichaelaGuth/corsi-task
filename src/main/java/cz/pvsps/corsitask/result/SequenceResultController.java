@@ -45,6 +45,8 @@ public class SequenceResultController {
     private ArrayList<Label> allBlockLabels;
 
 
+    // TODO Add feature
+
     @FXML
     public void initialize() {
         Tools.resize(anchorPane);

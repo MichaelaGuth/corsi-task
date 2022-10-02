@@ -1,4 +1,4 @@
-package cz.pvsps.corsitask.tools;
+package cz.pvsps.corsitask.settings;
 
 
 import com.fasterxml.jackson.annotation.*;

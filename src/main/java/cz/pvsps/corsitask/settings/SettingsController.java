@@ -23,6 +23,8 @@ public class SettingsController {
     public Button backToMenuButton;
     public CheckBox showBlockNumbersCheckBox;
     public CheckBox showUserOrderCheckBox;
+    public CheckBox allowResetButtonCheckBox;
+    public CheckBox allowTutorialCheckBox;
 
     private ObservableList<String> sequenceLocationOptions;
     private ObservableList<String> resultsLocationOptions;
@@ -58,7 +60,11 @@ public class SettingsController {
     public void backToMenuButtonOnAction() {
         configuration.setPathToResultsDir(resultsLocationChoiceBox.getValue().toString());
         configuration.setPathToSequenceDir(sequencesLocationChoiceBox.getValue().toString());
-        Tools.saveObjectToJSON(configuration, Constants.CONFIGURATION_LOCATION);
+        configuration.setAllowResetButton(allowResetButtonCheckBox.isSelected());
+        configuration.setAllowTutorial(allowTutorialCheckBox.isSelected());
+        configuration.setShowBlockNumbers(showBlockNumbersCheckBox.isSelected());
+        configuration.setShowUserSelectedOrderOnBlocks(showUserOrderCheckBox.isSelected());
+        Tools.saveObjectToJSONFile(configuration, Constants.CONFIGURATION_LOCATION);
         Tools.changeScene(Constants.FxmlFile.MENU);
     }
 
@@ -84,11 +90,5 @@ public class SettingsController {
                 resultsLocationChoiceBox.setValue(location.getPath());
             }
         }
-    }
-
-    public void showUserOrderCheckBoxOnAction() {
-    }
-
-    public void showBlockNumbersCheckBoxOnAction() {
     }
 }

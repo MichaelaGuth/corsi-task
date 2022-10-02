@@ -1,6 +1,6 @@
 package cz.pvsps.corsitask;
 
-import cz.pvsps.corsitask.tools.Configuration;
+import cz.pvsps.corsitask.settings.Configuration;
 import cz.pvsps.corsitask.tools.Tools;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

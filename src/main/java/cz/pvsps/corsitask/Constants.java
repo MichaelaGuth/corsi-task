@@ -7,20 +7,20 @@ public class Constants {
     public enum FxmlFile {
         MENU ("menu.fxml", 400, 600),
         TRIAL ("corsiTest.fxml", 1220, 820, true),
-        RESULT ("result.fxml", 1200, 600),
-        SETTINGS ("settings.fxml", 400, 600),
-        TEST_SETTINGS_DIALOG ("testSettingsDialog.fxml", 400, 600),
+        RESULT ("result.fxml", 1200, 600, false, true),
+        SETTINGS ("settings.fxml", 400, 600, false, true),
+        TEST_SETTINGS_DIALOG ("testSettingsDialog.fxml", 400, 600, false, true),
         SEQUENCE_RESULT ("sequenceResultCopy2.fxml", 510, 410),
-        TEST_RESULTS_DIALOG ("testResultsDialog.fxml", 400, 250),
+        TEST_RESULTS_DIALOG ("testResultsDialog.fxml", 400, 250, false, true),
         TUTORIAL ("tutorial.fxml", 800, 450, true),
         START_TEST("startTest.fxml", 600, 400, true),
-        END_TEST("startTest.fxml", 600, 400, true);
+        END_TEST("endTest.fxml", 600, 400, true);
 
         private final String name;
         private final int sceneWidth;
         private final int sceneHeight;
-
-        private final boolean isFullscreen;
+        private boolean isFullscreen;
+        private boolean isExitButtonOverridden = false;
 
         FxmlFile(String fxmlFileName, int sceneWidth, int sceneHeight) {
             this.name = fxmlFileName;
@@ -30,10 +30,13 @@ public class Constants {
         }
 
         FxmlFile(String fxmlFileName, int sceneWidth, int sceneHeight, boolean isFullscreen) {
-            this.name = fxmlFileName;
-            this.sceneWidth = sceneWidth;
-            this.sceneHeight = sceneHeight;
+            this(fxmlFileName, sceneWidth, sceneHeight);
             this.isFullscreen = isFullscreen;
+        }
+
+        FxmlFile(String fxmlFileName, int sceneWidth, int sceneHeight, boolean isFullscreen, boolean isExitButtonOverridden) {
+            this(fxmlFileName, sceneWidth, sceneHeight, isFullscreen);
+            this.isExitButtonOverridden = isExitButtonOverridden;
         }
 
         public String getPath() {
@@ -54,6 +57,10 @@ public class Constants {
 
         public boolean isFullscreen() {
             return isFullscreen;
+        }
+
+        public boolean isExitButtonOverridden() {
+            return isExitButtonOverridden;
         }
     }
 
