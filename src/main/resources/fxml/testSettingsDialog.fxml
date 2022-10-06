@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.settings.TestSettingsDialogController">
+    <children>
+        <Label fx:id="nameLabel" layoutX="40.0" layoutY="90.0" prefHeight="25.0" text="Jméno:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="110.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="133.0" layoutY="39.0" text="Pacientův profil" AnchorPane.topAnchor="40.0">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="surnameLabel" layoutX="40.0" layoutY="119.0" prefHeight="25.0" text="Příjmení:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="140.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="nameTextField" layoutX="188.0" layoutY="88.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="110.0" />
+        <TextField fx:id="surnameTextField" layoutX="138.0" layoutY="128.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="140.0" />
+        <Separator layoutY="174.0" prefHeight="10.0" prefWidth="400.0" AnchorPane.topAnchor="220.0" />
+        <Label layoutX="134.0" layoutY="211.0" text="Nastavení testu" AnchorPane.topAnchor="250.0">
+            <font>
+                <Font name="Arial Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="40.0" layoutY="252.0" prefHeight="25.0" text="Soubor se sekvencemi:" AnchorPane.topAnchor="290.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <ChoiceBox fx:id="sequenceFileChoiceBox" layoutX="40.0" layoutY="288.0" prefHeight="25.0" prefWidth="320.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="315.0" />
+        <CheckBox fx:id="showUserOrderCheckBox" layoutX="40.0" layoutY="400.0" mnemonicParsing="false" onAction="#showUserOrderCheckBoxOnAction" text="Zobrazit pořadí kliknutí" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="390.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </CheckBox>
+        <CheckBox fx:id="showBlockNumbersCheckBox" layoutX="40.0" layoutY="436.0" mnemonicParsing="false" onAction="#showBlockNumbersCheckBoxOnAction" text="Zobrazit čísla bloků" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="420.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </CheckBox>
+        <CheckBox fx:id="allowResetButtonCheckBox" layoutX="40.0" layoutY="468.0" mnemonicParsing="false" text="Povolit opravování zvolené skevence" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="450.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </CheckBox>
+        <Button fx:id="saveSettingsButton" layoutX="125.0" layoutY="533.0" mnemonicParsing="false" onAction="#saveSettingsButtonOnAction" text="Uložit nastavení" AnchorPane.bottomAnchor="40.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="browseLocalFilesButton" layoutX="115.0" layoutY="313.0" mnemonicParsing="false" onAction="#browseLocalFilesButtonOnAction" prefHeight="27.0" prefWidth="189.0" text="Procházet místní soubory" wrapText="true" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="345.0">
+            <font>
+                <Font size="12.0" />
+            </font>
+        </Button>
+        <DatePicker fx:id="birthdatePicker" layoutX="142.0" layoutY="141.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="170.0" />
+        <Label fx:id="birthdateLabel" layoutX="40.0" layoutY="140.0" prefHeight="25.0" text="Datum narození:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="170.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+      <Label fx:id="patientIDLabel" alignment="CENTER" layoutX="41.0" layoutY="74.0" prefHeight="25.0" prefWidth="320.0" text="ID: " textFill="grey" AnchorPane.topAnchor="70.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="statusLabel" alignment="CENTER" layoutX="40.0" layoutY="203.0" prefHeight="25.0" prefWidth="320.0" textFill="#575353" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="200.0" />
+      <CheckBox fx:id="allowTutorialCheckBox" layoutX="40.0" layoutY="501.0" mnemonicParsing="false" text="Zapnout tutoriál" AnchorPane.topAnchor="480.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+    </children>
+</AnchorPane>

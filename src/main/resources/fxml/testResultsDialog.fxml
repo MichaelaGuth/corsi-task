@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.result.TestResultsDialogController">
+   <children>
+      <Label layoutX="97.0" layoutY="40.0" text="Vyberte soubor s výsledky" AnchorPane.topAnchor="40.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="pathToResultsComboBox" layoutX="20.0" layoutY="80.0" prefHeight="30.0" prefWidth="360.0" />
+      <Button fx:id="confirmSelectionButton" layoutX="132.0" layoutY="176.0" mnemonicParsing="false" onAction="#confirmSelectionButtonOnAction" text="Potvrdit výběr" AnchorPane.bottomAnchor="40.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="browseLocalFilesButton" layoutX="20.0" layoutY="125.0" mnemonicParsing="false" onAction="#browseLocalFilesButtonOnAction" prefWidth="360.0" text="Procházet místní soubory">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,50 @@
+[
+  {
+    "userTime": 1482,
+    "userSequence": [
+      8,
+      5
+    ],
+    "correctSequence": [
+      8,
+      5
+    ]
+  },
+  {
+    "userTime": 1488,
+    "userSequence": [
+      6,
+      4
+    ],
+    "correctSequence": [
+      6,
+      4
+    ]
+  },
+  {
+    "userTime": 2397,
+    "userSequence": [
+      4,
+      7,
+      8
+    ],
+    "correctSequence": [
+      4,
+      7,
+      2
+    ]
+  },
+  {
+    "userTime": 3383,
+    "userSequence": [
+      8,
+      1,
+      4
+    ],
+    "correctSequence": [
+      8,
+      1,
+      5
+    ]
+  }
+]
