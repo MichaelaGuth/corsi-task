@@ -58,6 +58,10 @@ public class Tools {
 
     public static void changeScene(Constants.FxmlFile fxmlFile) {
         try {
+            if (fxmlFile.isFullscreen()) {
+                stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+                stage.setFullScreenExitHint("");
+            }
             Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxmlFile.getPath())));
             stage.setScene(new Scene(root, fxmlFile.getSceneWidth(), fxmlFile.getSceneHeight()));
             if (fxmlFile.isExitButtonOverridden()) {
@@ -76,7 +80,9 @@ public class Tools {
             System.exit(100);
             // TODO
         }
-        stage.setFullScreen(fxmlFile.isFullscreen());
+        if (!stage.isFullScreen()) {
+            stage.setFullScreen(fxmlFile.isFullscreen());
+        }
         if (stage.isFullScreen()) {
             stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             stage.setFullScreenExitHint("");

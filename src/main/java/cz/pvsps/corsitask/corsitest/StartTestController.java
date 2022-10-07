@@ -11,17 +11,13 @@ import static cz.pvsps.corsitask.Main.stage;
 public class StartTestController {
     public Button startButton;
 
-    @FXML
-    public void initialize() {
-        stage.setFullScreen(Constants.FxmlFile.START_TEST.isFullscreen());
-    }
 
     public void startButtonOnMouseClicked() {
         Tools.changeScene(Constants.FxmlFile.TRIAL);
     }
 
     public void startButtonOnMouseExited() {
-        startButton.setStyle(String.format(BUTTON_STYLE, "yellow", "white" ));
+        startButton.setStyle(String.format(BUTTON_STYLE, "yellow", "yellow" ));
 
     }
 

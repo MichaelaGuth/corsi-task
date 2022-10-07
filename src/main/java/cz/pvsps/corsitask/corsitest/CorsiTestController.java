@@ -82,8 +82,6 @@ public class CorsiTestController {
 
     @FXML
     public void initialize() {
-        //stage.setFullScreen(Constants.FxmlFile.TRIAL.isFullscreen());
-        stage.setFullScreen(false);
         prepareTest();
         Thread testThread = new Thread(new Runnable() {
             @Override

@@ -63,6 +63,9 @@ public class TestSettingsDialogController {
         birthdatePicker.setShowWeekNumbers(true);
         prepareSequenceFileChoiceBox();
         prepareFileChooser();
+        showBlockNumbersCheckBox.setDisable(true);
+        allowResetButtonCheckBox.setDisable(true);
+        showUserOrderCheckBox.setDisable(true);
     }
 
     private void prepareFileChooser() {
