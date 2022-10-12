@@ -6,7 +6,7 @@ import cz.pvsps.corsitask.tools.Tools;
 public class Constants {
 
     // FXML files config
-    public static final SceneConfig MENU = new SceneConfig ("menuf.fxml", 400, 600, false, true);
+    public static final SceneConfig MENU = new SceneConfig ("menu.fxml", 400, 600, false, false);
     public static final SceneConfig TRIAL = new SceneConfig ("corsiTest.fxml", 1220, 820, true, false);
     public static final SceneConfig SETTINGS = new SceneConfig ("settings.fxml", 400, 600, false, true);
     public static final SceneConfig RESULT = new SceneConfig ("result.fxml", 1200, 600, false, true);

@@ -56,6 +56,9 @@ public class Tools {
         return sequences;
     }
 
+
+    // TODO check why screen is flashing when changing scene in fullscreen
+    // TODO refactor method
     public static void changeScene(SceneConfig sceneConfig) {
         try {
             if (sceneConfig.isFullscreen()) {

@@ -46,6 +46,7 @@ public class SequenceResultController {
 
 
     // TODO Add feature
+    // TODO Add times between each block click to new table
 
     @FXML
     public void initialize() {

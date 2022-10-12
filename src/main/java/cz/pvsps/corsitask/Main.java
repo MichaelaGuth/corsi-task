@@ -35,9 +35,9 @@ public class Main extends Application {
             stage.setResizable(true);
             stage.setFullScreen(false);
             stage.show();
-            LOGGER.log(Level.INFO, "File named: menu.fxml has been successfully loaded.");
+            LOGGER.log(Level.INFO, "File named: " + MENU.fileName() + " has been successfully loaded.");
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "File named: menu.fxml could not be loaded." );
+            LOGGER.log(Level.SEVERE, "File named: " + MENU.fileName() + " could not be loaded." );
             Platform.exit();
             System.exit(100);
         }

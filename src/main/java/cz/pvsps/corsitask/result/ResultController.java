@@ -33,14 +33,14 @@ public class ResultController {
     public Label totalScoreLabel;
     public Label blockSpanLabel;
     public Label correctTrialsLabel;
-
-    public static File file;
     public Button showSequenceButton;
     public Label patientIDLabel;
     public Label testDateLabel;
-    public Label scoreSumLabel;
     private Score score;
+    public static File file;
 
+
+    // TODO change table design to include times between block clicks
     @FXML
     public void initialize() {
         stage.setFullScreen(Constants.RESULT.isFullscreen());
@@ -60,15 +60,7 @@ public class ResultController {
             patientIDLabel.setText("ID: "+ score.getPatientID());
             formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             testDateLabel.setText(score.getTestDate().format(formatter));
-            int scoreSum = 0;
-            for (SequenceScore sequenceScore :
-                    score.getSequencesScores()) {
-                scoreSum += sequenceScore.getScore();
-            }
-            scoreSumLabel.setText(String.valueOf(scoreSum));
-            // before feature is complete
             showSequenceButton.setDisable(true);
-            showSequenceButton.setVisible(false);
         }
     }
 
