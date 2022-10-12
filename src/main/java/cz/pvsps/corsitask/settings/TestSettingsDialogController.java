@@ -33,22 +33,14 @@ public class TestSettingsDialogController {
     public Label surnameLabel;
     public Label birthdateLabel;
     public CheckBox allowTutorialCheckBox;
-
     private ObservableList<String> sequenceFileOptions;
-
     private FileChooser fileChooser;
-
     public static String patientName;
     public static String patientSurname;
-
     public static UUID patientID;
-
     public static LocalDate patientBirthdate;
 
-    private final String successMessage = "-fx-text-fill: GREEN;";
-    private final String errorMessage = "-fx-text-fill: RED;";
-    private final String errorStyle = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;";
-    private final String successStyle = "-fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5;";
+    // TODO delete showUserOrderCheckBox
 
     @FXML
     public void initialize() {
@@ -57,7 +49,7 @@ public class TestSettingsDialogController {
         patientIDLabel.setText("ID: " + patientID);
         configuration = Tools.loadConfiguration();
         showBlockNumbersCheckBox.setSelected(configuration.isShowBlockNumbers());
-        showUserOrderCheckBox.setSelected(configuration.isShowUserSelectedOrderOnBlocks());
+        showUserOrderCheckBox.setDisable(true); // TODO delete showUserOrderCheckBox
         allowResetButtonCheckBox.setSelected(configuration.isAllowResetButton());
         allowTutorialCheckBox.setSelected(configuration.isAllowTutorial());
         birthdatePicker.setShowWeekNumbers(true);
@@ -65,7 +57,6 @@ public class TestSettingsDialogController {
         prepareFileChooser();
         showBlockNumbersCheckBox.setDisable(true);
         allowResetButtonCheckBox.setDisable(true);
-        showUserOrderCheckBox.setDisable(true);
     }
 
     private void prepareFileChooser() {
@@ -93,8 +84,6 @@ public class TestSettingsDialogController {
         sequenceFileChoiceBox.setValue(configuration.getCurrentlyInUseSequenceFilePath());
     }
 
-
-
     public void saveSettingsButtonOnAction() {
         configuration.setShowBlockNumbers(showBlockNumbersCheckBox.isSelected());
         configuration.setCurrentlyInUseSequenceFilePath(sequenceFileChoiceBox.getValue().toString());
@@ -105,71 +94,14 @@ public class TestSettingsDialogController {
         patientName = nameTextField.getText();
         patientBirthdate = birthdatePicker.getValue();
 
-        if (isNameInvalid(patientName) && isNameInvalid(patientSurname)) {
-            nameTextField.setStyle(errorStyle);
-            new animatefx.animation.Shake(nameTextField).play();
-
-            surnameTextField.setStyle(errorStyle);
-            new animatefx.animation.Shake(surnameTextField).play();
-
-            statusLabel.setStyle(errorMessage);
-
-            if (patientBirthdate == null) {
-                statusLabel.setText("Neplatně zadané údaje pacienta!");
-                birthdatePicker.setStyle(errorStyle);
-                new animatefx.animation.Shake(birthdatePicker).play();
-            } else {
-                statusLabel.setText("Neplatně zadané příjmení a jméno pacienta!");
-                birthdatePicker.setStyle(successStyle);
-            }
-
-        } else if (isNameInvalid(patientName)) {
-            surnameTextField.setStyle(successStyle);
-            nameTextField.setStyle(errorStyle);
-            new animatefx.animation.Shake(nameTextField).play();
-            statusLabel.setStyle(errorMessage);
-            if (patientBirthdate == null) {
-                statusLabel.setText("Neplatně zadané jméno a datum narození pacienta!");
-                birthdatePicker.setStyle(errorStyle);
-                new animatefx.animation.Shake(birthdatePicker).play();
-            } else {
-                statusLabel.setText("Neplatně zadané jméno pacienta!");
-                birthdatePicker.setStyle(successStyle);
-            }
-
-        } else if (isNameInvalid(patientSurname)) {
-            statusLabel.setStyle(errorMessage);
-            surnameTextField.setStyle(errorStyle);
-            new animatefx.animation.Shake(surnameTextField).play();
-            nameTextField.setStyle(successStyle);
-            if (patientBirthdate == null) {
-                statusLabel.setText("Neplatně zadané příjmení a datum narození pacienta!");
-                birthdatePicker.setStyle(errorStyle);
-                new animatefx.animation.Shake(birthdatePicker).play();
-            } else {
-                statusLabel.setText("Neplatně zadané příjmení pacienta!");
-                birthdatePicker.setStyle(successStyle);
-            }
-
-        } else if (patientBirthdate == null) {
-            statusLabel.setStyle(errorMessage);
-            surnameTextField.setStyle(successStyle);
-            new animatefx.animation.Shake(birthdatePicker).play();
-            nameTextField.setStyle(successStyle);
-
-        } else {
-            statusLabel.setStyle(successMessage);
-            surnameTextField.setStyle(successStyle);
-            nameTextField.setStyle(successStyle);
-            birthdatePicker.setStyle(successStyle);
-            statusLabel.setText("Zadané údaje jsou ve správném formátu.");
+        if (checkInsertedDataValidity()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Potvrdit nastavení");
+            alert.setTitle("Potvrdit nastavení");                   // TODO konstanta?
             alert.setHeaderText(null);
-            alert.setContentText("Jsou zadané informace správné?");
+            alert.setContentText("Jsou zadané informace správné?"); // TODO konstanta?
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent()) {
-                if (result.get() == ButtonType.OK){
+                if (result.get() == ButtonType.OK) {
                     Tools.saveObjectToJSONFile(configuration, Constants.CONFIGURATION_LOCATION);
                     if (configuration.isAllowTutorial()) {
                         Tools.changeScene(Constants.TUTORIAL);
@@ -180,6 +112,49 @@ public class TestSettingsDialogController {
                 }
             }
         }
+    }
+
+    public boolean checkInsertedDataValidity() {
+        final String successMessage = "-fx-text-fill: GREEN;";
+        final String errorMessage = "-fx-text-fill: RED;";
+        final String errorStyle = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;";
+        final String successStyle = "-fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5;";
+
+        boolean res = true;
+
+        if (isNameInvalid(patientName)) {
+            nameTextField.setStyle(errorStyle);
+            new animatefx.animation.Shake(nameTextField).play();
+            res = false;
+        } else {
+            nameTextField.setStyle(successStyle);
+        }
+
+        if (isNameInvalid(patientSurname)) {
+            surnameTextField.setStyle(errorStyle);
+            new animatefx.animation.Shake(surnameTextField).play();
+            res = false;
+        } else {
+            surnameTextField.setStyle(successStyle);
+        }
+
+        if (patientBirthdate == null) {
+            birthdatePicker.setStyle(errorStyle);
+            new animatefx.animation.Shake(birthdatePicker).play();
+            res = false;
+        } else {
+            birthdatePicker.setStyle(successStyle);
+        }
+        
+        if (res) {
+            statusLabel.setStyle(successMessage);
+            statusLabel.setText("Zadané údaje jsou ve správném formátu.");
+        } else {
+            statusLabel.setStyle(errorMessage);
+            statusLabel.setText("Neplatně zadané údaje pacienta!");
+        }
+        
+        return res;
     }
 
     public void showBlockNumbersCheckBoxOnAction() {

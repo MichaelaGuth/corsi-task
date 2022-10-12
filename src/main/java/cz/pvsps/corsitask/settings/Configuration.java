@@ -12,6 +12,7 @@ public class Configuration {
     @JsonProperty("pathToSequenceDir")
     private String pathToSequenceDir = Constants.SEQUENCES_DIR_PATH;
 
+    // TODO delete this option
     @JsonProperty("showUserSelectedOrderOnBlocks")
     private boolean showUserSelectedOrderOnBlocks = false;
 

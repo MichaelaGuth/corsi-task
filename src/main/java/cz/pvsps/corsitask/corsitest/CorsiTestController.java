@@ -151,11 +151,6 @@ public class CorsiTestController {
                 pause.play();
                 int blockIndex = allBlocks.indexOf(rectangle);
                 userSequence.add(new Block(blockIndex+1));
-                if (configuration.isShowUserSelectedOrderOnBlocks()) {
-                    allBlockLabels.get(blockIndex).setText(String.valueOf(userSequence.size()));
-                    allBlockLabels.get(blockIndex).setTextFill(BLUE);
-                    allBlockLabels.get(blockIndex).setVisible(true);
-                }
                 timesBetweenBlockClicks.add(System.currentTimeMillis()-lastBlockClickTime);
                 lastBlockClickTime = System.currentTimeMillis();
             }
@@ -192,6 +187,10 @@ public class CorsiTestController {
 
     public void resetSelectionButtonOnMouseClicked() {
         prepareForNewUserSequence();
+        if (sequenceIndex > 0) {
+            sequenceIndex--;
+        }
+        waitingForUser = false;
     }
 
     private void prepareTest() {

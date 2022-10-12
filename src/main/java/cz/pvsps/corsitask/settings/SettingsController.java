@@ -38,8 +38,7 @@ public class SettingsController {
 
     @FXML
     public void initialize() {
-        stage.setFullScreen(Constants.SETTINGS.isFullscreen());
-
+        // TODO delete showUserOrderCheckBox
         directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File(Tools.getDocumentsPath()));
         sequenceLocationOptions = FXCollections.observableArrayList(
@@ -48,7 +47,6 @@ public class SettingsController {
         );
         sequencesLocationChoiceBox.setItems(sequenceLocationOptions);
         sequencesLocationChoiceBox.setValue(sequenceLocationOptions.get(0));
-
         resultsLocationOptions = FXCollections.observableArrayList(
                 DEFAULT_RESULT_DIR_LOCATION,
                 BROWSE_OPTION
