@@ -67,7 +67,6 @@ public class CorsiTestController {
 
     private ArrayList<Block> userSequence;
     private Score score;
-    private SequenceScore currentSequence;
     private SequenceScore lastSequence;
 
     private final Color YELLOW = Color.web("#f5da0f");
@@ -78,7 +77,7 @@ public class CorsiTestController {
 
     private long lastBlockClickTime;
 
-    private ArrayList<Long> times;
+    private ArrayList<Long> timesBetweenBlockClicks;
 
 
     @FXML
@@ -100,7 +99,7 @@ public class CorsiTestController {
                         userSequence = new ArrayList<>();
                         confirmSelectionButton.setDisable(false);
                         setAllBlocksDisable(false);
-                        times = new ArrayList<>();
+                        timesBetweenBlockClicks = new ArrayList<>();
                         startTime = System.currentTimeMillis();
                         lastBlockClickTime = startTime;
                     }
@@ -121,7 +120,7 @@ public class CorsiTestController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH_mm_ss");
         filePath += score.getPatientSurname()+" "+score.getPatientName()+" "+score.getTestDate().format(dtf)+".json";
         saveObjectToJSONFile(score, filePath);
-        Platform.runLater(() -> Tools.changeScene(Constants.FxmlFile.END_TEST));
+        Platform.runLater(() -> Tools.changeScene(Constants.END_TEST));
     }
 
     private void playSequence(ArrayList<Block> sequence) {
@@ -157,7 +156,7 @@ public class CorsiTestController {
                     allBlockLabels.get(blockIndex).setTextFill(BLUE);
                     allBlockLabels.get(blockIndex).setVisible(true);
                 }
-                times.add(System.currentTimeMillis()-lastBlockClickTime);
+                timesBetweenBlockClicks.add(System.currentTimeMillis()-lastBlockClickTime);
                 lastBlockClickTime = System.currentTimeMillis();
             }
         }
@@ -165,12 +164,12 @@ public class CorsiTestController {
 
     public void confirmSelectionButtonOnMouseClicked() {
         long finishTime = System.currentTimeMillis();
-        times.add(System.currentTimeMillis()-lastBlockClickTime);
+        timesBetweenBlockClicks.add(System.currentTimeMillis()-lastBlockClickTime);
         time = finishTime -startTime;
         if (score.getNumberOfSequences() > 0) {
             lastSequence = score.getSequencesScores().get(score.getNumberOfSequences()-1);
         }
-        currentSequence = new SequenceScore(sequences.get(sequenceIndex-1), userSequence, time, times);
+        SequenceScore currentSequence = new SequenceScore(sequences.get(sequenceIndex - 1), userSequence, time, timesBetweenBlockClicks);
         if (lastSequence != null)  {
             if (lastSequence.getCorrectSequence().size() == currentSequence.getCorrectSequence().size()) {
                 currentSequence.setTrialNumber(2);

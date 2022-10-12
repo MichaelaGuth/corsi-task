@@ -56,17 +56,17 @@ public class Tools {
         return sequences;
     }
 
-    public static void changeScene(Constants.FxmlFile fxmlFile) {
+    public static void changeScene(SceneConfig sceneConfig) {
         try {
-            if (fxmlFile.isFullscreen()) {
+            if (sceneConfig.isFullscreen()) {
                 stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
                 stage.setFullScreenExitHint("");
             }
-            Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxmlFile.getPath())));
-            stage.setScene(new Scene(root, fxmlFile.getSceneWidth(), fxmlFile.getSceneHeight()));
-            if (fxmlFile.isExitButtonOverridden()) {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(sceneConfig.getPath())));
+            stage.setScene(new Scene(root, sceneConfig.getWidth(), sceneConfig.getHeight()));
+            if (sceneConfig.isExitButtonOverridden()) {
                 stage.setOnCloseRequest(windowEvent -> {
-                    Tools.changeScene(Constants.FxmlFile.MENU);
+                    Tools.changeScene(Constants.MENU);
                     windowEvent.consume();
                 });
             } else {
@@ -74,21 +74,21 @@ public class Tools {
             }
             stage.centerOnScreen();
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "File named: " + fxmlFile.getName() + " could no be Loaded.");
+            LOGGER.log(Level.SEVERE, "File named: " + sceneConfig.getFileName() + " could no be Loaded.");
             e.printStackTrace();
             stage.close();
             System.exit(100);
             // TODO
         }
         if (!stage.isFullScreen()) {
-            stage.setFullScreen(fxmlFile.isFullscreen());
+            stage.setFullScreen(sceneConfig.isFullscreen());
         }
         if (stage.isFullScreen()) {
             stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             stage.setFullScreenExitHint("");
         }
         stage.show();
-        LOGGER.log(Level.INFO, "File named: " + fxmlFile.getName() + " has been successfully loaded.");
+        LOGGER.log(Level.INFO, "File named: " + sceneConfig.getFileName() + " has been successfully loaded.");
     }
 
     public static String getDocumentsPath() {

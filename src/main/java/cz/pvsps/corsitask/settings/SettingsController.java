@@ -38,7 +38,7 @@ public class SettingsController {
 
     @FXML
     public void initialize() {
-        stage.setFullScreen(Constants.FxmlFile.SETTINGS.isFullscreen());
+        stage.setFullScreen(Constants.SETTINGS.isFullscreen());
 
         directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File(Tools.getDocumentsPath()));
@@ -65,7 +65,7 @@ public class SettingsController {
         configuration.setShowBlockNumbers(showBlockNumbersCheckBox.isSelected());
         configuration.setShowUserSelectedOrderOnBlocks(showUserOrderCheckBox.isSelected());
         Tools.saveObjectToJSONFile(configuration, Constants.CONFIGURATION_LOCATION);
-        Tools.changeScene(Constants.FxmlFile.MENU);
+        Tools.changeScene(Constants.MENU);
     }
 
     public void sequencesLocationChoiceBoxOnAction() {

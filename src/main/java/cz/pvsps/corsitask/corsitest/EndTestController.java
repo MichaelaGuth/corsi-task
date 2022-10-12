@@ -11,11 +11,11 @@ public class EndTestController {
     public Button endButton;
 
     public void initialize() {
-        stage.setFullScreen(Constants.FxmlFile.END_TEST.isFullscreen());
+        stage.setFullScreen(Constants.END_TEST.isFullscreen());
     }
 
     public void endButtonOnMouseClicked() {
-        Tools.changeScene(Constants.FxmlFile.MENU);
+        Tools.changeScene(Constants.MENU);
     }
 
     public void endButtonOnMouseEntered() {

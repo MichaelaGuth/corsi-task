@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static cz.pvsps.corsitask.Constants.FxmlFile;
+import static cz.pvsps.corsitask.Constants.MENU;
 
 public class Main extends Application {
     private static Logger LOGGER = Logger.getLogger(Main.class.getName());
@@ -26,12 +26,12 @@ public class Main extends Application {
         stage = primaryStage;
         configuration = Tools.loadConfiguration();
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(FxmlFile.MENU.getPath()));      // menu.fxml
+            Parent root = FXMLLoader.load(getClass().getResource(MENU.getPath()));      // menu.fxml
 
             stage.setTitle("Corsi Test");
             stage.getIcons().add(new Image("icon.png"));
             stage.setIconified(false);
-            stage.setScene(new Scene(root, FxmlFile.MENU.getSceneWidth(), FxmlFile.MENU.getSceneHeight()));
+            stage.setScene(new Scene(root, MENU.getWidth(), MENU.getHeight()));
             stage.setResizable(true);
             stage.setFullScreen(false);
             stage.show();

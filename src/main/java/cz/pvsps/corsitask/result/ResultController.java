@@ -43,7 +43,7 @@ public class ResultController {
 
     @FXML
     public void initialize() {
-        stage.setFullScreen(Constants.FxmlFile.RESULT.isFullscreen());
+        stage.setFullScreen(Constants.RESULT.isFullscreen());
         if (file != null) {
             score = Tools.loadScore(file);
             setTable();

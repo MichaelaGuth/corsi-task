@@ -52,7 +52,7 @@ public class TestSettingsDialogController {
 
     @FXML
     public void initialize() {
-        stage.setFullScreen(Constants.FxmlFile.TEST_SETTINGS_DIALOG.isFullscreen());
+        stage.setFullScreen(Constants.TEST_SETTINGS_DIALOG.isFullscreen());
         patientID = UUID.randomUUID();
         patientIDLabel.setText("ID: " + patientID);
         configuration = Tools.loadConfiguration();
@@ -172,9 +172,9 @@ public class TestSettingsDialogController {
                 if (result.get() == ButtonType.OK){
                     Tools.saveObjectToJSONFile(configuration, Constants.CONFIGURATION_LOCATION);
                     if (configuration.isAllowTutorial()) {
-                        Tools.changeScene(Constants.FxmlFile.TUTORIAL);
+                        Tools.changeScene(Constants.TUTORIAL);
                     } else {
-                        Tools.changeScene(Constants.FxmlFile.START_TEST);
+                        Tools.changeScene(Constants.START_TEST);
                     }
 
                 }

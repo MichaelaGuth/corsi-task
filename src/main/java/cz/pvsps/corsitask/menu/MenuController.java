@@ -19,7 +19,7 @@ public class MenuController {
 
     @FXML
     public void initialize() {
-        stage.setFullScreen(Constants.FxmlFile.MENU.isFullscreen());
+        stage.setFullScreen(Constants.MENU.isFullscreen());
     }
 
     public void exitButtonOnAction() {
@@ -28,15 +28,15 @@ public class MenuController {
     }
 
     public void startTestButtonOnAction()  {
-        Tools.changeScene(Constants.FxmlFile.TEST_SETTINGS_DIALOG);
+        Tools.changeScene(Constants.TEST_SETTINGS_DIALOG);
     }
 
     public void goToSettingsButtonOnAction() {
-        Tools.changeScene(Constants.FxmlFile.SETTINGS);
+        Tools.changeScene(Constants.SETTINGS);
     }
 
 
     public void showResultsButtonOnAction() {
-        Tools.changeScene(Constants.FxmlFile.TEST_RESULTS_DIALOG);
+        Tools.changeScene(Constants.TEST_RESULTS_DIALOG);
     }
 }

@@ -27,7 +27,6 @@ public class TestResultsDialogController {
 
     @FXML
     public void initialize() {
-        stage.setFullScreen(Constants.FxmlFile.TEST_RESULTS_DIALOG.isFullscreen());
         configuration = Tools.loadConfiguration();
         prepareResultsFileChoiceBox();
         prepareFileChooser();
@@ -60,7 +59,7 @@ public class TestResultsDialogController {
         // else throw new exception
         file = new File(pathToResultsComboBox.getValue());
         if (file.exists()) {
-            Tools.changeScene(Constants.FxmlFile.RESULT);
+            Tools.changeScene(Constants.RESULT);
         }
 
     }

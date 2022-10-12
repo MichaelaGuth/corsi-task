@@ -53,7 +53,7 @@ public class TutorialController {
 
     @FXML
     public void initialize() {
-        stage.setFullScreen(Constants.FxmlFile.TUTORIAL.isFullscreen());
+        stage.setFullScreen(Constants.TUTORIAL.isFullscreen());
         prepareTutorial();
         Thread checkForContinueButtonThread = new Thread(new Runnable() {
             @Override
@@ -142,7 +142,7 @@ public class TutorialController {
     }
 
     public void continueToTestButtonOnMouseClicked() {
-        Tools.changeScene(Constants.FxmlFile.START_TEST);
+        Tools.changeScene(Constants.START_TEST);
     }
 
     public void blockAny_OnMouseClicked(MouseEvent event) {

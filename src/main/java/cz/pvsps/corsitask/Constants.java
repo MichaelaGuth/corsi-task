@@ -1,78 +1,32 @@
 package cz.pvsps.corsitask;
 
+import cz.pvsps.corsitask.tools.SceneConfig;
 import cz.pvsps.corsitask.tools.Tools;
 
 public class Constants {
 
-    public enum FxmlFile {
-        MENU ("menu.fxml", 400, 600),
-        TRIAL ("corsiTest.fxml", 1220, 820, false), // TODO
-        RESULT ("result.fxml", 1200, 600, false, true),
-        SETTINGS ("settings.fxml", 400, 600, false, true),
-        TEST_SETTINGS_DIALOG ("testSettingsDialog.fxml", 400, 600, false, true),
-        SEQUENCE_RESULT ("sequenceResultCopy2.fxml", 510, 410),
-        TEST_RESULTS_DIALOG ("testResultsDialog.fxml", 400, 250, false, true),
-        TUTORIAL ("tutorial.fxml", 800, 450, true),
-        START_TEST("startTest.fxml", 600, 400, false), // TODO
-        END_TEST("endTest.fxml", 600, 400, false); // TODO
+    // FXML files config
+    public static final SceneConfig MENU = new SceneConfig ("menu.fxml", 400, 600, false, true);
+    public static final SceneConfig TRIAL = new SceneConfig ("corsiTest.fxml", 1220, 820, true, false);
+    public static final SceneConfig SETTINGS = new SceneConfig ("settings.fxml", 400, 600, false, true);
+    public static final SceneConfig RESULT = new SceneConfig ("result.fxml", 1200, 600, false, true);
+    public static final SceneConfig TEST_SETTINGS_DIALOG = new SceneConfig ("testSettingsDialog.fxml", 400, 600, false, true);
+    public static final SceneConfig SEQUENCE_RESULT = new SceneConfig ("sequenceResultCopy2.fxml", 510, 410, false, false);
+    public static final SceneConfig TEST_RESULTS_DIALOG = new SceneConfig ("testResultsDialog.fxml", 400, 250, false, true);
+    public static final SceneConfig TUTORIAL = new SceneConfig ("tutorial.fxml", 800, 450, true, false);
+    public static final SceneConfig START_TEST = new SceneConfig ("startTest.fxml", 600, 400, true, false);
+    public static final SceneConfig END_TEST = new SceneConfig ("endTest.fxml", 600, 400, true, false);
 
-        private final String name;
-        private final int sceneWidth;
-        private final int sceneHeight;
-        private boolean isFullscreen;
-        private boolean isExitButtonOverridden = false;
-
-        FxmlFile(String fxmlFileName, int sceneWidth, int sceneHeight) {
-            this.name = fxmlFileName;
-            this.sceneWidth = sceneWidth;
-            this.sceneHeight = sceneHeight;
-            this.isFullscreen = false;
-        }
-
-        FxmlFile(String fxmlFileName, int sceneWidth, int sceneHeight, boolean isFullscreen) {
-            this(fxmlFileName, sceneWidth, sceneHeight);
-            this.isFullscreen = isFullscreen;
-        }
-
-        FxmlFile(String fxmlFileName, int sceneWidth, int sceneHeight, boolean isFullscreen, boolean isExitButtonOverridden) {
-            this(fxmlFileName, sceneWidth, sceneHeight, isFullscreen);
-            this.isExitButtonOverridden = isExitButtonOverridden;
-        }
-
-        public String getPath() {
-            return "/fxml/" + name;
-        }
-
-        public int getSceneHeight() {
-            return sceneHeight;
-        }
-
-        public int getSceneWidth() {
-            return sceneWidth;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public boolean isFullscreen() {
-            return isFullscreen;
-        }
-
-        public boolean isExitButtonOverridden() {
-            return isExitButtonOverridden;
-        }
-    }
-
+    // Styling
     public static final String BUTTON_STYLE = "-fx-background-color: %s; -fx-border-color: %s; -fx-border-width: 5;";
 
+    // Paths
     public static final String CONFIGURATION_LOCATION = Tools.getDocumentsPath() + "\\Corsi Test\\settings.json";
-
     public static final String RESULTS_DIR_PATH = Tools.getDocumentsPath() + "\\Corsi Test\\results";
-
     public static final String SEQUENCES_DIR_PATH = Tools.getDocumentsPath() + "\\Corsi Test\\sequences";
-
     public static final String CURRENTLY_USED_SEQUENCES_PATH = SEQUENCES_DIR_PATH + "\\defaultSequences.json";
+
+    // Other
     public static final String BROWSE_OPTION = "Procházet místní soubory";
 
     public static final String DEFAULT_SEQUENCES_FILE_NAME = "defaultSequences.json";
