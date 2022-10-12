@@ -76,9 +76,10 @@ public class CorsiTestController {
     private long startTime;
     private long time;
 
+    private long lastBlockClickTime;
 
+    private ArrayList<Long> times;
 
-    /// TODO opravit vyhodnocení ukončení - test se má ukončit po dvou nesprávně odpovězených sekvencích o stejné délce!!!!
 
     @FXML
     public void initialize() {
@@ -92,14 +93,6 @@ public class CorsiTestController {
                         testInProgress = false;
                         waitingForUser = true;
                     }
-                    if (lastSequence != null && currentSequence != null) {
-                        if (lastSequence.getCorrectSequence().size() == currentSequence.getCorrectSequence().size()) {
-                            if (!lastSequence.isUserCorrect() && !currentSequence.isUserCorrect()) {
-                                testInProgress = false;
-                                waitingForUser = true;
-                            }
-                        }
-                    }
                     if (!waitingForUser) {
                         playSequence(sequences.get(sequenceIndex));
                         sequenceIndex++;
@@ -107,7 +100,9 @@ public class CorsiTestController {
                         userSequence = new ArrayList<>();
                         confirmSelectionButton.setDisable(false);
                         setAllBlocksDisable(false);
+                        times = new ArrayList<>();
                         startTime = System.currentTimeMillis();
+                        lastBlockClickTime = startTime;
                     }
                 }
                 endTest();
@@ -162,20 +157,31 @@ public class CorsiTestController {
                     allBlockLabels.get(blockIndex).setTextFill(BLUE);
                     allBlockLabels.get(blockIndex).setVisible(true);
                 }
+                times.add(System.currentTimeMillis()-lastBlockClickTime);
+                lastBlockClickTime = System.currentTimeMillis();
             }
         }
     }
 
     public void confirmSelectionButtonOnMouseClicked() {
         long finishTime = System.currentTimeMillis();
+        times.add(System.currentTimeMillis()-lastBlockClickTime);
         time = finishTime -startTime;
         if (score.getNumberOfSequences() > 0) {
             lastSequence = score.getSequencesScores().get(score.getNumberOfSequences()-1);
         }
-        currentSequence = new SequenceScore(sequences.get(sequenceIndex-1), userSequence, time);
+        currentSequence = new SequenceScore(sequences.get(sequenceIndex-1), userSequence, time, times);
         if (lastSequence != null)  {
             if (lastSequence.getCorrectSequence().size() == currentSequence.getCorrectSequence().size()) {
                 currentSequence.setTrialNumber(2);
+            }
+        }
+        if (lastSequence != null) {
+            if (lastSequence.getCorrectSequence().size() == currentSequence.getCorrectSequence().size()) {
+                if (!lastSequence.isUserCorrect() && !currentSequence.isUserCorrect()) {
+                    testInProgress = false;
+                    waitingForUser = true;
+                }
             }
         }
         score.addSequenceScore(currentSequence);

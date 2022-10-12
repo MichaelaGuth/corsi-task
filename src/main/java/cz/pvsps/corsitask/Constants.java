@@ -6,15 +6,15 @@ public class Constants {
 
     public enum FxmlFile {
         MENU ("menu.fxml", 400, 600),
-        TRIAL ("corsiTest.fxml", 1220, 820, true),
+        TRIAL ("corsiTest.fxml", 1220, 820, false), // TODO
         RESULT ("result.fxml", 1200, 600, false, true),
         SETTINGS ("settings.fxml", 400, 600, false, true),
         TEST_SETTINGS_DIALOG ("testSettingsDialog.fxml", 400, 600, false, true),
         SEQUENCE_RESULT ("sequenceResultCopy2.fxml", 510, 410),
         TEST_RESULTS_DIALOG ("testResultsDialog.fxml", 400, 250, false, true),
         TUTORIAL ("tutorial.fxml", 800, 450, true),
-        START_TEST("startTest.fxml", 600, 400, true),
-        END_TEST("endTest.fxml", 600, 400, true);
+        START_TEST("startTest.fxml", 600, 400, false), // TODO
+        END_TEST("endTest.fxml", 600, 400, false); // TODO
 
         private final String name;
         private final int sceneWidth;

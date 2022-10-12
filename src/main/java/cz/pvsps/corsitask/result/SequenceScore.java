@@ -18,8 +18,15 @@ public final class SequenceScore {
     private boolean userCorrect;
     @JsonProperty("score")
     private int score;
+    @JsonProperty("timesBetweenBlocks")
+    private ArrayList<Long> timesBetweenBlocks;
 
     public SequenceScore() {}
+
+    public SequenceScore(ArrayList<Block> correctSequence, ArrayList<Block> userSequence, long userTime, ArrayList<Long> timesBetweenBlocks) {
+        this(correctSequence, userSequence, userTime);
+        this.timesBetweenBlocks = timesBetweenBlocks;
+    }
 
     public SequenceScore(ArrayList<Block> correctSequence, ArrayList<Block> userSequence, long userTime) {
         this.correctSequence = correctSequence;
@@ -57,5 +64,9 @@ public final class SequenceScore {
 
     public void setTrialNumber(int trialNumber) {
         this.trialNumber = trialNumber;
+    }
+
+    public ArrayList<Long> getTimesBetweenBlocks() {
+        return timesBetweenBlocks;
     }
 }
