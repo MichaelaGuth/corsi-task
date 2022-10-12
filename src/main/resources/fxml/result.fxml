@@ -33,13 +33,15 @@
                 <Font size="16.0" />
             </font>
         </Label>
-        <TableView fx:id="table" layoutX="460.0" layoutY="40.0" prefHeight="520.0" prefWidth="603.0">
+        <TableView fx:id="table" layoutX="450.0" layoutY="40.0" prefHeight="520.0" prefWidth="620.0">
             <columns>
-                <TableColumn fx:id="sequenceColumn" editable="false" maxWidth="280.0" minWidth="280.0" prefWidth="280.0" resizable="false" sortable="false" style="-fx-alignment: CENTER-LEFT;" text="Sekvence" />
-                <TableColumn fx:id="sequenceLengthColumn" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Délka &#10;sekvence" />
-                <TableColumn fx:id="trialNumberColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Pokus" />
-                <TableColumn fx:id="userTimeColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Čas" />
-                <TableColumn fx:id="scoreColumn" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Skóre" />
+                <TableColumn fx:id="sequenceColumn" editable="false" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" resizable="false" sortable="false" style="-fx-alignment: CENTER-LEFT;" text="Zadaná sekvence" />
+                <TableColumn fx:id="userSequenceColumn" editable="false" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" resizable="false" sortable="false" style="-fx-alignment: CENTER-LEFT;" text="Odpovězená sekvence" />
+                <TableColumn fx:id="sequenceLengthColumn" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Délka &#10;sekvence" />
+                <TableColumn fx:id="trialNumberColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" style="-fx-alignment: CENTER;" text="Pokus" />
+                <TableColumn fx:id="scoreColumn" maxWidth="50.0" minWidth="-Infinity" prefWidth="50.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Skóre" />
+                <TableColumn fx:id="userTimeColumn" maxWidth="86.0" minWidth="-Infinity" prefWidth="81.0" resizable="false" style="-fx-alignment: CENTER;" text="Celkový čas" />
+                <TableColumn fx:id="timesBetweenBlocksColumn" maxWidth="92.0" minWidth="-Infinity" prefWidth="88.0" resizable="false" style="-fx-alignment: CENTER;" text="Časy kroků" />
             </columns>
         </TableView>
         <Label layoutX="40.0" layoutY="170.0" prefWidth="117.0" text="Datum narození:" wrapText="true">
@@ -97,7 +99,7 @@
                 <Font size="13.0" />
             </font>
         </Label>
-        <Button fx:id="showSequenceButton" layoutX="1079.0" layoutY="253.0" mnemonicParsing="false" onAction="#showSequenceButtonOnAction" prefHeight="74.0" prefWidth="94.0" text="Ukázat&#10;sekvenci&#10;" textAlignment="CENTER">
+        <Button fx:id="showSequenceButton" layoutX="1098.0" layoutY="253.0" mnemonicParsing="false" onAction="#showSequenceButtonOnAction" prefHeight="74.0" prefWidth="75.0" text="Ukázat&#10;sekvenci&#10;" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>

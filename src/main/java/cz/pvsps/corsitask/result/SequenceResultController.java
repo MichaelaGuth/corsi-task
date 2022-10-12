@@ -48,6 +48,8 @@ public class SequenceResultController {
     // TODO Add feature
     // TODO Add times between each block click to new table
 
+    // TODO Add option to export to csv
+
     @FXML
     public void initialize() {
         Tools.resize(anchorPane);

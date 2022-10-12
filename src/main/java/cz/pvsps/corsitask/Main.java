@@ -22,6 +22,9 @@ public class Main extends Application {
     public static Configuration configuration;
 
     public static Stage stage;
+
+    // TODO create default folders if they dont exist
+
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;

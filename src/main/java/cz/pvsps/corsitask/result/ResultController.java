@@ -30,6 +30,8 @@ public class ResultController {
     public TableColumn<SequenceTableItem, SimpleIntegerProperty> scoreColumn;
     public TableColumn<SequenceTableItem, SimpleDoubleProperty> userTimeColumn;
     public TableColumn<SequenceTableItem, SimpleListProperty<Block>> sequenceColumn;
+    public TableColumn<SequenceTableItem, SimpleListProperty<Long>> timesBetweenBlocksColumn;
+    public TableColumn<SequenceTableItem, SimpleListProperty<Block>> userSequenceColumn;
     public Label totalScoreLabel;
     public Label blockSpanLabel;
     public Label correctTrialsLabel;
@@ -39,8 +41,9 @@ public class ResultController {
     private Score score;
     public static File file;
 
-
-    // TODO change table design to include times between block clicks
+    // TODO change table design to NOT include times between block clicks
+    // TODO add export to PDF option
+    // TODO Add option to export data to csv
     @FXML
     public void initialize() {
         stage.setFullScreen(Constants.RESULT.isFullscreen());
@@ -70,6 +73,8 @@ public class ResultController {
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
         userTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         sequenceColumn.setCellValueFactory(new PropertyValueFactory<>("sequence"));
+        userSequenceColumn.setCellValueFactory(new PropertyValueFactory<>("userSequence"));
+        timesBetweenBlocksColumn.setCellValueFactory(new PropertyValueFactory<>("timesBetweenBlockClicks"));
     }
 
     private ObservableList<SequenceTableItem> getTableItemsList() {
