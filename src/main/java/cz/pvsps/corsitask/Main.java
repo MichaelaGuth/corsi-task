@@ -21,12 +21,8 @@ public class Main extends Application {
     public static Configuration configuration;
 
     public static Stage stage;
-
-
     @Override
     public void start(Stage primaryStage) {
-
-        // TODO check if default files and folders exist, if not create them
         stage = primaryStage;
         configuration = Tools.loadConfiguration();
         try {
