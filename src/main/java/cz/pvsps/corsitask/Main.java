@@ -39,7 +39,7 @@ public class Main extends Application {
             LOGGER.log(Level.INFO, "File named: menu.fxml has been successfully loaded.");
 
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "File named: " + " could not be loaded." );
+            LOGGER.log(Level.SEVERE, "File named: menu.fxml could not be loaded." );
         }
     }
 }
