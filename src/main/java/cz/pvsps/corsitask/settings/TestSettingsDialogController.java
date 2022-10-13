@@ -1,6 +1,7 @@
 package cz.pvsps.corsitask.settings;
 
 import cz.pvsps.corsitask.Constants;
+import cz.pvsps.corsitask.tools.FileNameFormat;
 import cz.pvsps.corsitask.tools.Tools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
+import static cz.pvsps.corsitask.Constants.*;
 import static cz.pvsps.corsitask.Main.configuration;
 import static cz.pvsps.corsitask.Main.stage;
 
@@ -20,7 +22,6 @@ public class TestSettingsDialogController {
 
     public Button saveSettingsButton;
     public CheckBox showBlockNumbersCheckBox;
-    public CheckBox showUserOrderCheckBox;
     public ChoiceBox<String> sequenceFileChoiceBox;
     public CheckBox allowResetButtonCheckBox;
     public TextField surnameTextField;
@@ -33,6 +34,8 @@ public class TestSettingsDialogController {
     public Label surnameLabel;
     public Label birthdateLabel;
     public CheckBox allowTutorialCheckBox;
+    public ChoiceBox<String> resultFileNameFormatChoiceBox;
+    public Label resultFileNameFormatExampleLabel;
     private ObservableList<String> sequenceFileOptions;
     private FileChooser fileChooser;
     public static String patientName;
@@ -49,14 +52,12 @@ public class TestSettingsDialogController {
         patientIDLabel.setText("ID: " + patientID);
         configuration = Tools.loadConfiguration();
         showBlockNumbersCheckBox.setSelected(configuration.isShowBlockNumbers());
-        showUserOrderCheckBox.setDisable(true); // TODO delete showUserOrderCheckBox
         allowResetButtonCheckBox.setSelected(configuration.isAllowResetButton());
         allowTutorialCheckBox.setSelected(configuration.isAllowTutorial());
         birthdatePicker.setShowWeekNumbers(true);
         prepareSequenceFileChoiceBox();
+        prepareResultFileNameFormatChoiceBox();
         prepareFileChooser();
-        showBlockNumbersCheckBox.setDisable(true);
-        allowResetButtonCheckBox.setDisable(true);
     }
 
     private void prepareFileChooser() {
@@ -84,12 +85,27 @@ public class TestSettingsDialogController {
         sequenceFileChoiceBox.setValue(configuration.getCurrentlyInUseSequenceFilePath());
     }
 
+    private void prepareResultFileNameFormatChoiceBox() {
+        ObservableList<String> resultFileNameFormatOptions = FXCollections.observableArrayList(
+                DATE_SURNAME_NAME_TIME.getFormat(),
+                ID.getFormat(),
+                DATE_ID_TIME.getFormat()
+        );
+        resultFileNameFormatChoiceBox.setItems(resultFileNameFormatOptions);
+        resultFileNameFormatChoiceBox.setValue(configuration.getResultFileNameFormat().getFormat());
+        setResultFileNameFormatExample(configuration.getResultFileNameFormat());
+    }
+
+    private void setResultFileNameFormatExample(FileNameFormat resultFileNameFormat) {
+        resultFileNameFormatExampleLabel.setText("např.: " + resultFileNameFormat.getExample());
+    }
+
     public void saveSettingsButtonOnAction() {
         configuration.setShowBlockNumbers(showBlockNumbersCheckBox.isSelected());
         configuration.setCurrentlyInUseSequenceFilePath(sequenceFileChoiceBox.getValue().toString());
-        configuration.setShowUserSelectedOrderOnBlocks(showUserOrderCheckBox.isSelected());
         configuration.setAllowResetButton(allowResetButtonCheckBox.isSelected());
         configuration.setAllowTutorial(allowTutorialCheckBox.isSelected());
+        configuration.setResultFileNameFormat(FileNameFormat.findFileNameFormat(resultFileNameFormatChoiceBox.getValue()));
         patientSurname = surnameTextField.getText();
         patientName = nameTextField.getText();
         patientBirthdate = birthdatePicker.getValue();
@@ -157,24 +173,6 @@ public class TestSettingsDialogController {
         return res;
     }
 
-    public void showBlockNumbersCheckBoxOnAction() {
-        if (showBlockNumbersCheckBox.isSelected()) {
-            showUserOrderCheckBox.setSelected(false);
-            showUserOrderCheckBox.setDisable(true);
-        } else {
-            showUserOrderCheckBox.setDisable(false);
-        }
-    }
-
-    public void showUserOrderCheckBoxOnAction() {
-        if (showUserOrderCheckBox.isSelected()) {
-            showBlockNumbersCheckBox.setSelected(false);
-            showBlockNumbersCheckBox.setDisable(true);
-        } else {
-            showBlockNumbersCheckBox.setDisable(false);
-        }
-    }
-
     public void browseLocalFilesButtonOnAction() {
         var location = fileChooser.showOpenDialog(stage);
         if (location != null) {
@@ -189,4 +187,7 @@ public class TestSettingsDialogController {
         return !name.matches("^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçřšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆŘŠŽ∂ð ,.'-]+$");
     }
 
+    public void resultFileNameFormatChoiceBoxOnAction() {
+        setResultFileNameFormatExample(FileNameFormat.findFileNameFormat(resultFileNameFormatChoiceBox.getValue()));
+    }
 }

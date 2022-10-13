@@ -7,9 +7,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SequenceTableItem {
     private final SimpleIntegerProperty sequenceLength;
     private final SimpleStringProperty time;
@@ -17,7 +14,6 @@ public class SequenceTableItem {
     private final SimpleIntegerProperty trialNumber;
     private final SimpleListProperty<Block> sequence;
     private final SimpleListProperty<Block> userSequence;
-    private final SimpleListProperty<String> timesBetweenBlockClicks;
 
     public SequenceTableItem(SequenceScore sequenceScore) {
         this.score = new SimpleIntegerProperty(sequenceScore.getScore());
@@ -25,11 +21,6 @@ public class SequenceTableItem {
         this.trialNumber = new SimpleIntegerProperty(sequenceScore.getTrialNumber());
         this.sequenceLength = new SimpleIntegerProperty(sequenceScore.getCorrectSequence().size());
         this.sequence = new SimpleListProperty<>(FXCollections.observableArrayList(sequenceScore.getCorrectSequence()));
-        List<String> tmp = new ArrayList<>();
-        for (long time : sequenceScore.getTimesBetweenBlocks()) {
-            tmp.add((double)time/1000 + " s");
-        }
-        this.timesBetweenBlockClicks = new SimpleListProperty<>(FXCollections.observableArrayList(tmp));
         this.userSequence = new SimpleListProperty<>(FXCollections.observableArrayList(sequenceScore.getUserSequence()));
     }
 
@@ -42,7 +33,6 @@ public class SequenceTableItem {
                 ", trialNumber=" + trialNumber +
                 ", sequence=" + sequence +
                 ", userSequence=" + userSequence +
-                ", timesBetweenBlockClicks=" + timesBetweenBlockClicks +
                 '}';
     }
 
@@ -84,14 +74,6 @@ public class SequenceTableItem {
 
     public SimpleListProperty<Block> sequenceProperty() {
         return sequence;
-    }
-
-    public ObservableList<String> getTimesBetweenBlockClicks() {
-        return timesBetweenBlockClicks.get();
-    }
-
-    public SimpleListProperty<String> timesBetweenBlockClicksProperty() {
-        return timesBetweenBlockClicks;
     }
 
     public ObservableList<Block> getUserSequence() {

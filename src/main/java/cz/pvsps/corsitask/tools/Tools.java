@@ -98,6 +98,8 @@ public class Tools {
         return FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     }
 
+
+    // TODO check with Honza
     public static Configuration loadConfiguration()  {
         Configuration configuration;
         try {
@@ -105,11 +107,18 @@ public class Tools {
             ObjectMapper mapper = new ObjectMapper();
             configuration = mapper.readValue(json_String, Configuration.class);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        } catch (FileNotFoundException e) {
+            LOGGER.log(Level.WARNING, "Configuration file is corrupted. Creating new file with default values...");
+            deleteFile(Constants.CONFIGURATION_LOCATION);
             configuration = new Configuration();
             saveObjectToJSONFile(configuration,Constants.CONFIGURATION_LOCATION);
             LOGGER.log(Level.INFO, "Configuration has been created to file: " + Constants.CONFIGURATION_LOCATION + ".");
+            return configuration;
+        } catch (FileNotFoundException e) {
+            LOGGER.log(Level.WARNING, "Configuration file was not found. Creating new file with default values...");
+            configuration = new Configuration();
+            saveObjectToJSONFile(configuration,Constants.CONFIGURATION_LOCATION);
+            LOGGER.log(Level.INFO, "Configuration has been created to file: " + Constants.CONFIGURATION_LOCATION + ".");
+            return configuration;
         }
         LOGGER.log(Level.INFO, "Configuration has been successfully loaded from file: " + Constants.CONFIGURATION_LOCATION + ".");
         return configuration;
@@ -183,6 +192,19 @@ public class Tools {
             fileWriter.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void deleteFile(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            if (file.delete()) {
+                LOGGER.log(Level.INFO, "File: " + filePath + " has been successfully deleted.");
+            } else {
+                LOGGER.log(Level.WARNING, "File: " + filePath + " could not be deleted.");
+            }
+        } else {
+            LOGGER.log(Level.INFO, "File: " + filePath + " could not be, because it does not exist.");
         }
     }
 

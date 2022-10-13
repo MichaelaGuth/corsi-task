@@ -21,7 +21,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
@@ -117,8 +116,7 @@ public class CorsiTestController {
 
     private void endTest() {
         String filePath = configuration.getPathToResultsDir() + "\\";
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH_mm_ss");
-        filePath += score.getPatientSurname()+" "+score.getPatientName()+" "+score.getTestDate().format(dtf)+".json";
+        filePath += configuration.getResultFileNameFormat().getFileName(score) + ".json";
         saveObjectToJSONFile(score, filePath);
         Platform.runLater(() -> Tools.changeScene(Constants.END_TEST));
     }

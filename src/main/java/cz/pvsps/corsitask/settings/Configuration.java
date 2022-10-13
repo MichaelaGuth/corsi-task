@@ -3,6 +3,7 @@ package cz.pvsps.corsitask.settings;
 
 import com.fasterxml.jackson.annotation.*;
 import cz.pvsps.corsitask.Constants;
+import cz.pvsps.corsitask.tools.FileNameFormat;
 
 public class Configuration {
 
@@ -11,10 +12,6 @@ public class Configuration {
 
     @JsonProperty("pathToSequenceDir")
     private String pathToSequenceDir = Constants.SEQUENCES_DIR_PATH;
-
-    // TODO delete this option
-    @JsonProperty("showUserSelectedOrderOnBlocks")
-    private boolean showUserSelectedOrderOnBlocks = false;
 
     @JsonProperty("showBlockNumbers")
     private boolean showBlockNumbers = false;
@@ -27,6 +24,9 @@ public class Configuration {
 
     @JsonProperty("currentlyInUseSequenceFilePath")
     private String currentlyInUseSequenceFilePath = Constants.CURRENTLY_USED_SEQUENCES_PATH;
+
+    @JsonProperty("saveResultByUserID")
+    private FileNameFormat resultFileNameFormat = Constants.DATE_SURNAME_NAME_TIME;
 
     public Configuration() {
 
@@ -46,14 +46,6 @@ public class Configuration {
 
     public void setPathToSequenceDir(String pathToSequenceDir) {
         this.pathToSequenceDir = pathToSequenceDir;
-    }
-
-    public boolean isShowUserSelectedOrderOnBlocks() {
-        return showUserSelectedOrderOnBlocks;
-    }
-
-    public void setShowUserSelectedOrderOnBlocks(boolean showUserSelectedOrderOnBlocks) {
-        this.showUserSelectedOrderOnBlocks = showUserSelectedOrderOnBlocks;
     }
 
     public boolean isShowBlockNumbers() {
@@ -87,4 +79,13 @@ public class Configuration {
     public void setAllowTutorial(boolean allowTutorial) {
         this.allowTutorial = allowTutorial;
     }
+
+    public FileNameFormat getResultFileNameFormat() {
+        return resultFileNameFormat;
+    }
+
+    public void setResultFileNameFormat(FileNameFormat resultFileNameFormat) {
+        this.resultFileNameFormat = resultFileNameFormat;
+    }
+
 }

@@ -10,6 +10,8 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static cz.pvsps.corsitask.Main.configuration;
 import static cz.pvsps.corsitask.Main.stage;
@@ -20,10 +22,9 @@ public class TestResultsDialogController {
     public Button confirmSelectionButton;
     public ComboBox<String> pathToResultsComboBox;
     public Button browseLocalFilesButton;
-
     private ObservableList<String> resultsFileOptions;
-
     private FileChooser fileChooser;
+    private static final Logger LOGGER = Logger.getLogger(TestResultsDialogController.class.getName());
 
     @FXML
     public void initialize() {
@@ -57,11 +58,15 @@ public class TestResultsDialogController {
     public void confirmSelectionButtonOnAction() {
         // TODO check if file exists and is correct
         // else throw new exception
-        file = new File(pathToResultsComboBox.getValue());
-        if (file.exists()) {
-            Tools.changeScene(Constants.RESULT);
+        if (pathToResultsComboBox.getValue() != null) {
+            file = new File(pathToResultsComboBox.getValue());
+            if (file.exists()) {
+                LOGGER.log(Level.INFO, "Results file: "+ file.getName() + "exists. Loading results...");
+                Tools.changeScene(Constants.RESULT);
+            }
+        } else {
+            LOGGER.log(Level.INFO, "Location to results file was not selected.");
         }
-
     }
 
     public void browseLocalFilesButtonOnAction() {
