@@ -12,7 +12,7 @@ public class Constants {
     public static final SceneConfig SETTINGS = new SceneConfig ("settings.fxml", 500, 600, false, true);
     public static final SceneConfig RESULT = new SceneConfig ("result.fxml", 1050, 600, false, true);
     public static final SceneConfig TEST_SETTINGS_DIALOG = new SceneConfig ("testSettingsDialog.fxml", 500, 650, false, true);
-    public static final SceneConfig SEQUENCE_RESULT = new SceneConfig ("sequenceResultCopy2.fxml", 510, 410, false, false);
+    public static final SceneConfig SEQUENCE_RESULT = new SceneConfig ("sequenceResult.fxml", 850, 530, false, false);
     public static final SceneConfig TEST_RESULTS_DIALOG = new SceneConfig ("testResultsDialog.fxml", 400, 250, false, true);
     public static final SceneConfig TUTORIAL = new SceneConfig ("tutorial.fxml", 800, 450, true, false);
     public static final SceneConfig START_TEST = new SceneConfig ("startTest.fxml", 600, 400, true, false);

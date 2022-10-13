@@ -1,65 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="410.0" prefWidth="510.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.result.SequenceResultController">
-    <children>
-        <Rectangle fx:id="block1" fill="#1f3bff" height="60.0" layoutX="40.0" layoutY="260.0" width="60.0" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="40.0" />
-        <Rectangle fx:id="block2" fill="#1f3bff" height="60.0" layoutX="60.0" layoutY="60.0" width="60.0" x="90.0" y="320.0" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="60.0" />
-        <Rectangle fx:id="block3" fill="#1f3bff" height="60.0" layoutX="110.0" layoutY="360.0" width="60.0" y="270.0" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="110.0" />
-        <Rectangle fx:id="block4" fill="#1f3bff" height="60.0" layoutX="140.0" layoutY="130.0" width="60.0" x="170.0" y="250.0" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="130.0" />
-        <Rectangle fx:id="block5" fill="#1f3bff" height="60.0" width="60.0" x="310.0" y="210.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="280.0" />
-        <Rectangle fx:id="block6" fill="#1f3bff" height="60.0" width="60.0" x="420.0" y="150.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="390.0" />
-        <Rectangle fx:id="block7" fill="#1f3bff" height="60.0" width="60.0" x="60.0" y="130.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0" />
-        <Rectangle fx:id="block8" fill="#1f3bff" height="60.0" width="60.0" x="180.0" y="70.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="150.0" />
-        <Rectangle fx:id="block9" fill="#1f3bff" height="60.0" width="60.0" x="300.0" y="90.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="270.0" />
-        <Label fx:id="labelBlock1" alignment="CENTER" layoutX="290.0" layoutY="340.0" prefHeight="60.0" prefWidth="60.0" text="1" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="40.0">
-            <font>
-                <Font name="Arial Black" size="36.0" />
-            </font>
-        </Label>
-        <Label fx:id="labelBlock2" alignment="CENTER" layoutX="90.0" layoutY="320.0" prefHeight="60.0" prefWidth="60.0" text="2" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="60.0">
-            <font>
-                <Font name="Arial Black" size="36.0" />
-            </font>
-        </Label>
-        <Label fx:id="labelBlock3" alignment="CENTER" layoutX="390.0" layoutY="270.0" prefHeight="60.0" prefWidth="60.0" text="3" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="110.0">
-            <font>
-                <Font name="Arial Black" size="36.0" />
-            </font>
-        </Label>
-        <Label fx:id="labelBlock4" alignment="CENTER" layoutX="170.0" layoutY="250.0" prefHeight="60.0" prefWidth="60.0" text="4" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="130.0">
-            <font>
-                <Font name="Arial Black" size="36.0" />
-            </font>
-        </Label>
-        <Label fx:id="labelBlock5" alignment="CENTER" layoutX="310.0" layoutY="210.0" prefHeight="60.0" prefWidth="60.0" text="5" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="280.0">
-            <font>
-                <Font name="Arial Black" size="36.0" />
-            </font>
-        </Label>
-        <Label fx:id="labelBlock6" alignment="CENTER" layoutX="420.0" layoutY="150.0" prefHeight="60.0" prefWidth="60.0" text="6" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="390.0">
-            <font>
-                <Font name="Arial Black" size="36.0" />
-            </font>
-        </Label>
-        <Label fx:id="labelBlock7" alignment="CENTER" layoutX="60.0" layoutY="130.0" prefHeight="60.0" prefWidth="60.0" text="7" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0">
-            <font>
-                <Font name="Arial Black" size="36.0" />
-            </font>
-        </Label>
-        <Label fx:id="labelBlock8" alignment="CENTER" layoutX="180.0" layoutY="70.0" prefHeight="60.0" prefWidth="60.0" text="8" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="150.0">
-            <font>
-                <Font name="Arial Black" size="36.0" />
-            </font>
-        </Label>
-        <Label fx:id="labelBlock9" alignment="CENTER" layoutX="300.0" layoutY="90.0" prefHeight="60.0" prefWidth="60.0" text="9" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="270.0">
-            <font>
-                <Font name="Arial Black" size="36.0" />
-            </font>
-        </Label>
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pvsps.corsitask.result.SequenceResultController">
+   <children>
+      <AnchorPane fx:id="anchorPane" layoutX="40.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="410.0" prefWidth="500.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;">
+         <children>
+            <Rectangle fx:id="block1" fill="#1f3bff" height="60.0" width="60.0" x="260.0" y="40.0" />
+            <Rectangle fx:id="block2" fill="#1f3bff" height="60.0" width="60.0" x="60.0" y="60.0" />
+            <Rectangle fx:id="block3" fill="#1f3bff" height="60.0" width="60.0" x="360.0" y="110.0" />
+            <Rectangle fx:id="block4" fill="#1f3bff" height="60.0" width="60.0" x="140.0" y="130.0" />
+            <Rectangle fx:id="block5" fill="#1f3bff" height="60.0" width="60.0" x="280.0" y="170.0" />
+            <Rectangle fx:id="block6" fill="#1f3bff" height="60.0" width="60.0" x="390.0" y="230.0" />
+            <Rectangle fx:id="block7" fill="#1f3bff" height="60.0" width="60.0" x="30.0" y="250.0" />
+            <Rectangle fx:id="block8" fill="#1f3bff" height="60.0" width="60.0" x="150.0" y="310.0" />
+            <Rectangle fx:id="block9" fill="#1f3bff" height="60.0" width="60.0" x="270.0" y="290.0" />
+            <Label fx:id="labelBlock1" alignment="CENTER" layoutX="260.0" layoutY="40.0" prefHeight="60.0" prefWidth="60.0" text="1" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBlock2" alignment="CENTER" layoutX="60.0" layoutY="60.0" prefHeight="60.0" prefWidth="60.0" text="2" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBlock3" alignment="CENTER" layoutX="360.0" layoutY="110.0" prefHeight="60.0" prefWidth="60.0" text="3" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBlock4" alignment="CENTER" layoutX="140.0" layoutY="130.0" prefHeight="60.0" prefWidth="60.0" text="4" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBlock5" alignment="CENTER" layoutX="280.0" layoutY="170.0" prefHeight="60.0" prefWidth="60.0" text="5" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBlock6" alignment="CENTER" layoutX="390.0" layoutY="230.0" prefHeight="60.0" prefWidth="60.0" text="6" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBlock7" alignment="CENTER" layoutX="30.0" layoutY="250.0" prefHeight="60.0" prefWidth="60.0" text="7" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBlock8" alignment="CENTER" layoutX="150.0" layoutY="310.0" prefHeight="60.0" prefWidth="60.0" text="8" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBlock9" alignment="CENTER" layoutX="270.0" layoutY="290.0" prefHeight="60.0" prefWidth="60.0" text="9" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView  fx:id="table" layoutX="610.0" layoutY="150.0" prefHeight="300.0" prefWidth="200.0" AnchorPane.rightAnchor="40.0">
+        <columns>
+          <TableColumn fx:id="fromBlockToBlockColumn" prefWidth="100.0" resizable="false" text="Úsek od - do" />
+          <TableColumn fx:id="timeColumn" prefWidth="99.0" resizable="false" text="Čas" />
+        </columns>
+      </TableView>
+      <Label layoutX="610.0" layoutY="40.0" prefHeight="25.0" prefWidth="200.0" text="Zadaná sekvence:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="correctSequenceLabel" layoutX="610.0" layoutY="65.0" prefWidth="200.0" />
+      <Label layoutX="610.0" layoutY="90.0" prefHeight="25.0" prefWidth="200.0" text="Odpovězená sekvence:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="userSequenceLabel" layoutX="610.0" layoutY="115.0" prefWidth="200.0" />
+      <Button fx:id="showUserSequenceButton" layoutX="305.0" layoutY="470.0" mnemonicParsing="false" onAction="#showUserSequenceButtonOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: red; -fx-border-width: 5; -fx-border-color: red;" text="Odpověď" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="showCorrectSequenceButton" layoutX="185.0" layoutY="470.0" mnemonicParsing="false" onAction="#showCorrectSequenceButtonOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: green; -fx-border-width: 5; -fx-border-color: green;" text="Zadání" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="goBackButton" layoutX="610.0" layoutY="470.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Zpět na celkový přehled">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
 </AnchorPane>

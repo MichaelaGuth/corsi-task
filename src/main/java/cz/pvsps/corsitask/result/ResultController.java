@@ -24,13 +24,13 @@ public class ResultController {
     public Label patientNameLabel;
     public Label patientSurnameLabel;
     public Label patientBirthdateLabel;
-    public TableView<SequenceTableItem> table;
-    public TableColumn<SequenceTableItem, SimpleIntegerProperty> sequenceLengthColumn;
-    public TableColumn<SequenceTableItem, SimpleIntegerProperty> trialNumberColumn;
-    public TableColumn<SequenceTableItem, SimpleIntegerProperty> scoreColumn;
-    public TableColumn<SequenceTableItem, SimpleDoubleProperty> userTimeColumn;
-    public TableColumn<SequenceTableItem, SimpleListProperty<Block>> sequenceColumn;
-    public TableColumn<SequenceTableItem, SimpleListProperty<Block>> userSequenceColumn;
+    public TableView<ResultTableItem> table;
+    public TableColumn<ResultTableItem, SimpleIntegerProperty> sequenceLengthColumn;
+    public TableColumn<ResultTableItem, SimpleIntegerProperty> trialNumberColumn;
+    public TableColumn<ResultTableItem, SimpleIntegerProperty> scoreColumn;
+    public TableColumn<ResultTableItem, SimpleDoubleProperty> userTimeColumn;
+    public TableColumn<ResultTableItem, SimpleListProperty<Block>> sequenceColumn;
+    public TableColumn<ResultTableItem, SimpleListProperty<Block>> userSequenceColumn;
     public Label totalScoreLabel;
     public Label blockSpanLabel;
     public Label correctTrialsLabel;
@@ -49,7 +49,7 @@ public class ResultController {
         if (file != null) {
             score = Tools.loadScore(file);
             setTable();
-            ObservableList<SequenceTableItem> list = getTableItemsList();
+            ObservableList<ResultTableItem> list = getTableItemsList();
             table.setItems(list);
             patientSurnameLabel.setText(score.getPatientSurname());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -75,11 +75,11 @@ public class ResultController {
         userSequenceColumn.setCellValueFactory(new PropertyValueFactory<>("userSequence"));
     }
 
-    private ObservableList<SequenceTableItem> getTableItemsList() {
-        ObservableList<SequenceTableItem> list = FXCollections.observableArrayList();
+    private ObservableList<ResultTableItem> getTableItemsList() {
+        ObservableList<ResultTableItem> list = FXCollections.observableArrayList();
         for (SequenceScore sequenceScore :
                 score.getSequencesScores()) {
-            list.add(new SequenceTableItem(sequenceScore));
+            list.add(new ResultTableItem(sequenceScore));
         }
         return list;
     }
@@ -87,7 +87,7 @@ public class ResultController {
 
     public void showSequenceButtonOnAction() {
         // TODO add this feature
-        //SequenceTableItem sequenceTableItem = table.getSelectionModel().getSelectedItem();
+        //ResultTableItem sequenceTableItem = table.getSelectionModel().getSelectedItem();
         System.out.println(table.getSelectionModel().getSelectedItem());
     }
 }

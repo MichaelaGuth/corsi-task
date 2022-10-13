@@ -30,16 +30,17 @@ public class Main extends Application {
         stage = primaryStage;
         configuration = Tools.loadConfiguration();
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(MENU.getPath())));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(SEQUENCE_RESULT.getPath())));
             stage.setTitle(APPLICATION_TITLE);
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(APPLICATION_ICON_FILE_PATH)).toString()));
             stage.setIconified(false);
-            stage.setScene(new Scene(root, MENU.getWidth(), MENU.getHeight()));
+            stage.setScene(new Scene(root, SEQUENCE_RESULT.getWidth(), SEQUENCE_RESULT.getHeight()));
             stage.setResizable(true);
             stage.setFullScreen(false);
             stage.show();
             LOGGER.log(Level.INFO, "File named: " + MENU.fileName() + " has been successfully loaded.");
         } catch (Exception e) {
+            e.printStackTrace();
             LOGGER.log(Level.SEVERE, "File named: " + MENU.fileName() + " could not be loaded." );
             Platform.exit();
             System.exit(100);

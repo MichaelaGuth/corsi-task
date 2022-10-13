@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class SequenceTableItem {
+public class ResultTableItem {
     private final SimpleIntegerProperty sequenceLength;
     private final SimpleStringProperty time;
     private final SimpleIntegerProperty score;
@@ -15,7 +15,7 @@ public class SequenceTableItem {
     private final SimpleListProperty<Block> sequence;
     private final SimpleListProperty<Block> userSequence;
 
-    public SequenceTableItem(SequenceScore sequenceScore) {
+    public ResultTableItem(SequenceScore sequenceScore) {
         this.score = new SimpleIntegerProperty(sequenceScore.getScore());
         this.time = new SimpleStringProperty((double)sequenceScore.getUserTime()/1000 + " s");
         this.trialNumber = new SimpleIntegerProperty(sequenceScore.getTrialNumber());
@@ -26,7 +26,7 @@ public class SequenceTableItem {
 
     @Override
     public String toString() {
-        return "SequenceTableItem{" +
+        return "ResultTableItem{" +
                 "sequenceLength=" + sequenceLength +
                 ", time=" + time +
                 ", score=" + score +

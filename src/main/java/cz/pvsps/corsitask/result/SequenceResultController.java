@@ -1,20 +1,26 @@
 package cz.pvsps.corsitask.result;
 
 import cz.pvsps.corsitask.tools.Block;
-import cz.pvsps.corsitask.tools.Tools;
-import javafx.animation.FadeTransition;
-import javafx.animation.SequentialTransition;
-import javafx.event.ActionEvent;
+import cz.pvsps.corsitask.tools.Point;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.WindowEvent;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static cz.pvsps.corsitask.Main.stage;
 
@@ -40,9 +46,24 @@ public class SequenceResultController {
     public Label labelBlock7;
     public Label labelBlock8;
     public Label labelBlock9;
+    public TableColumn<SequenceResultTableItem, SimpleStringProperty> fromBlockToBlockColumn;
+    public TableColumn<SequenceResultTableItem, SimpleStringProperty> timeColumn;
+    public Label correctSequenceLabel;
+    public Label userSequenceLabel;
+
+    public Button showCorrectSequenceButton;
+    public Button goBackButton;
+    public Button showUserSequenceButton;
+    public TableView<SequenceResultTableItem> table;
 
     private ArrayList<Rectangle> allBlocks;
     private ArrayList<Label> allBlockLabels;
+
+    private ArrayList<Line> userSequenceLines;
+
+    private ArrayList<Line> correctSequenceLines;
+
+    public SequenceScore sequenceScore;
 
 
     // TODO Add feature
@@ -50,98 +71,73 @@ public class SequenceResultController {
 
     // TODO Add option to export to csv
 
+    // TODO dodelat
+
     @FXML
     public void initialize() {
-        Tools.resize(anchorPane);
+        // todo nacist sequenceScore z result
+        // todo nastavit krizek abz se vratil do result
+
+        ArrayList<Block> correctSequence = new ArrayList<>();
+        correctSequence.add(new Block(1));
+        correctSequence.add(new Block(2));
+        correctSequence.add(new Block(4));
+
+        ArrayList<Block> userSequence = new ArrayList<>();
+        userSequence.add(new Block(1));
+        userSequence.add(new Block(4));
+        userSequence.add(new Block(6));
+
+        ArrayList<Long> times = new ArrayList<>();
+        times.add((long)500);
+        times.add((long)750);
+        times.add((long)250);
+        times.add((long)1500);
+
+
+        sequenceScore = new SequenceScore(correctSequence, userSequence, 3, times);
+
+        correctSequenceLabel.setText(correctSequence.toString());
+        userSequenceLabel.setText(userSequence.toString());
         allBlocks = getListOfBlocks();
         allBlockLabels = getListOfBlockLabels();
-        setAllBlocksOpacity(0.1);
+        setTable();
+
 
         stage.addEventHandler(WindowEvent.WINDOW_SHOWING, new  EventHandler<WindowEvent>()
         {
             @Override
             public void handle(WindowEvent window)
             {
-                ArrayList<Block> correctSequence = new ArrayList<>();
-                correctSequence.add(new Block(1));
-                correctSequence.add(new Block(2));
-                correctSequence.add(new Block(3));
-
-                ArrayList<Block> userSequence = new ArrayList<>();
-                userSequence.add(new Block(1));
-                userSequence.add(new Block(2));
-                userSequence.add(new Block(4));
-
-                playSequenceScore(new SequenceScore(correctSequence, userSequence, 0));
-
-//                SequenceScore sequenceScore = new SequenceScore(correctSequence, userSequence, 0);
-//                drawArrowsForSequenceScore(sequenceScore);
+                drawLinesForSequence(sequenceScore.getCorrectSequence(), Color.GREEN, correctSequenceLines);
+                drawLinesForSequence(sequenceScore.getUserSequence(), Color.RED, userSequenceLines);
             }
         });
-
-        //drawLinesBetweenTwoPoints(new Coordinates(290,70), new Coordinates(90, 90), Color.GREEN);
-
     }
 
-    private void playSequenceScore(SequenceScore sequenceScore) {
-        //var userSequenceAnimation = prepareSequenceAnimation(sequenceScore.userSequence(), Color.RED);
-        //var correctSequenceAnimation = prepareSequenceAnimation(sequenceScore.correctSequence(), Color.GREEN);
+    private void setTable() {
+        fromBlockToBlockColumn.setCellValueFactory(new PropertyValueFactory<>("fromTo"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        ObservableList<SequenceResultTableItem> list = getTableItemsList(sequenceScore);
+        table.setItems(list);
+    }
 
-        var userSequenceAnimation = new SequentialTransition();
-        var correctSequenceAnimation = new SequentialTransition();
-/*
-        for (Block block : sequenceScore.userSequence()) {
-            var rectangle = allBlocks.get(block.number()-1);
-            rectangle.setFill(color);
-            FadeTransition fadeTransition = fadeTransitionBlock(rectangle);
-            sequentialTransition.getChildren().add(fadeTransition);
-        }
-*/
-        userSequenceAnimation.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println(System.currentTimeMillis());
+
+    // TODO opravit
+    private ObservableList<SequenceResultTableItem> getTableItemsList(SequenceScore sequenceScore) {
+        ObservableList<SequenceResultTableItem> list = FXCollections.observableArrayList();
+        ArrayList<Block> sequence = sequenceScore.getUserSequence();
+        ArrayList<Long> times = sequenceScore.getTimesBetweenBlocks();
+        for (int i = 0; i <= sequence.size(); i++) {
+            if (i == 0) {
+                list.add(new SequenceResultTableItem(times.get(i), "start", sequence.get(i).toString()));
+            } else if (i == sequence.size()) {
+                list.add(new SequenceResultTableItem(times.get(i), sequence.get(i-1).toString(),"konec"));
+            } else {
+                list.add(new SequenceResultTableItem(times.get(i), sequence.get(i-1).toString(),sequence.get(i).toString()));
             }
-        });
-        correctSequenceAnimation.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println("correct sequence");
-                System.out.println(System.currentTimeMillis());
-            }
-        });
-
-        userSequenceAnimation.play();
-        correctSequenceAnimation.play();
-    }
-
-
-    private SequentialTransition prepareSequenceAnimation(ArrayList<Block> sequence, Color color) {
-        SequentialTransition sequentialTransition = new SequentialTransition();
-        for (Block block : sequence) {
-            var rectangle = allBlocks.get(block.number()-1);
-            rectangle.setFill(color);
-            FadeTransition fadeTransition = fadeTransitionBlock(rectangle);
-            sequentialTransition.getChildren().add(fadeTransition);
         }
-        sequentialTransition.setCycleCount(0);
-        return sequentialTransition;
-    }
-
-    private void setAllBlocksOpacity(double value) {
-        for (Rectangle block :
-                allBlocks) {
-            block.setOpacity(value);
-        }
-    }
-
-    private FadeTransition fadeTransitionBlock(Rectangle block) {
-        FadeTransition ft = new FadeTransition(Duration.millis(3000), block);
-        ft.setFromValue(0.1);
-        ft.setToValue(1.0);
-        ft.setCycleCount(0);
-        ft.setAutoReverse(true);
-        return ft;
+        return list;
     }
 
     private ArrayList<Label> getListOfBlockLabels() {
@@ -172,5 +168,53 @@ public class SequenceResultController {
         return blocks;
     }
 
+    private void drawLinesForSequence(List<Block> sequence, Color color, ArrayList<Line> listOfLines) {
+        deleteLinesFromAnchorPane(listOfLines);
+        listOfLines = new ArrayList<>();
+        for (int i = 0; i < sequence.size()-1; i++) {
+            Line line = drawLineBetweenTwoBlocks(allBlocks.get(sequence.get(i).number()-1), allBlocks.get(sequence.get(i+1).number()-1), color);
+            listOfLines.add(line);
+        }
+    }
 
+    private Line drawLineBetweenTwoBlocks(Rectangle block1, Rectangle block2, Paint color) {
+        double tmp = block1.getHeight() / 2;
+        Point startPoint = new Point((int) (block1.getX() + tmp), (int) (block1.getY() + tmp));
+        Point endPoint = new Point((int) (block2.getX() + tmp), (int) (block2.getY() + tmp));
+        return drawLineBetweenTwoPoints(startPoint, endPoint, color);
+    }
+
+    private Line drawLineBetweenTwoPoints(Point startPoint, Point endPoint, Paint color) {
+        Line line = new Line();
+        line.setStroke(color);
+        line.setStrokeWidth(3);
+        line.setVisible(true);
+        line.setStartX(startPoint.x());
+        line.setStartY(startPoint.y());
+        line.setEndX(endPoint.x());
+        line.setEndY(endPoint.y());
+        anchorPane.getChildren().add(line);
+        return line;
+    }
+
+    private void deleteLinesFromAnchorPane(ArrayList<Line> listOfLines) {
+        if (listOfLines != null) {
+            for (Line line :
+                    listOfLines) {
+                anchorPane.getChildren().remove(line);
+            }
+        }
+    }
+
+    // TODO pridat metodu na premisteni zpet do result
+
+
+    // TODO mozna menit sirku car a pridat tlacitko pro neutral
+    public void showUserSequenceButtonOnAction() {
+        drawLinesForSequence(sequenceScore.getUserSequence(), Color.RED, userSequenceLines);
+    }
+
+    public void showCorrectSequenceButtonOnAction() {
+        drawLinesForSequence(sequenceScore.getCorrectSequence(), Color.GREEN, correctSequenceLines);
+    }
 }
