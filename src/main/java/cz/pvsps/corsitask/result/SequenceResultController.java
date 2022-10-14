@@ -1,11 +1,12 @@
 package cz.pvsps.corsitask.result;
 
+import cz.pvsps.corsitask.Constants;
 import cz.pvsps.corsitask.tools.Block;
 import cz.pvsps.corsitask.tools.Point;
+import cz.pvsps.corsitask.tools.Tools;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,17 +18,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static cz.pvsps.corsitask.Main.stage;
-
 public class SequenceResultController {
     public AnchorPane anchorPane;
-
-    // TODO create class extending Rectangle with number
     public Rectangle block1;
     public Rectangle block2;
     public Rectangle block3;
@@ -50,69 +46,30 @@ public class SequenceResultController {
     public TableColumn<SequenceResultTableItem, SimpleStringProperty> timeColumn;
     public Label correctSequenceLabel;
     public Label userSequenceLabel;
-
     public Button showCorrectSequenceButton;
     public Button goBackButton;
     public Button showUserSequenceButton;
     public TableView<SequenceResultTableItem> table;
-
+    public Button showNeutralButton;
+    public Button showRangeButton;
     private ArrayList<Rectangle> allBlocks;
     private ArrayList<Label> allBlockLabels;
-
     private ArrayList<Line> userSequenceLines;
-
     private ArrayList<Line> correctSequenceLines;
-
-    public SequenceScore sequenceScore;
-
-
-    // TODO Add feature
-    // TODO Add times between each block click to new table
-
-    // TODO Add option to export to csv
-
-    // TODO dodelat
+    public static SequenceScore sequenceScore;
 
     @FXML
     public void initialize() {
-        // todo nacist sequenceScore z result
         // todo nastavit krizek abz se vratil do result
 
-        ArrayList<Block> correctSequence = new ArrayList<>();
-        correctSequence.add(new Block(1));
-        correctSequence.add(new Block(2));
-        correctSequence.add(new Block(4));
-
-        ArrayList<Block> userSequence = new ArrayList<>();
-        userSequence.add(new Block(1));
-        userSequence.add(new Block(4));
-        userSequence.add(new Block(6));
-
-        ArrayList<Long> times = new ArrayList<>();
-        times.add((long)500);
-        times.add((long)750);
-        times.add((long)250);
-        times.add((long)1500);
-
-
-        sequenceScore = new SequenceScore(correctSequence, userSequence, 3, times);
-
-        correctSequenceLabel.setText(correctSequence.toString());
-        userSequenceLabel.setText(userSequence.toString());
+        correctSequenceLabel.setText(sequenceScore.getCorrectSequence().toString());
+        userSequenceLabel.setText(sequenceScore.getUserSequence().toString());
         allBlocks = getListOfBlocks();
         allBlockLabels = getListOfBlockLabels();
         setTable();
-
-
-        stage.addEventHandler(WindowEvent.WINDOW_SHOWING, new  EventHandler<WindowEvent>()
-        {
-            @Override
-            public void handle(WindowEvent window)
-            {
-                drawLinesForSequence(sequenceScore.getCorrectSequence(), Color.GREEN, correctSequenceLines);
-                drawLinesForSequence(sequenceScore.getUserSequence(), Color.RED, userSequenceLines);
-            }
-        });
+        table.getSelectionModel().select(0);
+        correctSequenceLines = drawLinesForSequence(sequenceScore.getCorrectSequence(), Color.GREEN, correctSequenceLines);
+        userSequenceLines = drawLinesForSequence(sequenceScore.getUserSequence(), Color.RED, userSequenceLines);
     }
 
     private void setTable() {
@@ -122,8 +79,6 @@ public class SequenceResultController {
         table.setItems(list);
     }
 
-
-    // TODO opravit
     private ObservableList<SequenceResultTableItem> getTableItemsList(SequenceScore sequenceScore) {
         ObservableList<SequenceResultTableItem> list = FXCollections.observableArrayList();
         ArrayList<Block> sequence = sequenceScore.getUserSequence();
@@ -168,13 +123,14 @@ public class SequenceResultController {
         return blocks;
     }
 
-    private void drawLinesForSequence(List<Block> sequence, Color color, ArrayList<Line> listOfLines) {
+    private ArrayList<Line> drawLinesForSequence(List<Block> sequence, Color color, ArrayList<Line> listOfLines) {
         deleteLinesFromAnchorPane(listOfLines);
         listOfLines = new ArrayList<>();
         for (int i = 0; i < sequence.size()-1; i++) {
             Line line = drawLineBetweenTwoBlocks(allBlocks.get(sequence.get(i).number()-1), allBlocks.get(sequence.get(i+1).number()-1), color);
             listOfLines.add(line);
         }
+        return listOfLines;
     }
 
     private Line drawLineBetweenTwoBlocks(Rectangle block1, Rectangle block2, Paint color) {
@@ -206,15 +162,40 @@ public class SequenceResultController {
         }
     }
 
-    // TODO pridat metodu na premisteni zpet do result
-
-
-    // TODO mozna menit sirku car a pridat tlacitko pro neutral
     public void showUserSequenceButtonOnAction() {
-        drawLinesForSequence(sequenceScore.getUserSequence(), Color.RED, userSequenceLines);
+        correctSequenceLines = drawLinesForSequence(sequenceScore.getCorrectSequence(), Color.GREEN, correctSequenceLines);
+        userSequenceLines = drawLinesForSequence(sequenceScore.getUserSequence(), Color.RED, userSequenceLines);
+        changeLinesWidth(userSequenceLines);
     }
 
     public void showCorrectSequenceButtonOnAction() {
-        drawLinesForSequence(sequenceScore.getCorrectSequence(), Color.GREEN, correctSequenceLines);
+        userSequenceLines = drawLinesForSequence(sequenceScore.getUserSequence(), Color.RED, userSequenceLines);
+        correctSequenceLines = drawLinesForSequence(sequenceScore.getCorrectSequence(), Color.GREEN, correctSequenceLines);
+        changeLinesWidth(correctSequenceLines);
+    }
+
+    public void goBackButtonOnAction() {
+        sequenceScore = null;
+        Tools.changeScene(Constants.RESULT);
+    }
+
+    public void showNeutralButtonOnAction() {
+        correctSequenceLines = drawLinesForSequence(sequenceScore.getCorrectSequence(), Color.GREEN, correctSequenceLines);
+        userSequenceLines = drawLinesForSequence(sequenceScore.getUserSequence(), Color.RED, userSequenceLines);
+    }
+
+    private void changeLinesWidth(ArrayList<Line> lines) {
+        for (Line line : lines) {
+            line.setStrokeWidth(8);
+        }
+    }
+
+    public void showRangeButtonOnAction() {
+        SequenceResultTableItem sequenceResultTableItem = table.getSelectionModel().getSelectedItem();
+        int index = table.getItems().indexOf(sequenceResultTableItem);
+        showNeutralButtonOnAction();
+        if (index-1 >= 0 && index-1 < userSequenceLines.size()) {
+            userSequenceLines.get(index-1).setStrokeWidth(8);
+        }
     }
 }

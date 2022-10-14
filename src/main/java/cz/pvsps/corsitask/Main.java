@@ -30,11 +30,11 @@ public class Main extends Application {
         stage = primaryStage;
         configuration = Tools.loadConfiguration();
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(SEQUENCE_RESULT.getPath())));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(MENU.getPath())));
             stage.setTitle(APPLICATION_TITLE);
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(APPLICATION_ICON_FILE_PATH)).toString()));
             stage.setIconified(false);
-            stage.setScene(new Scene(root, SEQUENCE_RESULT.getWidth(), SEQUENCE_RESULT.getHeight()));
+            stage.setScene(new Scene(root, MENU.getWidth(), MENU.getHeight()));
             stage.setResizable(true);
             stage.setFullScreen(false);
             stage.show();

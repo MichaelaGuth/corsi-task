@@ -68,35 +68,45 @@
             </Label>
          </children>
       </AnchorPane>
-      <TableView  fx:id="table" layoutX="610.0" layoutY="150.0" prefHeight="300.0" prefWidth="200.0" AnchorPane.rightAnchor="40.0">
+      <TableView fx:id="table" layoutX="600.0" layoutY="150.0" prefHeight="260.0" prefWidth="210.0">
         <columns>
-          <TableColumn fx:id="fromBlockToBlockColumn" prefWidth="100.0" resizable="false" text="Úsek od - do" />
-          <TableColumn fx:id="timeColumn" prefWidth="99.0" resizable="false" text="Čas" />
+          <TableColumn fx:id="fromBlockToBlockColumn" prefWidth="104.0" resizable="false" text="Úsek od - do" />
+          <TableColumn fx:id="timeColumn" prefWidth="104.0" resizable="false" text="Čas" />
         </columns>
       </TableView>
-      <Label layoutX="610.0" layoutY="40.0" prefHeight="25.0" prefWidth="200.0" text="Zadaná sekvence:">
+      <Label layoutX="600.0" layoutY="40.0" prefHeight="25.0" prefWidth="210.0" text="Zadaná sekvence:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="correctSequenceLabel" layoutX="610.0" layoutY="65.0" prefWidth="200.0" />
-      <Label layoutX="610.0" layoutY="90.0" prefHeight="25.0" prefWidth="200.0" text="Odpovězená sekvence:">
+      <Label fx:id="correctSequenceLabel" layoutX="600.0" layoutY="65.0" prefWidth="210.0" />
+      <Label layoutX="600.0" layoutY="90.0" prefHeight="25.0" prefWidth="210.0" text="Odpovězená sekvence:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="userSequenceLabel" layoutX="610.0" layoutY="115.0" prefWidth="200.0" />
-      <Button fx:id="showUserSequenceButton" layoutX="305.0" layoutY="470.0" mnemonicParsing="false" onAction="#showUserSequenceButtonOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: red; -fx-border-width: 5; -fx-border-color: red;" text="Odpověď" textFill="WHITE">
+      <Label fx:id="userSequenceLabel" layoutX="600.0" layoutY="115.0" prefWidth="210.0" />
+      <Button fx:id="showUserSequenceButton" layoutX="350.0" layoutY="470.0" mnemonicParsing="false" onAction="#showUserSequenceButtonOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: red; -fx-border-width: 5; -fx-border-color: red;" text="Odpověď" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="showCorrectSequenceButton" layoutX="185.0" layoutY="470.0" mnemonicParsing="false" onAction="#showCorrectSequenceButtonOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: green; -fx-border-width: 5; -fx-border-color: green;" text="Zadání" textFill="WHITE">
+      <Button fx:id="showCorrectSequenceButton" layoutX="240.0" layoutY="470.0" mnemonicParsing="false" onAction="#showCorrectSequenceButtonOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: green; -fx-border-width: 5; -fx-border-color: green;" text="Zadání" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="goBackButton" layoutX="610.0" layoutY="470.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Zpět na celkový přehled">
+      <Button fx:id="goBackButton" layoutX="600.0" layoutY="470.0" mnemonicParsing="false" onAction="#goBackButtonOnAction" prefHeight="30.0" prefWidth="210.0" text="Zpět na celkový přehled">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="showNeutralButton" layoutX="130.0" layoutY="470.0" mnemonicParsing="false" onAction="#showNeutralButtonOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: blue; -fx-border-width: 5; -fx-border-color: blue;" text="Základ" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="showRangeButton" layoutX="600.0" layoutY="410.0" mnemonicParsing="false" onAction="#showRangeButtonOnAction" prefHeight="30.0" prefWidth="210.0" text="Zvýraznit úsek">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

@@ -62,7 +62,6 @@ public class ResultController {
             patientIDLabel.setText("ID: "+ score.getPatientID());
             formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             testDateLabel.setText(score.getTestDate().format(formatter));
-            showSequenceButton.setDisable(true);
         }
     }
 
@@ -86,8 +85,9 @@ public class ResultController {
 
 
     public void showSequenceButtonOnAction() {
-        // TODO add this feature
-        //ResultTableItem sequenceTableItem = table.getSelectionModel().getSelectedItem();
-        System.out.println(table.getSelectionModel().getSelectedItem());
+        ResultTableItem resultTableItem = table.getSelectionModel().getSelectedItem();
+        int index = table.getItems().indexOf(resultTableItem);
+        SequenceResultController.sequenceScore = score.getSequencesScores().get(index);
+        Tools.changeScene(Constants.SEQUENCE_RESULT);
     }
 }
