@@ -70,6 +70,7 @@ public class SequenceResultController {
         table.getSelectionModel().select(0);
         correctSequenceLines = drawLinesForSequence(sequenceScore.getCorrectSequence(), Color.GREEN, correctSequenceLines);
         userSequenceLines = drawLinesForSequence(sequenceScore.getUserSequence(), Color.RED, userSequenceLines);
+
     }
 
     private void setTable() {

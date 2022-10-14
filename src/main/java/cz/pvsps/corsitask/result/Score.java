@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+import static cz.pvsps.corsitask.Constants.SEPARATOR_CSV;
 
 public class Score {
 
@@ -117,5 +120,26 @@ public class Score {
 
     public UUID getPatientID() {
         return patientID;
+    }
+
+
+    public ArrayList<String> createCSV() {
+        ArrayList<String> res = new ArrayList<>();
+        res.add("name" + SEPARATOR_CSV + "surname" + SEPARATOR_CSV + "patientID" + SEPARATOR_CSV + "dateOfBirth"
+                + SEPARATOR_CSV + "dateOfTest" + SEPARATOR_CSV + "totalScore" + SEPARATOR_CSV + "blockSpan"
+                + SEPARATOR_CSV + "totalRawScore");
+        StringBuilder csv = new StringBuilder(patientName);
+        csv.append(SEPARATOR_CSV).append(patientSurname).append(SEPARATOR_CSV);
+        csv.append(patientID).append(SEPARATOR_CSV);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        csv.append(patientBirthdate.format(dtf)).append(SEPARATOR_CSV);
+        dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        csv.append(testDate.format(dtf)).append(SEPARATOR_CSV);
+        csv.append(getTotalScore()).append(SEPARATOR_CSV);
+        csv.append(getBlockSpan()).append(SEPARATOR_CSV);
+        csv.append(getNumberOfCorrectTrials());
+        res.add(csv.toString());
+
+        return res;
     }
 }

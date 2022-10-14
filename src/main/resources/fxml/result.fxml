@@ -107,12 +107,12 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-      <Button fx:id="ExportToPDFButton" layoutX="40.0" layoutY="530.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="260.0" text="Exportovat do PDF">
+      <Button fx:id="exportToPDFButton" layoutX="40.0" layoutY="530.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="260.0" text="Exportovat do PDF">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="generateCSVFileButton" layoutX="40.0" layoutY="490.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="260.0" text="Vygenerovat soubor CSV">
+      <Button fx:id="generateCSVFileButton" layoutX="40.0" layoutY="490.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="260.0" text="Vygenerovat soubor CSV" onAction="#generateCSVFileButtonOnAction">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

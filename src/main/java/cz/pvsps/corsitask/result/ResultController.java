@@ -8,15 +8,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import static cz.pvsps.corsitask.Main.stage;
 
@@ -37,6 +40,8 @@ public class ResultController {
     public Button showSequenceButton;
     public Label patientIDLabel;
     public Label testDateLabel;
+    public Button exportToPDFButton;
+    public Button generateCSVFileButton;
     private Score score;
     public static File file;
 
@@ -89,5 +94,40 @@ public class ResultController {
         int index = table.getItems().indexOf(resultTableItem);
         SequenceResultController.sequenceScore = score.getSequencesScores().get(index);
         Tools.changeScene(Constants.SEQUENCE_RESULT);
+    }
+
+    public void generateCSVFileButtonOnAction(ActionEvent actionEvent) {
+        // TODO nasatvit default složku na výsledky/xxxxx/csv
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File(Tools.getDocumentsPath()));
+        var location = directoryChooser.showDialog(stage);
+
+        // TODO upravit headery
+        String filePath = location.getPath() + "\\score.csv";
+        StringBuilder fileContent = new StringBuilder();
+        ArrayList<String> scoreCSV = score.createCSV();
+        for (String tmp :
+                scoreCSV) {
+            fileContent.append(tmp).append("\n");
+        }
+        Tools.saveFile(new File(filePath), fileContent.toString());
+
+        // TODO upravit headery
+        filePath = location.getPath() + "\\sequenceScores.csv";
+        fileContent = new StringBuilder();
+        StringBuilder sequenceScores = new StringBuilder();
+        String header = "";
+        for (SequenceScore sequenceScore :
+                score.getSequencesScores()) {
+            ArrayList<String> sequenceScoreCSV = sequenceScore.createCSV();
+            if (sequenceScoreCSV.get(0).length() >= header.length()) {
+                header = sequenceScoreCSV.get(0);
+            }
+            sequenceScores.append(sequenceScoreCSV.get(1)).append("\n");
+        }
+        fileContent.append(header).append("\n").append(sequenceScores);
+        Tools.saveFile(new File(filePath), fileContent.toString());
+
     }
 }

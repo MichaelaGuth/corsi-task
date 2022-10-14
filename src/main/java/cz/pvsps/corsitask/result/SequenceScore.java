@@ -5,6 +5,8 @@ import cz.pvsps.corsitask.tools.Block;
 
 import java.util.ArrayList;
 
+import static cz.pvsps.corsitask.Constants.SEPARATOR_CSV;
+
 public final class SequenceScore {
     @JsonProperty("correctSequence")
     private ArrayList<Block> correctSequence;
@@ -68,5 +70,25 @@ public final class SequenceScore {
 
     public ArrayList<Long> getTimesBetweenBlocks() {
         return timesBetweenBlocks;
+    }
+
+    public ArrayList<String> createCSV() {
+        ArrayList<String> result = new ArrayList<>();
+        StringBuilder header = new StringBuilder("correctSequence" + SEPARATOR_CSV + "userSequence" + SEPARATOR_CSV
+                + "userTime" + SEPARATOR_CSV);
+        StringBuilder csv = new StringBuilder(correctSequence.toString() + SEPARATOR_CSV);
+        csv.append(userSequence.toString()).append(SEPARATOR_CSV);
+        csv.append(userTime / 1000.0).append(SEPARATOR_CSV);
+        int i = 1;
+        for (long time :
+                timesBetweenBlocks) {
+            csv.append(time / 1000.0).append(SEPARATOR_CSV);
+            header.append("time").append(i++).append(SEPARATOR_CSV);
+        }
+        csv.delete(csv.length()-1, csv.length()-1);
+        header.delete(header.length()-1, header.length()-1);
+        result.add(header.toString());
+        result.add(csv.toString());
+        return result;
     }
 }

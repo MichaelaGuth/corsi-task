@@ -39,7 +39,7 @@ public class Tools {
     private static final Logger LOGGER = Logger.getLogger(Tools.class.getName());
 
     public static ArrayList<ArrayList<Block>> loadSequences(String fileName) {
-        String jsonString = loadJSON_File(fileName);
+        String jsonString = loadFile(fileName);
         Object obj = JSONValue.parse(jsonString);
         JSONArray array = (JSONArray) obj;
         ArrayList<ArrayList<Block>> sequences = new ArrayList<>();
@@ -103,7 +103,7 @@ public class Tools {
     public static Configuration loadConfiguration()  {
         Configuration configuration;
         try {
-            String json_String = loadJSON_File(Constants.CONFIGURATION_LOCATION);
+            String json_String = loadFile(Constants.CONFIGURATION_LOCATION);
             ObjectMapper mapper = new ObjectMapper();
             configuration = mapper.readValue(json_String, Configuration.class);
         } catch (JsonProcessingException e) {
@@ -134,14 +134,14 @@ public class Tools {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        saveJSON_File(new File(filePath), jsonString);
+        saveFile(new File(filePath), jsonString);
         LOGGER.log(Level.INFO, "Object "+ o.getClass().getName() + "has been successfully saved to file: " + filePath + ".");
     }
 
     public static Score loadScore(File file) {
         Score score;
         try {
-            String json_String = loadJSON_File(file);
+            String json_String = loadFile(file);
             ObjectMapper mapper = JsonMapper.builder()
                     .addModule(new JavaTimeModule())
                     .build();
@@ -162,33 +162,35 @@ public class Tools {
         }
     }
 
-    public static String loadJSON_File(String fileName) {
-        String jsonString = "";
+    public static String loadFile(String fileName) {
+        String fileContents = "";
         File file = new File(fileName);
-        jsonString = loadJSON_File(file);
-        return jsonString;
+        fileContents = loadFile(file);
+        return fileContents;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static String loadJSON_File(File file) {
-        String jsonString = "";
+    public static String loadFile(File file) {
+        String fileContents = "";
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             byte[] data = new byte[(int) file.length()];
             fileInputStream.read(data);
             fileInputStream.close();
-            jsonString = new String(data, StandardCharsets.UTF_8);
+            fileContents = new String(data, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new FileNotFoundException(e);
         }
-        return jsonString;
+        return fileContents;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void saveJSON_File(File file, String jsonString) {
-        file.getParentFile().mkdirs();
+    public static void saveFile(File file, String fileContents) {
+        if (file.getParentFile() != null) {
+            file.getParentFile().mkdirs();
+        }
         try (FileWriter fileWriter = new FileWriter(file)){
-            fileWriter.write(jsonString);
+            fileWriter.write(fileContents);
             fileWriter.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);

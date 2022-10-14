@@ -40,4 +40,5 @@ public class Constants {
     public static final FileNameFormat ID = new FileNameFormat("<Patient ID>", "4270a472-0614-4e54-8e50-2b8eff9cf01e");
     public static final FileNameFormat DATE_ID_TIME = new FileNameFormat("<TestDate:yyyy-mm-dd> <PatientID> <TestTime:hh_mm_ss>", "2022-10-02 4270a472-0614-4e54-8e50-2b8eff9cf01e 20_27_12");
 
+    public static final String SEPARATOR_CSV = ";";
 }
