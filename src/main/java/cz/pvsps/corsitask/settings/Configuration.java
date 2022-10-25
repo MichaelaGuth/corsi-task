@@ -28,6 +28,9 @@ public class Configuration {
     @JsonProperty("saveResultByUserID")
     private FileNameFormat resultFileNameFormat = Constants.DATE_SURNAME_NAME_TIME;
 
+    @JsonProperty("selectedLocalization")
+    private Constants.LOCALIZATION selectedLocalization = Constants.LOCALIZATION.ENG;
+
     public Configuration() {
 
     }
@@ -88,4 +91,11 @@ public class Configuration {
         this.resultFileNameFormat = resultFileNameFormat;
     }
 
+    public Constants.LOCALIZATION getSelectedLocalization() {
+        return selectedLocalization;
+    }
+
+    public void setSelectedLocalization(Constants.LOCALIZATION selectedLocalization) {
+        this.selectedLocalization = selectedLocalization;
+    }
 }

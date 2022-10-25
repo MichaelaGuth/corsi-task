@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cz.pvsps.corsitask.Constants;
+import cz.pvsps.corsitask.Localization;
 import cz.pvsps.corsitask.Main;
 import cz.pvsps.corsitask.exceptions.FileNotFoundException;
 import cz.pvsps.corsitask.result.Score;
@@ -122,6 +123,30 @@ public class Tools {
         }
         LOGGER.log(Level.INFO, "Configuration has been successfully loaded from file: " + Constants.CONFIGURATION_LOCATION + ".");
         return configuration;
+    }
+
+    public static Localization loadLocalization() {
+        Localization localization;
+        try {
+            String json_String = loadFile(Constants.LOCALIZATION_LOCATION);
+            ObjectMapper mapper = new ObjectMapper();
+            localization = mapper.readValue(json_String, Localization.class);
+        } catch (JsonProcessingException e) {
+            LOGGER.log(Level.WARNING, "Localization file is corrupted. Creating new file with default values...");
+            deleteFile(Constants.LOCALIZATION_LOCATION);
+            localization = new Localization();
+            saveObjectToJSONFile(localization,Constants.LOCALIZATION_LOCATION);
+            LOGGER.log(Level.INFO, "Localization has been created to file: " + Constants.LOCALIZATION_LOCATION + ".");
+            return localization;
+        } catch (FileNotFoundException e) {
+            LOGGER.log(Level.WARNING, "Localization file was not found. Creating new file with default values...");
+            localization = new Localization();
+            saveObjectToJSONFile(localization,Constants.LOCALIZATION_LOCATION);
+            LOGGER.log(Level.INFO, "Localization has been created to file: " + Constants.LOCALIZATION_LOCATION + ".");
+            return localization;
+        }
+        LOGGER.log(Level.INFO, "Localization has been successfully loaded from file: " + Constants.LOCALIZATION_LOCATION + ".");
+        return localization;
     }
 
     public static void saveObjectToJSONFile(Object o, String filePath) {

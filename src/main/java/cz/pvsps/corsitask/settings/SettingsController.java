@@ -37,13 +37,10 @@ public class SettingsController {
     private final String DEFAULT_SEQUENCE_DIR_LOCATION = Tools.getDocumentsPath()+"\\Corsi Test\\sekvence";
     private final String DEFAULT_RESULT_DIR_LOCATION = Tools.getDocumentsPath()+"\\Corsi Test\\výsledky";
 
-
-
-
+    // TODO přidat možnost zvolit lokalizaci
 
     @FXML
     public void initialize() {
-        // TODO delete showUserOrderCheckBox
         directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File(Tools.getDocumentsPath()));
         sequenceLocationOptions = FXCollections.observableArrayList(
@@ -104,7 +101,8 @@ public class SettingsController {
     }
 
     private void setResultFileNameFormatExample(FileNameFormat resultFileNameFormat) {
-        resultFileNameFormatExampleLabel.setText("např.: " + resultFileNameFormat.getExample());
+        // TODO rewrite for localization
+        resultFileNameFormatExampleLabel.setText(EXAMPLE_SHORT + ": " + resultFileNameFormat.getExample());
     }
 
     public void resultFileNameFormatChoiceBoxOnAction() {

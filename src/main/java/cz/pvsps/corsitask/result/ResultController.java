@@ -21,6 +21,7 @@ import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static cz.pvsps.corsitask.Constants.CSV_FOLDER_NAME;
 import static cz.pvsps.corsitask.Main.stage;
 
 public class ResultController {
@@ -97,14 +98,9 @@ public class ResultController {
     }
 
     public void generateCSVFileButtonOnAction(ActionEvent actionEvent) {
-        // TODO nasatvit default složku na výsledky/xxxxx/csv
-
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setInitialDirectory(new File(Tools.getDocumentsPath()));
-        var location = directoryChooser.showDialog(stage);
 
         // TODO upravit headery
-        String filePath = location.getPath() + "\\score.csv";
+        String filePath = file.getParentFile() + CSV_FOLDER_NAME + "score.csv";
         StringBuilder fileContent = new StringBuilder();
         ArrayList<String> scoreCSV = score.createCSV();
         for (String tmp :
@@ -114,7 +110,7 @@ public class ResultController {
         Tools.saveFile(new File(filePath), fileContent.toString());
 
         // TODO upravit headery
-        filePath = location.getPath() + "\\sequenceScores.csv";
+        filePath = file.getParentFile() + CSV_FOLDER_NAME + "sequenceScores.csv";
         fileContent = new StringBuilder();
         StringBuilder sequenceScores = new StringBuilder();
         String header = "";

@@ -44,6 +44,7 @@ public class FileNameFormat {
     public String getFileName(Score score) {
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter time = DateTimeFormatter.ofPattern("HH_mm_ss");
+
         if (this == DATE_SURNAME_NAME_TIME) {
             return score.getTestDate().format(date) + " " + score.getPatientSurname() + " " + score.getPatientName() + " " + score.getTestDate().format(time);
         } else if (this == DATE_ID_TIME) {
@@ -56,4 +57,19 @@ public class FileNameFormat {
         }
     }
 
+    public boolean containsID() {
+        return this != DATE_SURNAME_NAME_TIME;
+    }
+
+    public String getDirectoryName(Score score) {
+
+        // TODO check if user with the same name, surname and dateOfBirth doesnt already have a folder
+        // database (hibernate?)
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        if (containsID()) {
+            return score.getPatientSurname() + " " + score.getPatientName() + " " + score.getPatientBirthdate().format(date);
+        } else {
+            return score.getPatientID().toString();
+        }
+    }
 }

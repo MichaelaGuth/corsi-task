@@ -5,11 +5,13 @@ import cz.pvsps.corsitask.tools.Tools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,7 +50,7 @@ public class TestResultsDialogController {
         if (listOfFiles != null) {
             for (File file :
                     listOfFiles) {
-                resultsFileOptions.add(file.getPath());
+                resultsFileOptions.add(file.getPath() + "\\" + file.getName() + ".json");
             }
         }
         pathToResultsComboBox.setItems(resultsFileOptions);
@@ -59,12 +61,19 @@ public class TestResultsDialogController {
         // TODO check if file exists and is correct
         // else throw new exception
         if (pathToResultsComboBox.getValue() != null) {
-            file = new File(pathToResultsComboBox.getValue());
+            File directory = new File(pathToResultsComboBox.getValue());
+            file = new File(directory.getPath() + "\\" + directory.getName() + ".json");
             if (file.exists()) {
-                LOGGER.log(Level.INFO, "Results file: "+ file.getName() + "exists. Loading results...");
+                LOGGER.log(Level.INFO, "Results file: "+ file.getName() + " exists and has correct file extension. Loading results...");
                 Tools.changeScene(Constants.RESULT);
             }
         } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Chybně vybraný soubor!");
+            alert.setHeaderText(null);
+            alert.setContentText("Soubor, který byl vybrán neexistuje. Vyberte prosím jiný soubor.");
+            alert.showAndWait();
+            LOGGER.log(Level.SEVERE, "Results file: " + file.getName() + " does not have a correct extension. Showing dialog...");
             LOGGER.log(Level.INFO, "Location to results file was not selected.");
         }
     }

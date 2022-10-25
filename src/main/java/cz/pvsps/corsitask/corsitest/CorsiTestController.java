@@ -115,9 +115,10 @@ public class CorsiTestController {
     }
 
     private void endTest() {
-        // TODO vytvořit složku pro každý výsedek
         String filePath = configuration.getPathToResultsDir() + "\\";
-        filePath += configuration.getResultFileNameFormat().getFileName(score) + ".json";
+        String fileName = configuration.getResultFileNameFormat().getFileName(score);
+        String directory = configuration.getResultFileNameFormat().getDirectoryName(score);
+        filePath += fileName + "\\" + fileName + ".json";
         saveObjectToJSONFile(score, filePath);
         Platform.runLater(() -> Tools.changeScene(Constants.END_TEST));
     }
