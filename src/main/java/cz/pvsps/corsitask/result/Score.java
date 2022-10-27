@@ -125,9 +125,9 @@ public class Score {
 
     public ArrayList<String> createCSV() {
         ArrayList<String> res = new ArrayList<>();
-        res.add("name" + SEPARATOR_CSV + "surname" + SEPARATOR_CSV + "patientID" + SEPARATOR_CSV + "dateOfBirth"
-                + SEPARATOR_CSV + "dateOfTest" + SEPARATOR_CSV + "totalScore" + SEPARATOR_CSV + "blockSpan"
-                + SEPARATOR_CSV + "totalRawScore");
+        res.add("Name" + SEPARATOR_CSV + "Surname" + SEPARATOR_CSV + "Patient ID" + SEPARATOR_CSV + "Date of birth"
+                + SEPARATOR_CSV + "Test date" + SEPARATOR_CSV + "Total score" + SEPARATOR_CSV + "Block span"
+                + SEPARATOR_CSV + "Total raw score");
         StringBuilder csv = new StringBuilder(patientName);
         csv.append(SEPARATOR_CSV).append(patientSurname).append(SEPARATOR_CSV);
         csv.append(patientID).append(SEPARATOR_CSV);

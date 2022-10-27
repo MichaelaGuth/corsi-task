@@ -74,8 +74,8 @@ public final class SequenceScore {
 
     public ArrayList<String> createCSV() {
         ArrayList<String> result = new ArrayList<>();
-        StringBuilder header = new StringBuilder("correctSequence" + SEPARATOR_CSV + "userSequence" + SEPARATOR_CSV
-                + "userTime" + SEPARATOR_CSV);
+        StringBuilder header = new StringBuilder("Correct sequence" + SEPARATOR_CSV + "User sequence" + SEPARATOR_CSV
+                + "User time" + SEPARATOR_CSV);
         StringBuilder csv = new StringBuilder(correctSequence.toString() + SEPARATOR_CSV);
         csv.append(userSequence.toString()).append(SEPARATOR_CSV);
         csv.append(userTime / 1000.0).append(SEPARATOR_CSV);
@@ -83,7 +83,7 @@ public final class SequenceScore {
         for (long time :
                 timesBetweenBlocks) {
             csv.append(time / 1000.0).append(SEPARATOR_CSV);
-            header.append("time").append(i++).append(SEPARATOR_CSV);
+            header.append("Time ").append(i++).append(SEPARATOR_CSV);
         }
         csv.delete(csv.length()-1, csv.length()-1);
         header.delete(header.length()-1, header.length()-1);

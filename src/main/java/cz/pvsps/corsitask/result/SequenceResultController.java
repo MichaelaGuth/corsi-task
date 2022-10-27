@@ -22,6 +22,8 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cz.pvsps.corsitask.Main.stage;
+
 public class SequenceResultController {
     public AnchorPane anchorPane;
     public Rectangle block1;
@@ -60,8 +62,10 @@ public class SequenceResultController {
 
     @FXML
     public void initialize() {
-        // todo nastavit krizek abz se vratil do result
-
+        stage.setOnCloseRequest(windowEvent -> {
+            Tools.changeScene(Constants.RESULT);
+            windowEvent.consume();
+        });
         correctSequenceLabel.setText(sequenceScore.getCorrectSequence().toString());
         userSequenceLabel.setText(sequenceScore.getUserSequence().toString());
         allBlocks = getListOfBlocks();

@@ -8,10 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
 
 import java.io.File;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +24,7 @@ public class TestResultsDialogController {
     public ComboBox<String> pathToResultsComboBox;
     public Button browseLocalFilesButton;
     private ObservableList<String> resultsFileOptions;
-    private FileChooser fileChooser;
+    private DirectoryChooser directoryChooser;
     private static final Logger LOGGER = Logger.getLogger(TestResultsDialogController.class.getName());
 
     @FXML
@@ -36,11 +35,9 @@ public class TestResultsDialogController {
     }
 
     private void prepareFileChooser() {
-        fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(configuration.getPathToResultsDir()));
-        fileChooser.setTitle("Vyberte soubor se sekvencemi:");
-        FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
-        fileChooser.getExtensionFilters().add(fileExtensions);
+        directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File(configuration.getPathToResultsDir()));
+        directoryChooser.setTitle("Vyberte soubor se sekvencemi:");
     }
 
     private void prepareResultsFileChoiceBox() {
@@ -50,7 +47,7 @@ public class TestResultsDialogController {
         if (listOfFiles != null) {
             for (File file :
                     listOfFiles) {
-                resultsFileOptions.add(file.getPath() + "\\" + file.getName() + ".json");
+                resultsFileOptions.add(file.getPath());
             }
         }
         pathToResultsComboBox.setItems(resultsFileOptions);
@@ -79,7 +76,7 @@ public class TestResultsDialogController {
     }
 
     public void browseLocalFilesButtonOnAction() {
-        var location = fileChooser.showOpenDialog(stage);
+        var location = directoryChooser.showDialog(stage);
         if (location != null) {
             if (!resultsFileOptions.contains(location.getPath())) {
                 resultsFileOptions.add(location.getPath());

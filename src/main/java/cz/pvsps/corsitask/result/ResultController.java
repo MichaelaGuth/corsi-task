@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 import java.time.format.DateTimeFormatter;
@@ -46,11 +45,11 @@ public class ResultController {
     private Score score;
     public static File file;
 
-    // TODO change table design to NOT include times between block clicks
     // TODO add export to PDF option
-    // TODO Add option to export data to csv
     @FXML
     public void initialize() {
+        exportToPDFButton.setDisable(true);
+        exportToPDFButton.setVisible(false);
         stage.setFullScreen(Constants.RESULT.isFullscreen());
         if (file != null) {
             score = Tools.loadScore(file);
@@ -99,7 +98,6 @@ public class ResultController {
 
     public void generateCSVFileButtonOnAction(ActionEvent actionEvent) {
 
-        // TODO upravit headery
         String filePath = file.getParentFile() + CSV_FOLDER_NAME + "score.csv";
         StringBuilder fileContent = new StringBuilder();
         ArrayList<String> scoreCSV = score.createCSV();
