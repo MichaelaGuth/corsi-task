@@ -43,8 +43,6 @@ public class TestSettingsDialogController {
     public static UUID patientID;
     public static LocalDate patientBirthdate;
 
-    // TODO delete showUserOrderCheckBox
-
     @FXML
     public void initialize() {
         stage.setFullScreen(Constants.TEST_SETTINGS_DIALOG.isFullscreen());

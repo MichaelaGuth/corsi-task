@@ -24,6 +24,7 @@ public class Main extends Application {
     public static Stage stage;
 
     // TODO create default folders if they dont exist
+    // TODO create installer and exe file
 
     @Override
     public void start(Stage primaryStage) {

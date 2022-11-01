@@ -68,6 +68,7 @@ public class Tools {
             }
             Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(sceneConfig.getPath())));
             stage.setScene(new Scene(root, sceneConfig.getWidth(), sceneConfig.getHeight()));
+            stage.setFullScreen(sceneConfig.isFullscreen());
             if (sceneConfig.isExitButtonOverridden()) {
                 stage.setOnCloseRequest(windowEvent -> {
                     Tools.changeScene(Constants.MENU);

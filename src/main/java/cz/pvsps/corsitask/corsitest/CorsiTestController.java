@@ -204,8 +204,7 @@ public class CorsiTestController {
         resetSelectionButton.setDisable(true);
         resetSelectionButton.setVisible(false);
         resize();
-        // TODO change sequence loading to from sequence dir
-        sequences = Tools.loadSequences("sequences.json");
+        sequences = Tools.loadSequences(configuration.getCurrentlyInUseSequenceFilePath());
         score = new Score(patientName, patientSurname, patientBirthdate, patientID);
         testInProgress = true;
     }
