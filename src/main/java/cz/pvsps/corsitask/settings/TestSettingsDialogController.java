@@ -1,6 +1,7 @@
 package cz.pvsps.corsitask.settings;
 
 import cz.pvsps.corsitask.Constants;
+import cz.pvsps.corsitask.animations.Shake;
 import cz.pvsps.corsitask.tools.FileNameFormat;
 import cz.pvsps.corsitask.tools.Tools;
 import javafx.collections.FXCollections;
@@ -138,7 +139,7 @@ public class TestSettingsDialogController {
 
         if (isNameInvalid(patientName)) {
             nameTextField.setStyle(errorStyle);
-            new animatefx.animation.Shake(nameTextField).play();
+            new Shake(nameTextField).play();
             res = false;
         } else {
             nameTextField.setStyle(successStyle);
@@ -146,7 +147,7 @@ public class TestSettingsDialogController {
 
         if (isNameInvalid(patientSurname)) {
             surnameTextField.setStyle(errorStyle);
-            new animatefx.animation.Shake(surnameTextField).play();
+            new Shake(surnameTextField).play();
             res = false;
         } else {
             surnameTextField.setStyle(successStyle);
@@ -154,7 +155,7 @@ public class TestSettingsDialogController {
 
         if (patientBirthdate == null) {
             birthdatePicker.setStyle(errorStyle);
-            new animatefx.animation.Shake(birthdatePicker).play();
+            new Shake(birthdatePicker).play();
             res = false;
         } else {
             birthdatePicker.setStyle(successStyle);

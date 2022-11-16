@@ -1,6 +1,8 @@
 package cz.pvsps.corsitask.corsitest;
 
 import cz.pvsps.corsitask.Constants;
+import cz.pvsps.corsitask.animations.Pulse;
+import cz.pvsps.corsitask.animations.Shake;
 import cz.pvsps.corsitask.result.SequenceScore;
 import cz.pvsps.corsitask.tools.Block;
 import cz.pvsps.corsitask.tools.Tools;
@@ -109,13 +111,13 @@ public class TutorialController {
             resultLabel.setText(RESULT_LABEL_START + "SPRÁVNĚ");
             String RIGHT_ANSWER_STYLE = "-fx-background-color: greenyellow; -fx-text-fill: black;";
             resultLabel.setStyle(RIGHT_ANSWER_STYLE);
-            new animatefx.animation.Pulse(resultLabel).play();
+            new Pulse(resultLabel).play();
             numberOfCorrectlyAnsweredTrials++;
         } else {
             resultLabel.setText(RESULT_LABEL_START + "ŠPATNĚ");
             String WRONG_ANSWER_STYLE = "-fx-background-color: red; -fx-text-fill: white;";
             resultLabel.setStyle(WRONG_ANSWER_STYLE);
-            new animatefx.animation.Shake(resultLabel).play();
+            new Shake(resultLabel).play();
         }
         playTutorialButton.setDisable(false);
         confirmSelectionButton.setDisable(true);
