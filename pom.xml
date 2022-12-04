@@ -16,6 +16,7 @@
         <javafx.version>18.0.1</javafx.version>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
+        <client.version>1.0.0</client.version>
     </properties>
 
     <dependencies>
@@ -134,6 +135,32 @@
                             <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>Build Native Windows App</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <workingDirectory>${project.basedir}</workingDirectory>
+                    <executable>windows_app.bat</executable>
+                    <arguments>
+                        <argument>${build.finalName}.jar</argument>
+                    </arguments>
+                    <environmentVariables>
+                        <APP_VERSION>
+                            ${client.version}
+                        </APP_VERSION>
+                    </environmentVariables>
                 </configuration>
             </plugin>
         </plugins>
