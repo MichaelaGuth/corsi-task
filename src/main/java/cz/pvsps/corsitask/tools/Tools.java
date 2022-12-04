@@ -33,8 +33,6 @@ import java.util.logging.Logger;
 
 import static cz.pvsps.corsitask.Main.stage;
 
-;
-
 public class Tools {
 
     private static final Logger LOGGER = Logger.getLogger(Tools.class.getName());
@@ -67,8 +65,15 @@ public class Tools {
                 stage.setFullScreenExitHint("");
             }
             Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(sceneConfig.getPath())));
-            stage.setScene(new Scene(root, sceneConfig.getWidth(), sceneConfig.getHeight()));
-            stage.setFullScreen(sceneConfig.isFullscreen());
+            if (stage.isFullScreen() && sceneConfig.isFullscreen()){
+                stage.getScene().setRoot(root);
+            }
+            else{
+                stage.setScene(new Scene(root, sceneConfig.getWidth(), sceneConfig.getHeight()));
+                stage.setFullScreen(sceneConfig.isFullscreen());
+            }
+            //stage.setScene(new Scene(root, sceneConfig.getWidth(), sceneConfig.getHeight()));
+            //stage.setFullScreen(sceneConfig.isFullscreen());
             if (sceneConfig.isExitButtonOverridden()) {
                 stage.setOnCloseRequest(windowEvent -> {
                     Tools.changeScene(Constants.MENU);

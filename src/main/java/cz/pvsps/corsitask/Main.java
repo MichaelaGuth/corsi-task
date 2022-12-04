@@ -36,7 +36,7 @@ public class Main extends Application {
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(APPLICATION_ICON_FILE_PATH)).toString()));
             stage.setIconified(false);
             stage.setScene(new Scene(root, MENU.getWidth(), MENU.getHeight()));
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.setFullScreen(false);
             stage.show();
             LOGGER.log(Level.INFO, "File named: " + MENU.fileName() + " has been successfully loaded.");
