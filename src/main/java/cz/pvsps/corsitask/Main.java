@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -17,14 +18,13 @@ import java.util.logging.Logger;
 import static cz.pvsps.corsitask.Constants.*;
 
 public class Main extends Application {
-    private static Logger LOGGER = Logger.getLogger(Main.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     public static Configuration configuration;
 
     public static Stage stage;
 
     // TODO create default folders if they dont exist
-    // TODO create installer and exe file
 
     @Override
     public void start(Stage primaryStage) {
@@ -38,6 +38,8 @@ public class Main extends Application {
             stage.setScene(new Scene(root, MENU.getWidth(), MENU.getHeight()));
             stage.setResizable(false);
             stage.setFullScreen(false);
+            stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            stage.setFullScreenExitHint("");
             stage.show();
             LOGGER.log(Level.INFO, "File named: " + MENU.fileName() + " has been successfully loaded.");
         } catch (Exception e) {

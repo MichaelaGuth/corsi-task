@@ -14,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import org.json.simple.JSONArray;
@@ -60,10 +59,6 @@ public class Tools {
     // TODO refactor method
     public static void changeScene(SceneConfig sceneConfig) {
         try {
-            if (sceneConfig.isFullscreen()) {
-                stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-                stage.setFullScreenExitHint("");
-            }
             Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(sceneConfig.getPath())));
             if (stage.isFullScreen() && sceneConfig.isFullscreen()){
                 stage.getScene().setRoot(root);
@@ -72,8 +67,7 @@ public class Tools {
                 stage.setScene(new Scene(root, sceneConfig.getWidth(), sceneConfig.getHeight()));
                 stage.setFullScreen(sceneConfig.isFullscreen());
             }
-            //stage.setScene(new Scene(root, sceneConfig.getWidth(), sceneConfig.getHeight()));
-            //stage.setFullScreen(sceneConfig.isFullscreen());
+
             if (sceneConfig.isExitButtonOverridden()) {
                 stage.setOnCloseRequest(windowEvent -> {
                     Tools.changeScene(Constants.MENU);
@@ -82,7 +76,13 @@ public class Tools {
             } else {
                 stage.setOnCloseRequest(windowEvent -> {});
             }
-            stage.centerOnScreen();
+
+            if (!sceneConfig.isFullscreen()){
+                stage.centerOnScreen();
+            }
+
+            stage.show();
+            LOGGER.log(Level.INFO, "File named: " + sceneConfig.getFileName() + " has been successfully loaded.");
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "File named: " + sceneConfig.getFileName() + " could no be Loaded.");
             e.printStackTrace();
@@ -90,15 +90,6 @@ public class Tools {
             System.exit(100);
             // TODO
         }
-        if (!stage.isFullScreen()) {
-            stage.setFullScreen(sceneConfig.isFullscreen());
-        }
-        if (stage.isFullScreen()) {
-            stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-            stage.setFullScreenExitHint("");
-        }
-        stage.show();
-        LOGGER.log(Level.INFO, "File named: " + sceneConfig.getFileName() + " has been successfully loaded.");
     }
 
     public static String getDocumentsPath() {
