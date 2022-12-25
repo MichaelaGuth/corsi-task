@@ -111,6 +111,11 @@ public class CorsiTestController {
 
     private void startTest(Thread testThread) {
         testThread.setDaemon(true);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         testThread.start();
     }
 

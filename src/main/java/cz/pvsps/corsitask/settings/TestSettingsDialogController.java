@@ -119,7 +119,7 @@ public class TestSettingsDialogController {
                 if (result.get() == ButtonType.OK) {
                     Tools.saveObjectToJSONFile(configuration, Constants.CONFIGURATION_LOCATION);
                     if (configuration.isAllowTutorial()) {
-                        Tools.changeScene(Constants.TUTORIAL);
+                        Tools.changeScene(Constants.START_TUTORIAL);
                     } else {
                         Tools.changeScene(Constants.START_TEST);
                     }

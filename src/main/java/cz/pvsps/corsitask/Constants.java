@@ -15,8 +15,10 @@ public class Constants {
     public static final SceneConfig SEQUENCE_RESULT = new SceneConfig ("sequenceResult.fxml", 850, 530, false, false);
     public static final SceneConfig TEST_RESULTS_DIALOG = new SceneConfig ("testResultsDialog.fxml", 400, 250, false, true);
     public static final SceneConfig TUTORIAL = new SceneConfig ("tutorial.fxml", 800, 450, true, false);
-    public static final SceneConfig START_TEST = new SceneConfig ("startTest.fxml", 600, 400, true, false);
+    public static final SceneConfig START_TEST = new SceneConfig ("startTest1.fxml", 1200, 800, true, false);
     public static final SceneConfig END_TEST = new SceneConfig ("endTest.fxml", 600, 400, true, false);
+    public static final SceneConfig START_TUTORIAL = new SceneConfig ("startTutorial.fxml", 1200, 800, true, false) ;
+
 
     // Styling
     public static final String BUTTON_STYLE = "-fx-background-color: %s; -fx-border-color: %s; -fx-border-width: 5;";
@@ -45,6 +47,7 @@ public class Constants {
     public static final String SEPARATOR_CSV = ";";
 
     public static final String CSV_FOLDER_NAME = "\\csv\\";
+
 
     // LOCALIZATION
     public static enum LOCALIZATION {
