@@ -87,20 +87,21 @@ public class CorsiTestController {
             public void run() {
                 sequenceIndex = 0;
                 while (testInProgress) {
-                    if (sequenceIndex >= sequences.size()) {
-                        testInProgress = false;
-                        waitingForUser = true;
-                    }
                     if (!waitingForUser) {
-                        playSequence(sequences.get(sequenceIndex));
-                        sequenceIndex++;
-                        waitingForUser = true;
-                        userSequence = new ArrayList<>();
-                        confirmSelectionButton.setDisable(false);
-                        setAllBlocksDisable(false);
-                        timesBetweenBlockClicks = new ArrayList<>();
-                        startTime = System.currentTimeMillis();
-                        lastBlockClickTime = startTime;
+                        if (sequenceIndex >= sequences.size()) {
+                            testInProgress = false;
+                            waitingForUser = true;
+                        } else {
+                            playSequence(sequences.get(sequenceIndex));
+                            sequenceIndex++;
+                            waitingForUser = true;
+                            userSequence = new ArrayList<>();
+                            confirmSelectionButton.setDisable(false);
+                            setAllBlocksDisable(false);
+                            timesBetweenBlockClicks = new ArrayList<>();
+                            startTime = System.currentTimeMillis();
+                            lastBlockClickTime = startTime;
+                        }
                     }
                 }
                 endTest();

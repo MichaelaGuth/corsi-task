@@ -9,9 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.util.StringConverter;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,11 +51,33 @@ public class TestSettingsDialogController {
         stage.setFullScreen(Constants.TEST_SETTINGS_DIALOG.isFullscreen());
         patientID = UUID.randomUUID();
         patientIDLabel.setText("ID: " + patientID);
+        Tools.setTestSettingsPrerequisites();
         configuration = Tools.loadConfiguration();
         showBlockNumbersCheckBox.setSelected(configuration.isShowBlockNumbers());
         allowResetButtonCheckBox.setSelected(configuration.isAllowResetButton());
         allowTutorialCheckBox.setSelected(configuration.isAllowTutorial());
         birthdatePicker.setShowWeekNumbers(true);
+        birthdatePicker.setConverter(new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+            @Override
+            public String toString(LocalDate localDate) {
+                if (localDate != null) {
+                    return dateFormatter.format(localDate);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String s) {
+                if (s != null && !s.isEmpty()) {
+                    return LocalDate.parse(s, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
         prepareSequenceFileChoiceBox();
         prepareResultFileNameFormatChoiceBox();
         prepareFileChooser();

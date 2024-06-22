@@ -1,5 +1,5 @@
 @echo off
-set JRE=C:\Users\gmich\.jdks\openjdk-18.0.2.1
+set JRE="add path to JRE folder"
 set MAIN_JAR=%1
 set INSTALLER_TYPE=msi
 

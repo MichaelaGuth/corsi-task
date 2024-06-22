@@ -20,10 +20,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 
 import javax.swing.filechooser.FileSystemView;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -95,6 +92,55 @@ public class Tools {
         return FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     }
 
+    public static void setTestSettingsPrerequisites() {
+        File dirSequences = new File(Constants.SEQUENCES_DIR_PATH);
+        if (!dirSequences.exists()) {
+            dirSequences.mkdirs();
+        }
+
+        if (dirSequences.listFiles().length == 0) {
+            File defSeq = new File(Constants.CURRENTLY_USED_SEQUENCES_PATH);
+            try (InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(Main.class.getResourceAsStream(Constants.DEFAULT_SEQUENCES_FILE_PATH)), StandardCharsets.UTF_8);
+                 BufferedReader br = new BufferedReader(isr);
+                 FileWriter fw = new FileWriter(defSeq)) {
+
+                String line;
+                while ((line = br.readLine()) != null) {
+                    fw.write(line);
+                    fw.write("\r\n");
+                }
+                fw.flush();
+
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "File named: " + Constants.CURRENTLY_USED_SEQUENCES_PATH + " could no be created.");
+                e.printStackTrace();
+                stage.close();
+                System.exit(100);
+            }
+        }
+
+        File tutorialSeq = new File(Constants.CURRENTLY_USED_TUTORIAL_SEQUENCES_PATH);
+        if (!tutorialSeq.exists()) {
+            try (InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(Main.class.getResourceAsStream(Constants.DEFAULT_TUTORIAL_SEQUENCE_FILE_PATH)), StandardCharsets.UTF_8);
+                BufferedReader br = new BufferedReader(isr);
+                FileWriter fw = new FileWriter(tutorialSeq)) {
+
+                String line;
+                while ((line = br.readLine()) != null) {
+                    fw.write(line);
+                    fw.write("\r\n");
+                }
+                fw.flush();
+
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "File named: " + Constants.CURRENTLY_USED_TUTORIAL_SEQUENCES_PATH + " could no be created.");
+                e.printStackTrace();
+                stage.close();
+                System.exit(100);
+            }
+        }
+
+    }
 
     // TODO check with Honza
     public static Configuration loadConfiguration()  {
