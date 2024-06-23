@@ -7,12 +7,22 @@ import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
+/**
+ * Shake animation implementation. Extends of {@link CorsiAnimation}.
+ */
 public class Shake extends CorsiAnimation {
 
+    /**
+     *
+     * @param node
+     */
     public Shake(Node node){
         super(node);
     }
 
+    /**
+     * Set up shake animation for scene node specified in constructor.
+     */
     @Override
     public void initTimeline() {
         setTimeline(new Timeline(

@@ -4,6 +4,9 @@ import cz.pvsps.corsitask.tools.FileNameFormat;
 import cz.pvsps.corsitask.tools.SceneConfig;
 import cz.pvsps.corsitask.tools.Tools;
 
+/**
+ * Class contains all constants used in whole project. You can find here paths to fxml files, default settings, styles, etc.
+ */
 public class Constants {
 
     // FXML files config

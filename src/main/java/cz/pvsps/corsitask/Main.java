@@ -17,6 +17,9 @@ import java.util.logging.Logger;
 
 import static cz.pvsps.corsitask.Constants.*;
 
+/**
+ * Main class of the project.
+ */
 public class Main extends Application {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
@@ -26,6 +29,10 @@ public class Main extends Application {
 
     // TODO create default folders if they dont exist
 
+    /**
+     *
+     * @param primaryStage
+     */
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;

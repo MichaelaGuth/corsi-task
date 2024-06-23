@@ -29,6 +29,10 @@ import static cz.pvsps.corsitask.Main.stage;
 import static cz.pvsps.corsitask.settings.TestSettingsDialogController.*;
 import static cz.pvsps.corsitask.tools.Tools.saveObjectToJSONFile;
 
+/**
+ * This class controls whole Corsi task testing process. It is responsible for displaying the sequence to the user,
+ * recording the sequence created by the user, evaluating the inputs and terminating the testing.
+ */
 public class CorsiTestController {
     public Rectangle block1;
     public Rectangle block2;
@@ -78,7 +82,9 @@ public class CorsiTestController {
 
     private ArrayList<Long> timesBetweenBlockClicks;
 
-
+    /**
+     * Initialize and prepare UI for test and start the logic in a new thread.
+     */
     @FXML
     public void initialize() {
         prepareTest();
@@ -110,6 +116,10 @@ public class CorsiTestController {
         startTest(testThread);
     }
 
+    /**
+     * Set up thread as daemon and run it.
+     * @param testThread Thread that will be run.
+     */
     private void startTest(Thread testThread) {
         testThread.setDaemon(true);
         try {
@@ -120,6 +130,9 @@ public class CorsiTestController {
         testThread.start();
     }
 
+    /**
+     * Save score achieved by the user and switch into "End test" scene.
+     */
     private void endTest() {
         String filePath = configuration.getPathToResultsDir() + "\\";
         String fileName = configuration.getResultFileNameFormat().getFileName(score);
@@ -129,6 +142,10 @@ public class CorsiTestController {
         Platform.runLater(() -> Tools.changeScene(Constants.END_TEST));
     }
 
+    /**
+     *
+     * @param sequence
+     */
     private void playSequence(ArrayList<Block> sequence) {
         for (Block block:
              sequence) {
