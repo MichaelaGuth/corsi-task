@@ -131,7 +131,7 @@ public class CorsiTestController {
     }
 
     /**
-     * Save score achieved by the user and switch into "End test" scene.
+     * Saves score achieved by the user and switch into "End test" scene.
      */
     private void endTest() {
         String filePath = configuration.getPathToResultsDir() + "\\";
@@ -143,8 +143,8 @@ public class CorsiTestController {
     }
 
     /**
-     *
-     * @param sequence
+     * Gradually shows user a sequence of blocks.
+     * @param sequence Array of {@link Block} that should be highlighted.
      */
     private void playSequence(ArrayList<Block> sequence) {
         for (Block block:
@@ -163,6 +163,11 @@ public class CorsiTestController {
         }
     }
 
+    /**
+     * Trigger of mouse click event on a block. Highlights for a short duration clicked block and
+     * adds it to the user's list of clicked blocks with the duration since the last block was clicked.
+     * @param event {@link MouseEvent} arguments
+     */
     public void blockAny_OnMouseClicked(MouseEvent event) {
         if (event.getSource() instanceof Rectangle rectangle) {
             if (!rectangle.getFill().equals(YELLOW)) {
@@ -180,6 +185,9 @@ public class CorsiTestController {
         }
     }
 
+    /**
+     * Ends selecting blocks to the user's sequence and evaluate it
+     */
     public void confirmSelectionButtonOnMouseClicked() {
         long finishTime = System.currentTimeMillis();
         timesBetweenBlockClicks.add(System.currentTimeMillis()-lastBlockClickTime);
@@ -208,6 +216,9 @@ public class CorsiTestController {
         waitingForUser = false;
     }
 
+    /**
+     *
+     */
     public void resetSelectionButtonOnMouseClicked() {
         prepareForNewUserSequence();
         if (sequenceIndex > 0) {
