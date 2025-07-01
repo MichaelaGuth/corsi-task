@@ -4,6 +4,9 @@ import cz.pvsps.corsitask.tools.FileNameFormat;
 import cz.pvsps.corsitask.tools.SceneConfig;
 import cz.pvsps.corsitask.tools.Tools;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 /**
  * Class contains all constants used in whole project. You can find here paths to fxml files, default settings, styles, etc.
  */
@@ -27,30 +30,30 @@ public class Constants {
     public static final String BUTTON_STYLE = "-fx-background-color: %s; -fx-border-color: %s; -fx-border-width: 5;";
 
     // Paths
-    public static final String LOCALIZATION_LOCATION = Tools.getDocumentsPath() + "\\Corsi Test\\localization\\";
-    public static final String CONFIGURATION_LOCATION = Tools.getDocumentsPath() + "\\Corsi Test\\settings.json";
-    public static final String RESULTS_DIR_PATH = Tools.getDocumentsPath() + "\\Corsi Test\\results";
-    public static final String SEQUENCES_DIR_PATH = Tools.getDocumentsPath() + "\\Corsi Test\\sequences";
-    public static final String CURRENTLY_USED_SEQUENCES_PATH = SEQUENCES_DIR_PATH + "\\defaultSequences.json";
-    public static final String CURRENTLY_USED_TUTORIAL_SEQUENCES_PATH = SEQUENCES_DIR_PATH + "\\tutorialSequences.json";
+    public static final String LOCALIZATION_LOCATION = Paths.get(Tools.getDocumentsPath(), "Corsi Test", "localization").toString() + File.separator;
+    public static final String CONFIGURATION_LOCATION = Paths.get(Tools.getDocumentsPath(), "Corsi Test", "settings.json").toString();
+    public static final String RESULTS_DIR_PATH = Paths.get(Tools.getDocumentsPath(), "Corsi Test", "results").toString();
+    public static final String SEQUENCES_DIR_PATH = Paths.get(Tools.getDocumentsPath(), "Corsi Test", "sequences").toString();
+    public static final String CURRENTLY_USED_SEQUENCES_PATH = Paths.get(SEQUENCES_DIR_PATH , "defaultSequences.json").toString();
+    public static final String CURRENTLY_USED_TUTORIAL_SEQUENCES_PATH = Paths.get(SEQUENCES_DIR_PATH, "tutorialSequences.json").toString();
 
     // Other
-    public static final String APPLICATION_ICON_FILE_PATH = "/png/icon.png";
+    public static final String APPLICATION_ICON_FILE_PATH = Paths.get(File.separator + "png", "icon.png").toString();
     public static final String APPLICATION_TITLE = "Corsi Test";
     public static final String BROWSE_OPTION = "Procházet místní soubory";
     public static final String EXAMPLE_SHORT = "např.";
 
     // Default files backup location (resources)
-    public static final String DEFAULT_SEQUENCES_FILE_PATH = "/json/defaultSequences.json";
-    public static final String DEFAULT_TUTORIAL_SEQUENCE_FILE_PATH = "/json/tutorialSequences.json";
+    public static final String DEFAULT_SEQUENCES_FILE_PATH = Paths.get(File.separator + "json", "defaultSequences.json").toString();
+    public static final String DEFAULT_TUTORIAL_SEQUENCE_FILE_PATH = Paths.get(File.separator + "json", "tutorialSequences.json").toString();
 
-    public static final FileNameFormat DATE_SURNAME_NAME_TIME = new FileNameFormat("<TestDate:yyyy-mm-dd> <Surname> <Name> <TestTime:hh_mm_ss>", "2022-10-02 Guthová Michaela 20_27_12");
+    public static final FileNameFormat DATE_SURNAME_NAME_TIME = new FileNameFormat("<TestDate:yyyy-mm-dd> <Surname> <Name> <TestTime:hh_mm_ss>", "1972-10-02 Corsi Phillip 20_27_12");
     public static final FileNameFormat ID = new FileNameFormat("<Patient ID>", "4270a472-0614-4e54-8e50-2b8eff9cf01e");
-    public static final FileNameFormat DATE_ID_TIME = new FileNameFormat("<TestDate:yyyy-mm-dd> <PatientID> <TestTime:hh_mm_ss>", "2022-10-02 4270a472-0614-4e54-8e50-2b8eff9cf01e 20_27_12");
+    public static final FileNameFormat DATE_ID_TIME = new FileNameFormat("<TestDate:yyyy-mm-dd> <PatientID> <TestTime:hh_mm_ss>", "1972-10-02 4270a472-0614-4e54-8e50-2b8eff9cf01e 20_27_12");
 
     public static final String SEPARATOR_CSV = ";";
 
-    public static final String CSV_FOLDER_NAME = "\\csv\\";
+    public static final String CSV_FOLDER_NAME = File.separator + "csv" + File.separator;
 
 
     // LOCALIZATION

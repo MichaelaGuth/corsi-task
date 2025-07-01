@@ -59,7 +59,7 @@ public class TestResultsDialogController {
         // else throw new exception
         if (pathToResultsComboBox.getValue() != null) {
             File directory = new File(pathToResultsComboBox.getValue());
-            file = new File(directory.getPath() + "\\" + directory.getName() + ".json");
+            file = new File(directory.getPath() + File.separator + directory.getName() + ".json");
             if (file.exists()) {
                 LOGGER.log(Level.INFO, "Results file: "+ file.getName() + " exists and has correct file extension. Loading results...");
                 Tools.changeScene(Constants.RESULT);

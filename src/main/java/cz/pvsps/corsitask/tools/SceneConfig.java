@@ -1,9 +1,11 @@
 package cz.pvsps.corsitask.tools;
 
+import java.io.File;
+
 public record SceneConfig(String fileName, int width, int height, boolean isFullscreen, boolean isExitButtonOverridden) {
 
     public String getPath() {
-        return "/fxml/" + fileName;
+        return File.separator + "fxml" + File.separator + fileName;
     }
 
     public int getHeight() {

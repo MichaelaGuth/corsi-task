@@ -73,10 +73,9 @@ public class Tools {
                 stage.setOnCloseRequest(windowEvent -> {});
             }
 
-            if (!sceneConfig.isFullscreen()){
+            if (!sceneConfig.isFullscreen()) {
                 stage.centerOnScreen();
             }
-
             stage.show();
             LOGGER.log(Level.INFO, "File named: " + sceneConfig.getFileName() + " has been successfully loaded.");
         } catch (IOException e) {

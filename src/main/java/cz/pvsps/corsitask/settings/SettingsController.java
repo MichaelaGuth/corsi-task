@@ -34,8 +34,8 @@ public class SettingsController {
 
     private DirectoryChooser directoryChooser;
 
-    private final String DEFAULT_SEQUENCE_DIR_LOCATION = Tools.getDocumentsPath()+"\\Corsi Test\\sekvence";
-    private final String DEFAULT_RESULT_DIR_LOCATION = Tools.getDocumentsPath()+"\\Corsi Test\\výsledky";
+    private final String DEFAULT_SEQUENCE_DIR_LOCATION = SEQUENCES_DIR_PATH;
+    private final String DEFAULT_RESULT_DIR_LOCATION = RESULTS_DIR_PATH;
 
     // TODO přidat možnost zvolit lokalizaci
 
@@ -47,12 +47,30 @@ public class SettingsController {
                 DEFAULT_SEQUENCE_DIR_LOCATION,
                 BROWSE_OPTION
         );
+
+        if (!Objects.equals(configuration.getPathToSequenceDir(), DEFAULT_SEQUENCE_DIR_LOCATION)) {
+            sequenceLocationOptions = FXCollections.observableArrayList(
+                    configuration.getPathToSequenceDir(),
+                    DEFAULT_SEQUENCE_DIR_LOCATION,
+                    BROWSE_OPTION
+            );
+        }
+
         sequencesLocationChoiceBox.setItems(sequenceLocationOptions);
         sequencesLocationChoiceBox.setValue(sequenceLocationOptions.get(0));
         resultsLocationOptions = FXCollections.observableArrayList(
                 DEFAULT_RESULT_DIR_LOCATION,
                 BROWSE_OPTION
         );
+
+        if (!Objects.equals(configuration.getPathToResultsDir(), DEFAULT_RESULT_DIR_LOCATION)) {
+            resultsLocationOptions = FXCollections.observableArrayList(
+                    configuration.getPathToResultsDir(),
+                    DEFAULT_RESULT_DIR_LOCATION,
+                    BROWSE_OPTION
+            );
+        }
+
         resultsLocationChoiceBox.setItems(resultsLocationOptions);
         resultsLocationChoiceBox.setValue(resultsLocationOptions.get(0));
         ObservableList<String> resultFileNameFormatOptions = FXCollections.observableArrayList(
@@ -60,9 +78,14 @@ public class SettingsController {
                 ID.getFormat(),
                 DATE_ID_TIME.getFormat()
         );
+
         resultFileNameFormatChoiceBox.setItems(resultFileNameFormatOptions);
         resultFileNameFormatChoiceBox.setValue(configuration.getResultFileNameFormat().getFormat());
         setResultFileNameFormatExample(configuration.getResultFileNameFormat());
+
+        allowResetButtonCheckBox.setSelected(configuration.isAllowResetButton());
+        allowTutorialCheckBox.setSelected(configuration.isAllowTutorial());
+        showBlockNumbersCheckBox.setSelected(configuration.isShowBlockNumbers());
     }
 
     public void backToMenuButtonOnAction() {
@@ -80,10 +103,15 @@ public class SettingsController {
         if (sequencesLocationChoiceBox.getValue() != null) {
             if (Objects.equals(sequencesLocationChoiceBox.getValue(), BROWSE_OPTION)) {
                 var location = directoryChooser.showDialog(stage);
-                sequenceLocationOptions.remove(BROWSE_OPTION);
-                sequenceLocationOptions.add(location.getPath());
-                sequenceLocationOptions.add(BROWSE_OPTION);
-                sequencesLocationChoiceBox.setValue(location.getPath());
+                if (location != null)
+                {
+                    sequenceLocationOptions.remove(BROWSE_OPTION);
+                    sequenceLocationOptions.add(location.getPath());
+                    sequenceLocationOptions.add(BROWSE_OPTION);
+                    sequencesLocationChoiceBox.setValue(location.getPath());
+                } else {
+                   sequencesLocationChoiceBox.setValue(sequenceLocationOptions.get(0));
+                }
             }
         }
     }

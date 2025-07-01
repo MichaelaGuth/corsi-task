@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
@@ -134,10 +135,10 @@ public class CorsiTestController {
      * Saves score achieved by the user and switch into "End test" scene.
      */
     private void endTest() {
-        String filePath = configuration.getPathToResultsDir() + "\\";
+        String filePath = configuration.getPathToResultsDir() + File.separator;
         String fileName = configuration.getResultFileNameFormat().getFileName(score);
         String directory = configuration.getResultFileNameFormat().getDirectoryName(score);
-        filePath += fileName + "\\" + fileName + ".json";
+        filePath += fileName + File.separator + fileName + ".json";
         saveObjectToJSONFile(score, filePath);
         Platform.runLater(() -> Tools.changeScene(Constants.END_TEST));
     }
@@ -217,7 +218,7 @@ public class CorsiTestController {
     }
 
     /**
-     *
+     * Reset current sequence of selected blocks
      */
     public void resetSelectionButtonOnMouseClicked() {
         prepareForNewUserSequence();

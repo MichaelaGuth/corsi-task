@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static cz.pvsps.corsitask.Constants.BUTTON_STYLE;
@@ -78,7 +79,7 @@ public class TutorialController {
         allBlocks = getListOfBlocks();
         setAllBlocksDisable(true);
         userSequence = new ArrayList<>();
-        sequences = Tools.loadSequences(configuration.getPathToSequenceDir() + "\\tutorialSequences.json");
+        sequences = Tools.loadSequences(Paths.get(configuration.getPathToSequenceDir(), "tutorialSequences.json").toString());
         continueToTestButton.setDisable(true);
         continueToTestButton.setVisible(false);
         numberOfCorrectlyAnsweredTrials = 0;
@@ -86,6 +87,10 @@ public class TutorialController {
         sequenceIndex = 0;
     }
 
+    /**
+     * Gradually shows user a sequence of blocks.
+     * @param sequence Array of {@link Block} that should be highlighted.
+     */
     private void playSequence(ArrayList<Block> sequence) {
         for (Block block:
                 sequence) {

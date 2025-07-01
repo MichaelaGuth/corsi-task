@@ -15,6 +15,12 @@ public class FileNameFormat {
 
     private final String example;
 
+    public FileNameFormat()
+    {
+        this.format = "";
+        this.example = "";
+    }
+
     public FileNameFormat(String format, String example) {
         this.format = format;
         this.example = example;
