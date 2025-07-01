@@ -5,7 +5,7 @@ import java.io.File;
 public record SceneConfig(String fileName, int width, int height, boolean isFullscreen, boolean isExitButtonOverridden) {
 
     public String getPath() {
-        return File.separator + "fxml" + File.separator + fileName;
+        return "/fxml/" + fileName;
     }
 
     public int getHeight() {

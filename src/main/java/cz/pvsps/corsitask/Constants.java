@@ -38,14 +38,14 @@ public class Constants {
     public static final String CURRENTLY_USED_TUTORIAL_SEQUENCES_PATH = Paths.get(SEQUENCES_DIR_PATH, "tutorialSequences.json").toString();
 
     // Other
-    public static final String APPLICATION_ICON_FILE_PATH = Paths.get(File.separator + "png", "icon.png").toString();
+    public static final String APPLICATION_ICON_FILE_PATH = "/png/icon.png";
     public static final String APPLICATION_TITLE = "Corsi Test";
     public static final String BROWSE_OPTION = "Procházet místní soubory";
     public static final String EXAMPLE_SHORT = "např.";
 
     // Default files backup location (resources)
-    public static final String DEFAULT_SEQUENCES_FILE_PATH = Paths.get(File.separator + "json", "defaultSequences.json").toString();
-    public static final String DEFAULT_TUTORIAL_SEQUENCE_FILE_PATH = Paths.get(File.separator + "json", "tutorialSequences.json").toString();
+    public static final String DEFAULT_SEQUENCES_FILE_PATH = "/json/defaultSequences.json";
+    public static final String DEFAULT_TUTORIAL_SEQUENCE_FILE_PATH = "/json/tutorialSequences.json";
 
     public static final FileNameFormat DATE_SURNAME_NAME_TIME = new FileNameFormat("<TestDate:yyyy-mm-dd> <Surname> <Name> <TestTime:hh_mm_ss>", "1972-10-02 Corsi Phillip 20_27_12");
     public static final FileNameFormat ID = new FileNameFormat("<Patient ID>", "4270a472-0614-4e54-8e50-2b8eff9cf01e");
