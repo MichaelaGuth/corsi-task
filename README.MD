@@ -13,8 +13,22 @@ Installer for MS Windows: [Corsi_Task_1.0.msi]()
 ## Prerequisites
 - [Java OpenJDK version 18.0.2](https://jdk.java.net/archive/)
 - [Apache Maven](https://maven.apache.org/)
-## From Command-line
+
+
 Run command `mvn clean javafx:run` from project folder
+
+# Project layout
+
+
+    ├─ .idea/          IntelliJ Idea project folder
+	├─ .mvn/           Maven wrapper
+	├─ src/main/       Application source code
+	│  ├─ java/        Source code folder
+	│  └─ resources/   Application resources
+	│     ├─ fxml/     UI files
+	│     ├─ json/     Predefined application json files 
+	│     └─ png/      Application icons
+    └─ windows_app.bat Batch file for creating .msi file
 
 # License
 Corsi task application is licensed under the GNU Affero General Public License v3.0. 
