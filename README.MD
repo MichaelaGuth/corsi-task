@@ -18,4 +18,4 @@ Run command `mvn clean javafx:run` from project folder
 
 # License
 Corsi task application is licensed under the GNU Affero General Public License v3.0. 
-See (LICENSE)[https://github.com/MichaelaGuth/corsi-task/blob/master/LICENSE] for details.
+See [LICENSE](https://github.com/MichaelaGuth/corsi-task/blob/master/LICENSE) for details.
