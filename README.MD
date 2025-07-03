@@ -1,5 +1,6 @@
 # Corsi task
 Corsi block-tapping task is a psychological test used to assess visuo-spatial working memory. In this project I aimed to improve and optimize the efficiency of psychological testing by digitizing the Corsi test and making it available to the scientific community as free software. 
+
 # Install from package
 Installer for MS Windows: [Corsi_Task_1.0.msi]()
 
@@ -16,6 +17,27 @@ Installer for MS Windows: [Corsi_Task_1.0.msi]()
 
 
 Run command `mvn clean javafx:run` from project folder
+
+# Test sequences 
+Default folder:
+- For Windows:	C:\Users\"user's name"\Documents\Corsi Test
+- For Linux: 	Home folder
+
+If folder doesn't exists
+
+## Create new test sequence
+Test sequence file is type of JSON.
+File content is only JSON array of arrays with numbers in range from 1 to 9 (Corsi task has 9 blocks)
+
+Sample of custom test sequence file:
+
+	[
+		[1, 5],
+		[3, 7],
+		[4, 2, 9, 8]
+		[8, 6, 9, 6]
+	]
+
 
 # Project layout
 
