@@ -314,7 +314,7 @@ public class CorsiTestController {
         for (int i = 0; i < allBlockLabels.size(); i++) {
             allBlockLabels.get(i).setText(String.valueOf(i+1));
             allBlockLabels.get(i).setTextFill(WHITE);
-            allBlockLabels.get(i).setVisible(false);
+            allBlockLabels.get(i).setVisible(configuration.isShowBlockNumbers());
         }
     }
 

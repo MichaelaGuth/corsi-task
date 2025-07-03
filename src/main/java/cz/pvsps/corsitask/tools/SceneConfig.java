@@ -1,7 +1,5 @@
 package cz.pvsps.corsitask.tools;
 
-import java.io.File;
-
 public record SceneConfig(String fileName, int width, int height, boolean isFullscreen, boolean isExitButtonOverridden) {
 
     public String getPath() {
