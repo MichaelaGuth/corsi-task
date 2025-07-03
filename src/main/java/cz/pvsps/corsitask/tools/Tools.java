@@ -64,12 +64,7 @@ public class Tools {
                 stage.setFullScreen(sceneConfig.isFullscreen());
             }
 
-            if (sceneConfig.isExitButtonOverridden()) {
-                stage.setOnCloseRequest(windowEvent -> {
-                    Tools.changeScene(Constants.MENU);
-                    windowEvent.consume();
-                });
-            } else {
+            if (!sceneConfig.isExitButtonOverridden()) {
                 stage.setOnCloseRequest(windowEvent -> {});
             }
 
@@ -138,7 +133,6 @@ public class Tools {
                 System.exit(100);
             }
         }
-
     }
 
     // TODO check with Honza

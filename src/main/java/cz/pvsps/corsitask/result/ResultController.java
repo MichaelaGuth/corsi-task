@@ -51,6 +51,10 @@ public class ResultController {
         exportToPDFButton.setDisable(true);
         exportToPDFButton.setVisible(false);
         stage.setFullScreen(Constants.RESULT.isFullscreen());
+        stage.setOnCloseRequest(windowEvent -> {
+            Tools.changeScene(Constants.MENU);
+            windowEvent.consume();
+        });
         if (file != null) {
             score = Tools.loadScore(file);
             setTable();

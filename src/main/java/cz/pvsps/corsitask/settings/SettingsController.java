@@ -41,6 +41,11 @@ public class SettingsController {
 
     @FXML
     public void initialize() {
+        stage.setOnCloseRequest(windowEvent -> {
+            Tools.changeScene(Constants.MENU);
+            windowEvent.consume();
+        });
+
         directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File(Tools.getDocumentsPath()));
         sequenceLocationOptions = FXCollections.observableArrayList(

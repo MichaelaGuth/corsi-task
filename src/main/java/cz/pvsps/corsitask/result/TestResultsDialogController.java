@@ -29,6 +29,10 @@ public class TestResultsDialogController {
 
     @FXML
     public void initialize() {
+        stage.setOnCloseRequest(windowEvent -> {
+            Tools.changeScene(Constants.MENU);
+            windowEvent.consume();
+        });
         configuration = Tools.loadConfiguration();
         prepareResultsFileChoiceBox();
         prepareFileChooser();

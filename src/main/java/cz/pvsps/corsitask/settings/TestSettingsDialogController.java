@@ -49,6 +49,10 @@ public class TestSettingsDialogController {
     @FXML
     public void initialize() {
         stage.setFullScreen(Constants.TEST_SETTINGS_DIALOG.isFullscreen());
+        stage.setOnCloseRequest(windowEvent -> {
+            Tools.changeScene(Constants.MENU);
+            windowEvent.consume();
+        });
         patientID = UUID.randomUUID();
         patientIDLabel.setText("ID: " + patientID);
         Tools.setTestSettingsPrerequisites();
