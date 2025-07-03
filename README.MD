@@ -19,11 +19,11 @@ Installer for MS Windows: [Corsi_Task_1.0.msi]()
 Run command `mvn clean javafx:run` from project folder
 
 # Test sequences 
-Default folder:
-- For Windows:	C:\Users\"user's name"\Documents\Corsi Test
-- For Linux: 	Home folder
+Default folder path:
+- For Windows:	C:\Users\\{user's name}\Documents\Corsi Test\sequences
+- For Linux: 	Home folder\Corsi Test\sequences
 
-If folder doesn't exists
+If folder _Corsi Test_ and/or its subfolders/files are missing, they will be automatically created.
 
 ## Create new test sequence
 Test sequence file is type of JSON.
@@ -34,7 +34,7 @@ Sample of custom test sequence file:
 	[
 		[1, 5],
 		[3, 7],
-		[4, 2, 9, 8]
+		[4, 2, 9, 8],
 		[8, 6, 9, 6]
 	]
 
