@@ -13,7 +13,7 @@ public final class SequenceScore {
     @JsonProperty("userSequence")
     private ArrayList<Block> userSequence;
     @JsonProperty("userTime")
-    private long userTime;
+    private long totalTime;
     @JsonProperty("trialNumber")
     private int trialNumber;
     @JsonProperty("userCorrect")
@@ -33,7 +33,7 @@ public final class SequenceScore {
     public SequenceScore(ArrayList<Block> correctSequence, ArrayList<Block> userSequence, long userTime) {
         this.correctSequence = correctSequence;
         this.userSequence = userSequence;
-        this.userTime = userTime;
+        this.totalTime = userTime;
         this.trialNumber = 1;
         this.userCorrect = correctSequence.equals(userSequence);
         this.score = userCorrect ? 1 : 0;
@@ -55,10 +55,21 @@ public final class SequenceScore {
         return userSequence;
     }
 
-    public long getUserTime() {
-        return userTime;
+    public long getTotalTime() {
+        return totalTime;
     }
 
+    public long getResponseTime() {
+        return timesBetweenBlocks.get(0);
+    }
+
+    public long getExecutionTime() {
+        long executionTime = 0;
+        for (int i = 1; i < timesBetweenBlocks.size(); i++) {
+            executionTime += timesBetweenBlocks.get(i);
+        }
+        return executionTime;
+    }
 
     public int getTrialNumber() {
         return trialNumber;
@@ -75,10 +86,12 @@ public final class SequenceScore {
     public ArrayList<String> createCSV() {
         ArrayList<String> result = new ArrayList<>();
         StringBuilder header = new StringBuilder("Correct sequence" + SEPARATOR_CSV + "User sequence" + SEPARATOR_CSV
-                + "User time" + SEPARATOR_CSV);
+                + "Total time" + SEPARATOR_CSV + "Response time" + SEPARATOR_CSV + "Execution time" + SEPARATOR_CSV);
         StringBuilder csv = new StringBuilder(correctSequence.toString() + SEPARATOR_CSV);
         csv.append(userSequence.toString()).append(SEPARATOR_CSV);
-        csv.append(userTime / 1000.0).append(SEPARATOR_CSV);
+        csv.append(totalTime / 1000.0).append(SEPARATOR_CSV);
+        csv.append(getResponseTime() / 1000.0).append(SEPARATOR_CSV);
+        csv.append(getExecutionTime() / 1000.0).append(SEPARATOR_CSV);
         int i = 1;
         for (long time :
                 timesBetweenBlocks) {

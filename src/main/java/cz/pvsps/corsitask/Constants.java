@@ -16,7 +16,7 @@ public class Constants {
     public static final SceneConfig MENU = new SceneConfig ("menu.fxml", 400, 600, false, false);
     public static final SceneConfig TRIAL = new SceneConfig ("corsiTest.fxml", 1220, 820, true, false);
     public static final SceneConfig SETTINGS = new SceneConfig ("settings.fxml", 500, 600, false, true);
-    public static final SceneConfig RESULT = new SceneConfig ("result.fxml", 1050, 600, false, true);
+    public static final SceneConfig RESULT = new SceneConfig ("result.fxml", 1250, 600, false, true);
     public static final SceneConfig TEST_SETTINGS_DIALOG = new SceneConfig ("testSettingsDialog.fxml", 500, 650, false, true);
     public static final SceneConfig SEQUENCE_RESULT = new SceneConfig ("sequenceResult.fxml", 850, 530, false, true);
     public static final SceneConfig TEST_RESULTS_DIALOG = new SceneConfig ("testResultsDialog.fxml", 400, 250, false, true);

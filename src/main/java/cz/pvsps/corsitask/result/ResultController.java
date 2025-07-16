@@ -34,6 +34,8 @@ public class ResultController {
     public TableColumn<ResultTableItem, SimpleDoubleProperty> userTimeColumn;
     public TableColumn<ResultTableItem, SimpleListProperty<Block>> sequenceColumn;
     public TableColumn<ResultTableItem, SimpleListProperty<Block>> userSequenceColumn;
+    public TableColumn<ResultTableItem, SimpleDoubleProperty> userResponseTimeColumn;
+    public TableColumn<ResultTableItem, SimpleDoubleProperty> userExecutionTimeColumn;
     public Label totalScoreLabel;
     public Label blockSpanLabel;
     public Label correctTrialsLabel;
@@ -78,7 +80,9 @@ public class ResultController {
         sequenceLengthColumn.setCellValueFactory(new PropertyValueFactory<>("sequenceLength"));
         trialNumberColumn.setCellValueFactory(new PropertyValueFactory<>("trialNumber"));
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
-        userTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        userTimeColumn.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+        userResponseTimeColumn.setCellValueFactory(new PropertyValueFactory<>("responseTime"));
+        userExecutionTimeColumn.setCellValueFactory(new PropertyValueFactory<>("executionTime"));
         sequenceColumn.setCellValueFactory(new PropertyValueFactory<>("sequence"));
         userSequenceColumn.setCellValueFactory(new PropertyValueFactory<>("userSequence"));
     }
